@@ -1,4 +1,4 @@
-/** Consumer contract 1.0.0. Phase 2 HTTP bridge; MCP transport arrives in Phase 4. */
+/** Consumer contract 1.0.0, implemented by HTTP and MCP stdio bridges. */
 export const CONTRACT_VERSION = '1.0.0' as const;
 export type Ticket = {id:string;summary:string;status:string};
 export type Context = {

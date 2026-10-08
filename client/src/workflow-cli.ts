@@ -1,23 +1,23 @@
 import { createInterface } from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
 import { randomUUID } from 'node:crypto';
-import { httpBridge, type Proposal, type RequestFn } from './service-operations-v1.js';
+import { httpBridge, type Proposal, type RequestFn, type ServiceOperations } from './service-operations-v1.js';
 import { project01TicketHandoff,project08RecordedWork } from './consumer-examples.js';
 
-export async function consumerSmoke(request:RequestFn) {
-  const ops=httpBridge(request);
+export async function consumerSmoke(request:RequestFn,provided?:ServiceOperations) {
+  const ops=provided??httpBridge(request);
   const a=await project01TicketHandoff(ops,'A-100');
   const b=await project08RecordedWork(ops,{ticketId:'A-100',minutes:30,startedAt:'2026-10-08T09:00:00+07:00',evidence:'Synthetic technician timer: 30 minutes',description:'Demo troubleshooting session'});
   if(a.payload.internalFlag!==true || a.payload.externalFlag!==false || b.payload.actualHours!==0.5 || a.id===b.id) throw new Error('Consumer contract acceptance failed');
   const preview=await request<Proposal>(`/workflow/proposals/${a.id}`);
   if(preview.payload_hash!==a.payload_hash) throw new Error('Proposal preview mismatch');
-  console.log('Project 01 + 08 consumer contract 1.0.0 HTTP bridge PASS (proposals only; no MCP transport)');
+  console.log(`Project 01 + 08 consumer contract 1.0.0 ${provided?'MCP':'HTTP bridge'} PASS (proposals only)`);
 }
 
-export async function workflowCLI(request:RequestFn,args:string[]) {
+export async function workflowCLI(request:RequestFn,args:string[],provided?:ServiceOperations) {
   const [command,id,key]=args;
   if(!id) throw new Error('Usage: --workflow context|note|time|preview|approve|execute|verify ID [idempotency-key]');
-  const ops=httpBridge(request);
+  const ops=provided??httpBridge(request);
   const rl=createInterface({input:stdin,output:stdout});
   const answers=rl[Symbol.asyncIterator]();
   async function ask(prompt:string):Promise<string> {

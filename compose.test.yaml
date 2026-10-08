@@ -75,6 +75,7 @@ services:
       context: .
       dockerfile: client/Dockerfile
     environment:
+      MCP_TEST_DATABASE: cw_ops_test
       API_URL: http://api:8000
       DEMO_PASSWORD: synthetic-test-user-password-only
     command: [--smoke]

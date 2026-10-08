@@ -1,3 +1,4 @@
+import { connectMCP } from './mcp-client.js';
 import { createInterface } from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
 import { consumerSmoke,workflowCLI } from './workflow-cli.js';
@@ -10,6 +11,7 @@ if (base.protocol !== 'https:' && !(base.protocol === 'http:' && ['api','localho
   throw new Error('Use HTTPS outside the local demo network');
 }
 let token: string | undefined;
+let mcp:Awaited<ReturnType<typeof connectMCP>>|undefined;
 async function call<T>(path: string, method='GET', body?: unknown): Promise<T> {
   const response = await fetch(new URL(path,base), {method,headers:{'Content-Type':'application/json',...(token ? {Authorization:`Bearer ${token}`} : {})},
     body:body===undefined?undefined:JSON.stringify(body),signal:AbortSignal.timeout(path.startsWith('/assistant/')?110000:10000)});
@@ -21,6 +23,7 @@ const password = process.env.DEMO_PASSWORD;
 if (!password) throw new Error('Set DEMO_PASSWORD through the local environment; never pass it as a command argument');
 try {
   token = (await call<{access_token:string}>('/auth/login','POST',{username,password})).access_token;
+  if(process.argv.includes('--mcp'))mcp=await connectMCP(token);
   const identity = await call<Identity>('/me');
   console.log(`Synthetic local data | ${identity.id} | tenant ${identity.tenant_id} | ${identity.role}`);
   async function list() {
@@ -32,9 +35,9 @@ try {
   if(process.argv.includes('--ai')) {
     await assistantCLI(call,process.argv.slice(process.argv.indexOf('--ai')+1));
   } else if(process.argv.includes('--consumer-smoke')) {
-    await consumerSmoke(call);
+    await consumerSmoke(call,mcp?.ops);
   } else if(process.argv.includes('--workflow')) {
-    await workflowCLI(call,process.argv.slice(process.argv.indexOf('--workflow')+1));
+    await workflowCLI(call,process.argv.slice(process.argv.indexOf('--workflow')+1).filter(x=>x!=='--mcp'),mcp?.ops);
   } else if(process.argv.includes('--smoke')) {
     if(rows.length!==1) throw new Error('Unexpected scope result');
     const detail=await call<Ticket>(`/tickets/${encodeURIComponent(rows[0]!.id)}`);
@@ -52,4 +55,4 @@ try {
     } finally {rl.close();}
   }
 } catch(error) {console.error((error as Error).message);process.exitCode=1;}
-finally {if(token) {try {await call<void>('/auth/logout','POST');} catch {console.error('Logout unavailable; session will expire.');}}}
+finally {if(mcp)await mcp.close();if(token) {try {await call<void>('/auth/logout','POST');} catch {console.error('Logout unavailable; session will expire.');}}}

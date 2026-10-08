@@ -2,7 +2,7 @@ import json
 import logging
 import secrets
 import time
-from uuid import uuid4
+from uuid import UUID,uuid4
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
@@ -25,7 +25,12 @@ DUMMY_PASSWORD = hash_password(secrets.token_urlsafe(32))
 
 @app.middleware('http')
 async def request_log(request: Request, call_next):
-    request.state.correlation_id = str(uuid4())
+    from .tracing import correlation_id
+    try:
+        request.state.correlation_id = str(UUID(request.headers.get('X-Correlation-ID','')))
+    except ValueError:
+        request.state.correlation_id = str(uuid4())
+    correlation_id.set(request.state.correlation_id)
     start = time.monotonic()
     try:
         response = await call_next(request)

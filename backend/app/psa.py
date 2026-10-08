@@ -5,6 +5,7 @@ from urllib.parse import urlparse
 import httpx
 from fastapi import HTTPException
 from .db import connection
+from .tracing import correlation_id
 
 
 class PSA:
@@ -21,7 +22,7 @@ class PSA:
         if len(secret)<24:raise HTTPException(503,'platform_credentials_missing')
         self.client=httpx.Client(base_url=cfg['base_url']+'/',
             auth=(cfg['company_login']+'+'+cfg['public_key'],secret),
-            headers={'clientId':cfg['client_id'],'Accept':'application/json'},
+            headers={'clientId':cfg['client_id'],'Accept':'application/json','X-Correlation-ID':correlation_id.get()},
             timeout=0.6,follow_redirects=False,trust_env=False)
 
     def __enter__(self):return self

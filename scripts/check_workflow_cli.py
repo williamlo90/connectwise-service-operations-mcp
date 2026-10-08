@@ -6,8 +6,9 @@ import subprocess
 ROOT=Path(__file__).resolve().parents[1]
 
 
-def check_cli(command):
+def check_cli(command, mcp=False):
     def call(args,stdin=None):
+        if mcp: args = args + ['--mcp']
         r=subprocess.run(command+['run','--rm','--no-deps','-T']+args,cwd=ROOT,input=stdin,
                          text=True,capture_output=True,encoding='utf-8')
         if r.returncode:
@@ -31,5 +32,5 @@ def check_cli(command):
     time=payload(call(['client','--workflow','time','A-100'],
         'Synthetic CLI work log\n30\nTimer recorded 30 minutes\n2026-10-08T09:00:00+07:00\n'))
     if time['payload']['actualHours']!=0.5:raise RuntimeError('CLI duration mismatch')
-    print('Workflow CLI prepare/decline/approve/execute/verify and time input PASS')
+    print(('MCP' if mcp else 'HTTP') + ' workflow CLI prepare/decline/approve/execute/verify and time input PASS')
     return verified

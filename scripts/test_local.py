@@ -36,6 +36,13 @@ def main():
         run('run', '--rm', '--no-deps', 'client')
         run('run', '--rm', '--no-deps', 'client', '--consumer-smoke')
         check_cli(COMMAND)
+        check_cli(COMMAND, mcp=True)
+        mcp_run = run('run', '--rm', '--no-deps', '--entrypoint', 'node', 'client', 'dist/mcp-acceptance.js', capture=True, check=False)
+        print(mcp_run.stdout + mcp_run.stderr)
+        mcp_run.check_returncode()
+        mcp = json.loads(mcp_run.stdout.strip().splitlines()[-1])
+        if mcp['status'] != 'passed':
+            raise RuntimeError('MCP acceptance failed')
         logs = run('logs', '--no-color', 'api', capture=True).stdout
         for secret in ('synthetic-test-user-password-only', 'synthetic-test-database-password-only', 'synthetic-test-simulator-secret-only', 'Bearer ', 'access_token'):
             if secret in logs:
@@ -53,11 +60,11 @@ def main():
                   'skill_package_tests': len(re.findall(r'^test_\w+ \(test_skill_contracts\.', output, re.MULTILINE)),
                   'test_cases': re.findall(r'^(test_\w+) .*? \.\.\. ok$', output, re.MULTILINE),
                   'structured_http_events': len(events), 'log_secret_check': 'passed',
-                  'typescript_client': 'passed', 'workflow_cli': 'passed', 'consumer_contract_1_0_0': 'passed (HTTP bridge)', 'http_acceptance': 'passed'}
+                  'mcp_cli': 'passed', 'mcp_acceptance': mcp, 'typescript_client': 'passed', 'workflow_cli': 'passed', 'consumer_contract_1_0_0': 'passed (HTTP bridge)', 'http_acceptance': 'passed'}
         status = 'passed'
     finally:
         run('down', '--remove-orphans', check=False)
-        evidence = ROOT / 'docs' / 'evidence' / 'phase-3-run.json'
+        evidence = ROOT / 'docs' / 'evidence' / 'phase-4-run.json'
         files = {}
         for directory in ('backend', 'client', 'tests', 'scripts', 'contracts', 'skills'):
             for path in sorted((ROOT / directory).rglob('*')):

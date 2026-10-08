@@ -1,6 +1,6 @@
-# Service Operations MCP — phase-3
+# Service Operations MCP — phase-4
 
-OpenAI and Ollama provider validation.
+MCP protocol and consumer acceptance.
 
 This learning checkpoint uses synthetic data. It does not claim live ConnectWise or Azure validation.
 
