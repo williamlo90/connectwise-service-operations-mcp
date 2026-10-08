@@ -1,6 +1,6 @@
 # Local setup and quick start
 
-This is the current local/simulator release: FastAPI, PostgreSQL, a PSA HTTP simulator, TypeScript CLI/stdio MCP, optional AI, scheduled sync and a local alert inbox. It does not contact a real ConnectWise tenant. No browser UI is required.
+This is the current local/simulator release: FastAPI, PostgreSQL, a PSA HTTP simulator, TypeScript CLI/stdio MCP, optional AI, scheduled sync and a local alert inbox. The browser workspace is served by the API; the CLI and stdio MCP are also available. It does not contact a real ConnectWise tenant.
 
 ## Requirements
 
@@ -21,7 +21,7 @@ docker compose -f compose.yaml -f compose.ops.yaml --profile automation up -d --
 
 Setup creates unique passwords in ignored `.env` without printing or overwriting existing values. Keep that file private. `.env.example` is a template, not a credential. Changing `.env` does not rotate a password already stored in PostgreSQL. Seed is idempotent: rerunning it preserves users, records and settings. Hosted AI remains disabled in a fresh setup; no provider key is needed for these steps.
 
-Readiness: `http://127.0.0.1:8030/health/ready`. This is a JSON API, not a website. Change `API_PORT` in `.env` if necessary. Read `local/monitor/metrics.json` and `alerts.jsonl` for local monitoring; the worker needs a few seconds to perform its first sync.
+Browser workspace: **http://localhost:8030/**. Readiness endpoint: `http://127.0.0.1:8030/health/ready`. Change `API_PORT` in `.env` if necessary. Read `local/monitor/metrics.json` and `alerts.jsonl` for local monitoring; the worker needs a few seconds to perform its first sync.
 
 ## First task
 
@@ -63,7 +63,7 @@ python scripts/record_demo.py
 python scripts/qualify_local.py
 ```
 
-Run these serially. Each uses its own disposable project and removes it on completion. Regression and demo do not need model keys. Qualification additionally uses the previously installed pinned Ollama/model volume for OOM testing. Regression evidence is `docs/evidence/phase-7-regression.json`; quality and qualification evidence retain their original scope. To replay the frozen AI evaluation, use the `phase-6` checkpoint; later file changes intentionally fail its frozen-hash guard.
+Run these serially. Each uses its own disposable project and removes it on completion. Regression and demo do not need model keys. Qualification additionally uses the previously installed pinned Ollama/model volume for OOM testing. Current regression evidence is `docs/evidence/workspace-regression.json`; quality and qualification evidence retain their original scope. To replay the frozen AI evaluation, use the `phase-6` checkpoint; later file changes intentionally fail its frozen-hash guard.
 
 `python scripts/check_installation.py` tests the **committed HEAD** in a fresh extracted Git snapshot with generated credentials, fresh named volumes and a dynamic loopback port. It uses the existing Docker download/build cache; this is not a newly provisioned physical machine. Uncommitted changes are excluded.
 

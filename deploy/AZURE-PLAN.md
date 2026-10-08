@@ -1,6 +1,6 @@
 # Azure deployment plan — not applied
 
-No subscription, resource group, service, public endpoint or billable cloud resource is created by this document. This is the Phase 8 design appendix, not deployable IaC or a validated cloud architecture. Provisioning remains Phase 9 **after** real ConnectWise acceptance in Phase 8A. The current application rejects connected/production mode and uses local bootstrap credentials; deploying it unchanged would not satisfy those gates.
+No subscription, resource group, service, public endpoint or billable cloud resource is created by this document. This is the Phase 8 design appendix, not deployable IaC or a validated cloud architecture. The next Azure validation may use the synthetic PSA simulator before Phase 8A. Connected production deployment still requires actual ConnectWise acceptance. The current application rejects connected/production mode and uses local bootstrap credentials; cloud access, secrets, TLS and runtime qualification must be prepared even for the simulator deployment.
 
 ## Proposed topology and limits
 
@@ -18,7 +18,7 @@ These resource sizes and replica limits are proposed starting limits, not measur
 
 ## Required implementation before provisioning
 
-1. Complete Phase 8A: tenant owner, exact API version/region, API credentials, company/board allowlists, field semantics, read-only canary, approved note/time writes and unknown-outcome recovery. Re-run affected regression/quality/qualification and rebuild the release manifest after adapter changes.
+1. Choose and label the target: a synthetic Azure deployment can use an isolated simulator and synthetic identities; no vendor credentials are needed for that path. For a connected deployment, complete Phase 8A: tenant owner, exact API version/region, API credentials, company/board allowlists, field semantics, read-only canary, approved note/time writes and unknown-outcome recovery. Re-run affected regression/quality/qualification and rebuild the release manifest after adapter changes.
 2. Add reviewed production configuration, explicit trusted platform origins, TLS database settings, runtime/migrator DB-role separation, and production user provisioning/session policy. Replace synthetic accounts and simulator with the validated adapter configuration.
 3. Choose subscription, region, permitted data residency and approved budget. Generate scoped Bicep/Terraform only after these inputs exist. Use a read-only plan/what-if review before applying. Do not embed credentials in templates, CLI arguments or state exports.
 4. Build immutable candidate images; export an SBOM and scan the actual images/dependencies. Assess critical findings before release. Pin migrations and define forward/backward compatibility. Restore a backup before relying on rollback.
@@ -32,4 +32,4 @@ Proposed initial backup retention is seven days, subject to business/data-reside
 
 Tag every future resource with project/environment/owner and record immutable IDs. For teardown, pause ingress/writers, reconcile pending operations, preserve approved evidence/backups under retention policy, revoke identities/keys, then remove only the dedicated recorded resource group after owner confirmation. Explicitly list retained backups, registry images and shared resources; never delete shared infrastructure by name pattern.
 
-**Phase 9 acceptance:** real authenticated user workflow, tenant isolation, cloud normal/peak/soak, delivered alert, restore and rollback, measured billing/resources, approved ownership and teardown record. All remain pending.
+**Phase 9 acceptance:** authenticated workflow in the declared simulator or connected environment, tenant isolation, cloud normal/peak/soak, delivered alert, restore and rollback, measured billing/resources, approved ownership and teardown record. All remain pending.

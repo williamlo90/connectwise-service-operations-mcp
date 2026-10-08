@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "timestamp_utc": "2026-10-08T14:51:16.628Z",
+  "environment": "Headless Chromium; isolated synthetic Docker stack; scripted separate-user browser login",
+  "hosted_requests": 0,
+  "cases": [
+    "Separate-identity note approval, execution and verified read-back",
+    "390px responsive layout without page overflow",
+    "Time entry with explicit duration, start and evidence",
+    "Unknown outcome reconciled with exactly one downstream effect",
+    "Identity switch clears tenant A data and loads tenant B scope",
+    "Credentials and session tokens absent from browser storage",
+    "Sign out clears workspace data",
+    "No browser JavaScript errors"
+  ]
+}

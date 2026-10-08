@@ -67,7 +67,7 @@ def main():
         status = 'passed'
     finally:
         run('down', '--remove-orphans', check=False)
-        evidence = ROOT / 'docs' / 'evidence' / 'phase-7-regression.json'
+        evidence = ROOT / 'docs' / 'evidence' / 'workspace-regression.json'
         files = {}
         for directory in ('backend', 'client', 'tests', 'scripts', 'contracts', 'skills', 'evaluation'):
             for path in sorted((ROOT / directory).rglob('*')):

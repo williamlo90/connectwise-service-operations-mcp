@@ -1,5 +1,7 @@
 # Phase 8 — local delivery pack
 
+Snapshot: **phase-8**. For the current browser release, see [release notes](RELEASE-NOTES.md) and [workspace validation](WORKSPACE-UI.md).
+
 Status: **local/simulator release candidate ready**. Installation, operator instructions, recorded demonstration, acceptance checklist, support ownership and a release manifest are packaged. No real ConnectWise tenant or Azure deployment is claimed.
 
 The fresh-install check used committed source `e3541f19dde89dec6c0b07ff4609662267f60b0f`, generated new credentials, allocated new named volumes and a dynamic loopback port, and followed the documented start/seed/CLI/MCP/worker/monitor steps. Eleven command steps passed; re-seeding retained seven identities, stop/restart retained data, and the isolated project/volumes were removed. Existing Docker downloads/build cache were reused; this was not a newly provisioned physical machine.

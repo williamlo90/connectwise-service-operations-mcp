@@ -1,6 +1,6 @@
 # Learning checkpoints
 
-Current checkpoint: **phase-8**, local delivery pack, fresh installation and recorded demo passed.
+Completed phase checkpoint: **phase-8**. The current `main` branch also includes the responsive browser workspace, fresh workspace installation evidence and English portfolio documentation. See the [roadmap](ROADMAP.md) for the next milestone.
 
 | Tag | Learning objective | Verification |
 | --- | --- | --- |
@@ -25,7 +25,7 @@ git diff --stat phase-0..phase-1
 git diff --stat phase-1..phase-2
 ```
 
-Start Phase 0 with the scope and acceptance documents. For Phase 1 follow LOCAL-SETUP.md at its tag. At Phase 2 use [the workflow guide](PHASE-2-WORKFLOW.md) for prepare → approval → execute → verify. Phase 0A real-platform access remains pending across these local checkpoints.
+At the `phase-0` tag, start with its original scope and acceptance documents. For the current English overview, use the [business brief](BUSINESS-BRIEF.md) and [acceptance checklist](ACCEPTANCE-CHECKLIST.md). For Phase 1 follow LOCAL-SETUP.md at its tag. At Phase 2 use [the workflow guide](PHASE-2-WORKFLOW.md) for prepare → approval → execute → verify. Phase 0A real-platform access remains pending across these local checkpoints.
 
 ## Get the repository
 

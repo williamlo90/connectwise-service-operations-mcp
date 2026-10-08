@@ -3,6 +3,7 @@ WORKDIR /app
 COPY backend/requirements.lock ./requirements.lock
 RUN pip install --no-cache-dir -r requirements.lock && useradd --uid 10001 --create-home app
 COPY backend/app ./app
+COPY backend/static ./static
 COPY backend/migrations ./migrations
 COPY tests ./tests
 COPY contracts ./contracts

@@ -32,27 +32,29 @@ def main():
         # Final delivery report is allowed to point back at this immutable manifest.
         if name=='docs/PHASE-8-DELIVERY.md':continue
         files[name]=digest(ROOT/name)
-    installation=json.loads((ROOT/'docs/evidence/phase-8-installation.json').read_text(encoding='utf-8'))
+    installation=json.loads((ROOT/'docs/evidence/workspace-installation.json').read_text(encoding='utf-8'))
     demo=json.loads((ROOT/'docs/evidence/phase-8-demo.json').read_text(encoding='utf-8'))
     assert installation['status']==demo['status']=='passed'
     runtime=['backend','client','contracts','skills','evaluation','compose.yaml','compose.ops.yaml','compose.ai.yaml','compose.test.yaml']
     changed=subprocess.check_output(['git','diff','--name-only',installation['source_revision'],revision,'--',*runtime],cwd=ROOT,text=True)
     if changed:raise SystemExit('Runtime changed after installation qualification: '+changed)
-    regression=json.loads((ROOT/'docs/evidence/phase-7-regression.json').read_text(encoding='utf-8'))
+    regression=json.loads((ROOT/'docs/evidence/workspace-regression.json').read_text(encoding='utf-8'))
+    browser=json.loads((ROOT/'docs/evidence/workspace-browser.json').read_text(encoding='utf-8'))
+    assert regression['status']==browser['status']=='passed'
     for name,expected in regression['source_sha256'].items():
         if name.startswith(('backend/','client/','contracts/','skills/','evaluation/')) and digest(ROOT/name)!=expected:
             raise SystemExit('Runtime changed after regression: '+name)
-    manifest={'candidate':'local-simulator-rc1','generated_at':datetime.now(timezone.utc).isoformat(),
+    manifest={'candidate':'local-simulator-workspace-rc2','generated_at':datetime.now(timezone.utc).isoformat(),
               'source_revision':revision,'installation_source_revision':installation['source_revision'],
               'status':'local-ready; connected/cloud pending','schema':'004_automation.sql',
               'prompt':'evidence-selector-1.1.0','skills':'1.0.0','schema_ai':'selection-1.0.0',
               'mcp_protocol':'2025-11-25','models':json.loads((ROOT/'contracts/local-model.json').read_text()),
               'hosted_model':'gpt-4.1-mini-2025-04-14','evidence':{
-                  'regression':'docs/evidence/phase-7-regression.json','quality':'docs/evidence/phase-6-quality.json',
+                  'regression':'docs/evidence/workspace-regression.json','browser':'docs/evidence/workspace-browser.json','quality':'docs/evidence/phase-6-quality.json',
                   'qualification':'docs/evidence/phase-7-qualification.json','demo':'docs/evidence/phase-8-demo.json',
-                  'installation':'docs/evidence/phase-8-installation.json'},
+                  'installation':'docs/evidence/workspace-installation.json'},
               'untested_integrations':['ConnectWise tenant','Anthropic live','xAI live','Azure runtime'],
-              'runtime_unchanged_since_installation':True,'runtime_matches_phase7_regression':True,
+              'runtime_unchanged_since_installation':True,'runtime_matches_workspace_regression':True,
               'exclusions':['this manifest (self reference)','final delivery report (links to manifest)','ignored .env/local artifacts'],
               'files_sha256':files}
     TARGET.write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')

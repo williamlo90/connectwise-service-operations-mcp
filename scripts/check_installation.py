@@ -61,7 +61,7 @@ def main():
     finally:
         cleanup=subprocess.run(command+['down','--volumes','--remove-orphans'],cwd=directory,env=env,capture_output=True)
         report['isolated_cleanup_succeeded']=cleanup.returncode==0
-        (ROOT/'docs/evidence/phase-8-installation.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+        (ROOT/'docs/evidence/workspace-installation.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
     assert report['isolated_cleanup_succeeded']
     print(json.dumps({'status':report['status'],'source_revision':revision,'steps':len(steps)}))
 

@@ -2,6 +2,22 @@
 
 Use the [quick start](LOCAL-SETUP.md) first. This guide operates the synthetic PSA simulator. [Replay the recorded terminal demo](demo/demo.html), read its [plain transcript](demo/transcript.txt), or replay the [asciicast](demo/service-operations.cast) in a compatible player. The recording uses the actual CLI and MCP subprocesses; approvals in it are scripted test identities.
 
+## Browser workspace
+
+Open **http://localhost:8030/** after starting the local stack. The responsive workspace uses the existing domain HTTP API; the MCP/CLI remains available independently.
+
+1. Click **Sign in** and use `op-a` with the generated `DEMO_PASSWORD` from your local `.env`.
+2. Read the scoped ticket context. Enter technician observations and choose **Prepare proposal**. For time entries, supply minutes, duration evidence and a start time in your browser's local timezone.
+3. Open the account menu, sign in as `approver-a`, and review the proposal. Expand **Inspect exact payload & evidence**, confirm the checkbox, then select **Approve exact payload**.
+4. Sign back in as `op-a` and choose **Execute approved update**. A verified result includes the downstream record ID.
+5. For an unknown/review outcome, choose **Verify existing operation**. After a browser/network interruption, refresh and open the existing proposal before doing anything else.
+
+The activity table includes the latest 40 proposals within your scope, including proposals created through MCP. Refresh loads the latest state. Switching tenants clears the previous workspace; tokens remain only in page memory, and a reload requires login. No credentials are embedded in the frontend. The browser covers deterministic note/time operations; optional AI assistance remains in the CLI.
+
+For an independent tenant, use `op-b` and `approver-b`. Administrator, auditor and worker accounts use their existing tools rather than this operator workspace.
+
+Browser acceptance and screenshots: [workspace validation](WORKSPACE-UI.md).
+
 ## Read the ticket and prepare an internal note
 
 ```sh

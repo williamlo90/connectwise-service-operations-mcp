@@ -4,6 +4,7 @@ from copy import deepcopy
 import os
 import subprocess
 import sys
+import time
 import unittest
 from uuid import uuid4
 import httpx
@@ -188,7 +189,13 @@ automation.process_one()
             self.assertEqual(conn.execute('SELECT count(*) n FROM ticket_source_cache').fetchone()['n'],0)
             self.assertEqual(conn.execute('SELECT count(*) n FROM ticket_change_events').fetchone()['n'],0)
             self.assertTrue(all(r['page']==1 for r in conn.execute('SELECT page FROM sync_cursors').fetchall()))
-        self.drain();self.assertEqual(self.job()['status'],'completed')
+        # PostgreSQL may still be releasing the killed client's row lock when
+        # process.wait() returns. A surviving worker polls again after SKIP LOCKED.
+        deadline=time.monotonic()+5
+        while time.monotonic()<deadline and self.job()['status']!='completed':
+            self.drain()
+            if self.job()['status']!='completed':time.sleep(.05)
+        self.assertEqual(self.job()['status'],'completed')
 
     def test_real_worker_entrypoint_heartbeat_and_health(self):
         result=subprocess.run([sys.executable,'-m','app.worker','--once'],capture_output=True,text=True,timeout=15)

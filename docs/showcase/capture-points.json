@@ -1,0 +1,25 @@
+{
+  "source": "docs/demo/demo.html",
+  "type": "Browser screenshots of recorded CLI/MCP output, not a live product dashboard",
+  "points": [
+    {
+      "name": "verified-note",
+      "time": 9.147999999999998
+    },
+    {
+      "name": "unknown-outcome",
+      "time": 21.759
+    },
+    {
+      "name": "recovered-write",
+      "time": 25.496000000000002
+    }
+  ],
+  "recording_sha256": "6ebfe8182134115619c4192e6f9a610ccb11d07baa430779b15a35c558ed59a8",
+  "assets_sha256": {
+    "demo-highlights.gif": "673e50299b23ba43e153627434f41a7cb61b55a3128789c995753839c41f9a13",
+    "recovered-write.png": "e507f19663db077d6cc4316cfdf4bfb9668c62ad3003a30dab40d5fd0abf43a8",
+    "unknown-outcome.png": "2af16457dc3930ba652545c502c3f0ba7d520fe23e3038c535376aaf3307bb9a",
+    "verified-note.png": "f9883365ccfd8f6b9f0c673e2407d5b48e07f82316f629ddb87871ea772a66aa"
+  }
+}

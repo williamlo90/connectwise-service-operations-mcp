@@ -5,9 +5,12 @@ import time
 from uuid import UUID,uuid4
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
+from pathlib import Path
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel, ConfigDict, Field
 import psycopg
@@ -38,6 +41,9 @@ async def request_log(request: Request, call_next):
         response = JSONResponse(status_code=500, content={'error':'internal_error'})
     response.headers['X-Correlation-ID'] = request.state.correlation_id
     response.headers['Cache-Control'] = 'no-store'
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['Referrer-Policy'] = 'no-referrer'
+    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
     route = request.scope.get('route')
     logger.info(json.dumps({'event':'http_request','correlation_id':request.state.correlation_id,
                            'method':request.method,'route':getattr(route,'path','unmatched'),
@@ -195,3 +201,29 @@ from .assistant import router as assistant_router
 app.include_router(assistant_router)
 from .automation import router as automation_router
 app.include_router(automation_router)
+
+
+@app.get('/workspace/activity')
+def workspace_activity(actor: Actor):
+    allow(actor, ('operator','approver'))
+    with connection() as conn:
+        rows=conn.execute('''SELECT p.id,p.ticket_id,p.kind,p.actor_id,p.payload,p.payload_hash,p.evidence,
+            p.created_at,p.expires_at,a.actor_id AS approved_by,o.id AS operation_id,o.external_id,
+            o.error_code,o.verified_at,
+            CASE WHEN o.status IS NOT NULL THEN o.status WHEN p.expires_at<=now() THEN 'expired'
+                 WHEN a.id IS NOT NULL THEN 'approved' ELSE 'proposed' END AS status
+            FROM proposals p JOIN tickets t ON t.tenant_id=p.tenant_id AND t.id=p.ticket_id
+            LEFT JOIN approvals a ON a.proposal_id=p.id LEFT JOIN operations o ON o.proposal_id=p.id
+            WHERE p.tenant_id=%s AND EXISTS (SELECT 1 FROM actor_scopes s WHERE s.tenant_id=p.tenant_id
+                AND s.actor_id=%s AND s.company_id=t.company_id AND s.board_id=t.board_id)
+            ORDER BY p.created_at DESC,p.id LIMIT 40''', (actor['tenant_id'],actor['id'])).fetchall()
+    return {'items':rows,'limit':40,'platform_mode':'synthetic'}
+
+
+STATIC=Path(__file__).resolve().parents[1]/'static'
+app.mount('/assets', StaticFiles(directory=STATIC), name='workspace-assets')
+
+
+@app.get('/',include_in_schema=False)
+def workspace():
+    return FileResponse(STATIC/'index.html')

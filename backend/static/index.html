@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Service Ops · Workspace</title><link rel="stylesheet" href="/assets/workspace.css"><script type="module" src="/assets/workspace.js"></script></head>
+<body>
+<a class="skip" href="#main">Skip to workspace</a>
+<aside class="sidebar">
+ <a class="brand" href="/" aria-label="Service Ops home"><span class="brandmark">so</span><span>service<span class="brandlight">ops</span><small>CONTROLLED BY DESIGN</small></span></a>
+ <p class="navlabel">OPERATIONS</p>
+ <a class="nav active" href="#main"><span class="nav-symbol">▦</span> Workspace <span class="navdot"></span></a>
+ <a class="nav" href="#activity"><span class="nav-symbol">≡</span> Activity</a>
+ <button class="nav" id="guide"><span class="nav-symbol">?</span> How it works</button>
+ <div class="sidebar-bottom"><span class="small-dot"></span> Local environment<p>Synthetic PSA simulator<br>No live customer data</p><div class="side-rule"></div><span class="sidefoot">Built for accountable operations.</span></div>
+</aside>
+<div class="shell">
+ <header class="topbar"><div>Operations <span class="slash">/</span> <strong>Workspace</strong></div><div class="topright"><span class="environment">SIMULATOR</span><button class="account" id="account"><span class="avatar" id="avatar">—</span><span id="identity">Sign in</span><span>⌄</span></button></div></header>
+ <main id="main">
+  <div class="heading"><div><p class="eyebrow">SERVICE OPERATIONS</p><h1>Good work. Verified.</h1><p class="subtitle">From ticket context to an approved, traceable outcome.</p></div><button class="secondary" id="refresh" disabled>Refresh workspace</button></div>
+  <div class="summarybar" aria-label="Recent proposal counts"><div><span class="metric-label">Recent proposals</span><strong id="count-all">—</strong></div><div><span class="metric-label">Awaiting approval</span><strong id="count-pending">—</strong></div><div><span class="metric-label">Verified writes</span><strong id="count-verified">—</strong></div><div><span class="metric-label">Needs review</span><strong id="count-review">—</strong></div><p>Within your scope<br>Latest 40 proposals</p></div>
+  <div id="notice" role="status" aria-live="polite" hidden></div>
+  <div class="workspace-grid">
+   <section class="context panel"><div class="sectionbar"><h2>Ticket context</h2><span class="smallcap">READ BEFORE YOU WRITE</span></div>
+    <label class="ticket-select">Selected ticket<select id="tickets" disabled><option>Sign in to load tickets</option></select></label>
+    <div id="context"><div class="empty"><span class="empty-number">01</span><h3>Your work starts with context.</h3><p>Sign in to view tickets available to your account.</p></div></div>
+   </section>
+   <section class="composer panel"><div class="sectionbar"><h2 id="composer-title">Prepare an update</h2><span class="step-label" id="step-label">STEP 01 / 03</span></div>
+    <ol class="steps" aria-label="Workflow"><li id="step-draft" class="current"><span>1</span>Prepare</li><li id="step-approve"><span>2</span>Approve</li><li id="step-verify"><span>3</span>Verify</li></ol>
+    <div id="draft-pane"><form id="draft-form"><label>Update type<select id="kind"><option value="note">Internal note</option><option value="time">Time entry</option></select></label>
+     <label>Technician observations<textarea id="content" maxlength="4000" rows="5" placeholder="What did you check, and what happens next?" required></textarea></label>
+     <div id="time-fields" hidden><div class="two-fields"><label>Minutes worked<input id="minutes" type="number" min="1" max="1440" step="1"></label><label>Start time<input id="started" type="datetime-local"></label></div><label>Duration evidence<input id="duration-evidence" maxlength="1000" placeholder="e.g. Technician timer: 25 minutes"></label></div>
+     <div class="inline-note"><span class="lockmark">PRIVATE</span><p>Internal visibility only. A separate approver reviews the exact payload before execution.</p></div>
+     <button class="primary wide" id="prepare" disabled>Prepare proposal <span>→</span></button>
+    </form><p class="hint">Preparation does not create a downstream record.</p></div>
+    <div id="review-pane" hidden></div>
+   </section>
+  </div>
+  <section class="activity panel" id="activity"><div class="sectionbar"><div><h2>Recent activity</h2><p>Every update has a path back to its evidence.</p></div><button id="new-draft" class="secondary" disabled>New proposal</button></div><div class="table-wrap"><table><thead><tr><th>Update / ticket</th><th>Prepared by</th><th>Status</th><th>Created</th><th>Reference</th><th><span class="sr-only">Open</span></th></tr></thead><tbody id="activity-body"><tr><td colspan="6" class="table-empty">Sign in to see activity within your scope.</td></tr></tbody></table></div></section>
+  <footer><span>Human approval. Exact payload. Verified read-back.</span><span>Service Ops / Local demo</span></footer>
+ </main>
+</div>
+<dialog id="auth-dialog" aria-labelledby="auth-title"><form id="login-form"><div class="dialog-head"><span class="brandmark">so</span><button type="button" class="text-button" id="close-auth" aria-label="Close sign in">Close</button></div><p class="eyebrow">YOUR WORKSPACE</p><h2 id="auth-title">Sign in to Service Ops</h2><p class="dialog-intro">Use your local demo account. Permissions follow your identity, not the selected screen.</p><label>Username<input id="username" autocomplete="username" placeholder="op-a or approver-a" required></label><label>Password<input id="password" type="password" autocomplete="current-password" required></label><p id="auth-error" class="error-text" role="alert"></p><button class="primary wide" id="signin">Sign in <span>→</span></button><button type="button" id="signout" class="secondary wide" hidden>Sign out</button><p class="hint">Owner: use the generated DEMO_PASSWORD in your local .env file. No credentials are embedded in this page.</p></form></dialog>
+<dialog id="guide-dialog" aria-labelledby="guide-title"><div class="dialog-head"><p class="eyebrow">THE WORKFLOW</p><button id="close-guide" class="text-button">Close</button></div><h2 id="guide-title">Clear ownership at every step.</h2><ol class="guide-list"><li><strong>Prepare as an operator</strong><p>Choose a ticket and supply observations. Time entries require documented minutes and a start time.</p></li><li><strong>Review as another approver</strong><p>Switch account, sign in as approver-a or approver-b, and open the proposal. Approval is bound to the exact payload.</p></li><li><strong>Execute as the proposer</strong><p>Switch back to the original operator. The backend writes and checks the resulting record.</p></li><li><strong>Reconcile uncertainty</strong><p>If the result is unknown or needs review, verify the existing operation. Do not create a replacement write.</p></li></ol><p class="hint">This browser uses the domain HTTP API. The CLI also supports MCP. Both enforce the same authorization and workflow rules.</p></dialog>
+</body></html>

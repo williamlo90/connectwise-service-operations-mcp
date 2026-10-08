@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "timestamp_utc": "2026-10-08T14:54:13.755276+00:00",
+  "source_revision": "e92918512413446eff4ef3e42b1e6f0ada70f4d9",
+  "environment": "fresh Git archive, generated secrets, new named volumes and loopback dynamic port; existing Docker download/build cache",
+  "project": "cw-ops-install-0ef52a00",
+  "hosted_requests": 0,
+  "steps": [
+    {
+      "command": "python scripts/setup_local.py",
+      "status": "passed"
+    },
+    {
+      "command": "docker compose -p cw-ops-install-0ef52a00 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation build",
+      "status": "passed"
+    },
+    {
+      "command": "docker compose -p cw-ops-install-0ef52a00 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation up -d --wait api",
+      "status": "passed"
+    },
+    {
+      "command": "docker compose -p cw-ops-install-0ef52a00 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps seed",
+      "status": "passed"
+    },
+    {
+      "command": "docker compose -p cw-ops-install-0ef52a00 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps client --smoke",
+      "status": "passed"
+    },
+    {
+      "command": "docker compose -p cw-ops-install-0ef52a00 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps client --mcp --workflow context A-100",
+      "status": "passed"
+    },
+    {
+      "command": "docker compose -p cw-ops-install-0ef52a00 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps seed",
+      "status": "passed"
+    },
+    {
+      "command": "docker compose -p cw-ops-install-0ef52a00 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation up -d --wait worker monitor",
+      "status": "passed"
+    },
+    {
+      "command": "docker compose -p cw-ops-install-0ef52a00 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation stop",
+      "status": "passed"
+    },
+    {
+      "command": "docker compose -p cw-ops-install-0ef52a00 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation up -d --wait api worker monitor",
+      "status": "passed"
+    },
+    {
+      "command": "docker compose -p cw-ops-install-0ef52a00 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps client --smoke",
+      "status": "passed"
+    }
+  ],
+  "seed_idempotent": true,
+  "restart_preserved_data": true,
+  "worker_and_monitor_current": true,
+  "isolated_cleanup_succeeded": true
+}
