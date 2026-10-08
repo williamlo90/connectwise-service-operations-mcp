@@ -1,6 +1,6 @@
-# Service Operations MCP — phase-7
+# Service Operations MCP — phase-8
 
-Local reliability and recovery qualification.
+Operator delivery and installation.
 
 This learning checkpoint uses synthetic data. It does not claim live ConnectWise or Azure validation.
 

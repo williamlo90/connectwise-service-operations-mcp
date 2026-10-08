@@ -1,2 +1,5 @@
 # Preserve exact source bytes used by checkpoint evidence on every platform.
 * -text
+
+# Preserve vendored upstream license bytes verbatim.
+docs/licenses/* -whitespace
