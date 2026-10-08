@@ -116,7 +116,7 @@ docker compose -f compose.yaml -f compose.ops.yaml run --rm seed
 docker compose -f compose.yaml -f compose.ops.yaml --profile automation up -d --wait worker monitor
 ```
 
-Open **http://localhost:8030/**. Sign in as `op-a` using the generated `DEMO_PASSWORD` in your ignored `.env`. Prepare an update, switch to `approver-a` for approval, then return to `op-a` to execute. Repository access is required while it remains private.
+Open **http://localhost:8030/**. Sign in as `op-a` using the generated `DEMO_PASSWORD` in your ignored `.env`. Prepare an update, switch to `approver-a` for approval, then return to `op-a` to execute. The source repository is public; reuse remains subject to its license.
 
 The [setup guide](docs/LOCAL-SETUP.md) covers resources, alternate ports and lifecycle commands. The [operator guide](docs/USER-GUIDE.md) covers browser, CLI and recovery workflows.
 

@@ -4,7 +4,7 @@ Completed phase checkpoint: **phase-8**. The current `main` branch also includes
 
 | Tag | Learning objective | Verification |
 | --- | --- | --- |
-| phase-0 | Define scope, dependencies, business rules and acceptance cases | Review planning documents; no application runtime |
+| phase-0 | Define scope, dependencies, business rules and acceptance cases | Review the English scope and acceptance goals; no application runtime |
 | phase-1 | Build authentication, tenant scopes, database migrations and a reference CLI | 10 HTTP tests and TypeScript client smoke |
 | phase-2 | Add HTTP simulator, proposals, separate-user approval, verified writes and recovery | 27 HTTP tests, workflow CLI and consumer examples |
 
@@ -25,7 +25,7 @@ git diff --stat phase-0..phase-1
 git diff --stat phase-1..phase-2
 ```
 
-At the `phase-0` tag, start with its original scope and acceptance documents. For the current English overview, use the [business brief](BUSINESS-BRIEF.md) and [acceptance checklist](ACCEPTANCE-CHECKLIST.md). For Phase 1 follow LOCAL-SETUP.md at its tag. At Phase 2 use [the workflow guide](PHASE-2-WORKFLOW.md) for prepare → approval → execute → verify. Phase 0A real-platform access remains pending across these local checkpoints.
+At the `phase-0` tag, start with its English README scope and acceptance goals. For the current English overview, use the [business brief](BUSINESS-BRIEF.md) and [acceptance checklist](ACCEPTANCE-CHECKLIST.md). For Phase 1 follow LOCAL-SETUP.md at its tag. At Phase 2 use [the workflow guide](PHASE-2-WORKFLOW.md) for prepare → approval → execute → verify. Phase 0A real-platform access remains pending across these local checkpoints.
 
 ## Get the repository
 
@@ -36,7 +36,7 @@ git switch --detach phase-1
 python scripts/test_local.py
 ```
 
-The repository is private, so GitHub access is required. The test runner creates and removes its own temporary database; run only one checkpoint test runner at a time. For separate persistent demos, use a different Compose project name and API port per phase (for example, set `COMPOSE_PROJECT_NAME=cw-ops-phase-1` and `API_PORT=8031` in that clone's generated `.env`). Merely cloning into a different folder does not isolate the default Compose database volume.
+The repository is public. The phase tags are curated learning snapshots; evidence retains the original run identifiers and source fingerprints. Current installation evidence is generated from the current source history. The test runner creates and removes its own temporary database; run only one checkpoint test runner at a time. For separate persistent demos, use a different Compose project name and API port per phase (for example, set `COMPOSE_PROJECT_NAME=cw-ops-phase-1` and `API_PORT=8031` in that clone's generated `.env`). Merely cloning into a different folder does not isolate the default Compose database volume.
 
 | Additional tag | Scope | Verification |
 | --- | --- | --- |
