@@ -5,5 +5,7 @@ RUN pip install --no-cache-dir -r requirements.lock && useradd --uid 10001 --cre
 COPY backend/app ./app
 COPY backend/migrations ./migrations
 COPY tests ./tests
+COPY contracts ./contracts
+COPY skills ./skills
 USER app
 CMD ["uvicorn","app.main:app","--host","0.0.0.0","--port","8000","--no-access-log"]

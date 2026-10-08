@@ -1,0 +1,88 @@
+{
+  "timestamp_utc": "2026-10-08T11:17:50.835939+00:00",
+  "dataset": "five synthetic development sanity cases; no held-out claim",
+  "runtime": "Ollama 0.12.3 / CPU only / 2 CPU cap / 1536 MiB cap",
+  "quantization": "see local-model-runtime.json",
+  "context_tokens": 4096,
+  "concurrency": 1,
+  "pass_count": 5,
+  "case_count": 5,
+  "cases": [
+    {
+      "case": "a_summary",
+      "passed": true,
+      "status": "completed",
+      "error_code": null,
+      "model": "qwen3:0.6b@sha256:7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435",
+      "latency_ms": 26441,
+      "usage": {
+        "input_tokens": 519,
+        "output_tokens": 61
+      },
+      "cost_usd": null,
+      "run_id": "f7864253-7e23-46f8-9562-39238e8e7376",
+      "wall_ms": 28893
+    },
+    {
+      "case": "b_summary",
+      "passed": true,
+      "status": "completed",
+      "error_code": null,
+      "model": "qwen3:0.6b@sha256:7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435",
+      "latency_ms": 18689,
+      "usage": {
+        "input_tokens": 325,
+        "output_tokens": 56
+      },
+      "cost_usd": null,
+      "run_id": "bdea9ce3-3eb5-40e2-bd4d-811ee2ac01be",
+      "wall_ms": 20441
+    },
+    {
+      "case": "a_note",
+      "passed": true,
+      "status": "completed",
+      "error_code": null,
+      "model": "qwen3:0.6b@sha256:7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435",
+      "latency_ms": 16788,
+      "usage": {
+        "input_tokens": 549,
+        "output_tokens": 50
+      },
+      "cost_usd": null,
+      "run_id": "5b9d1a74-ec35-49c5-986d-602a67325415",
+      "wall_ms": 18367
+    },
+    {
+      "case": "b_time",
+      "passed": true,
+      "status": "completed",
+      "error_code": null,
+      "model": "qwen3:0.6b@sha256:7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435",
+      "latency_ms": 12810,
+      "usage": {
+        "input_tokens": 351,
+        "output_tokens": 50
+      },
+      "cost_usd": null,
+      "run_id": "a5258a0c-56cd-4f2e-a0ad-767efce034e6",
+      "wall_ms": 14003
+    },
+    {
+      "case": "worker_summary",
+      "passed": true,
+      "status": "completed",
+      "error_code": null,
+      "model": "qwen3:0.6b@sha256:7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435",
+      "latency_ms": 18610,
+      "usage": {
+        "input_tokens": 519,
+        "output_tokens": 61
+      },
+      "cost_usd": null,
+      "run_id": "fb11f71a-2306-4cd7-a34e-662b89b110f6",
+      "wall_ms": 20341
+    }
+  ],
+  "cost_note": "Cost unknown; no hosted comparison without configured keys and a measured run."
+}

@@ -65,7 +65,7 @@ def live():
 @app.get('/health/ready')
 def ready():
     with connection() as conn:
-        row = conn.execute("SELECT name FROM schema_migrations WHERE name='002_workflows.sql'").fetchone()
+        row = conn.execute("SELECT name FROM schema_migrations WHERE name='003_assistant.sql'").fetchone()
     if not row:
         raise HTTPException(503,'schema_not_ready')
     return {'status':'ready','platform_mode':'synthetic'}
@@ -186,3 +186,5 @@ def admin_config(actor: Actor):
 
 from .workflows import router as workflow_router
 app.include_router(workflow_router)
+from .assistant import router as assistant_router
+app.include_router(assistant_router)

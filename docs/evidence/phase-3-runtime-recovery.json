@@ -1,0 +1,17 @@
+{
+  "timestamp_utc": "2026-10-08T11:19:00.201064+00:00",
+  "status": "passed",
+  "unavailable": {
+    "run_id": "f84165e6-13e9-4487-abcc-16c0311944c4",
+    "status": "failed",
+    "error_code": "provider_unavailable",
+    "provider": "ollama"
+  },
+  "restarted": {
+    "run_id": "ee8b48f5-f49a-4231-8618-fc2a3260a216",
+    "status": "completed",
+    "model": "qwen3:0.6b@sha256:7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435"
+  },
+  "fallback": "none; both runs explicitly local_only",
+  "external_writes": 0
+}

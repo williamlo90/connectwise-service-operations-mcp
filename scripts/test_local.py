@@ -46,20 +46,24 @@ def main():
                 events.append(json.loads(line[line.index('{'):]))
         if not events or not any(e['status'] == 404 for e in events):
             raise RuntimeError('Missing structured denied-access evidence')
-        result = {'http_tests': int(summary[1]), 'http_test_seconds': float(summary[2]),
+        result = {'tests_total': int(summary[1]), 'suite_seconds': float(summary[2]),
+                  'http_tests': len(re.findall(r'^test_\w+ \(test_(?:phase2|smoke)\.', output, re.MULTILINE)),
+                  'asgi_assistant_tests': len(re.findall(r'^test_\w+ \(test_assistant\.', output, re.MULTILINE)),
+                  'provider_contract_tests': len(re.findall(r'^test_\w+ \(test_ai_providers\.', output, re.MULTILINE)),
+                  'skill_package_tests': len(re.findall(r'^test_\w+ \(test_skill_contracts\.', output, re.MULTILINE)),
                   'test_cases': re.findall(r'^(test_\w+) .*? \.\.\. ok$', output, re.MULTILINE),
                   'structured_http_events': len(events), 'log_secret_check': 'passed',
                   'typescript_client': 'passed', 'workflow_cli': 'passed', 'consumer_contract_1_0_0': 'passed (HTTP bridge)', 'http_acceptance': 'passed'}
         status = 'passed'
     finally:
         run('down', '--remove-orphans', check=False)
-        evidence = ROOT / 'docs' / 'evidence' / 'phase-2-run.json'
+        evidence = ROOT / 'docs' / 'evidence' / 'phase-3-run.json'
         files = {}
-        for directory in ('backend', 'client', 'tests', 'scripts', 'contracts'):
+        for directory in ('backend', 'client', 'tests', 'scripts', 'contracts', 'skills'):
             for path in sorted((ROOT / directory).rglob('*')):
                 if path.is_file() and not any(part in ('node_modules', 'dist', '__pycache__') for part in path.parts) and path.name != 'resolved.json':
                     files[path.relative_to(ROOT).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
-        for name in ('compose.yaml','compose.test.yaml'):
+        for name in ('compose.yaml','compose.test.yaml','compose.ai.yaml'):
             files[name] = hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
         evidence.write_text(json.dumps({'timestamp_utc': datetime.now(timezone.utc).isoformat(),
             'status': status, 'environment': 'local Docker Linux / isolated PostgreSQL tmpfs',

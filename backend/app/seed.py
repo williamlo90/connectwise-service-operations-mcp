@@ -35,6 +35,8 @@ def seed():
             conn.execute("INSERT INTO tickets (tenant_id,id,company_id,board_id,summary,status) VALUES (%s,%s,%s,%s,%s,'New') ON CONFLICT DO NOTHING",
                          (tenant,tid,cid,bid,summary))
         seed_phase2(conn, password)
+        conn.execute("INSERT INTO actor_scopes VALUES ('a','worker-a','acme','support') ON CONFLICT DO NOTHING")
+        conn.execute("INSERT INTO skill_grants VALUES ('a','worker-a','summarize_service_ticket') ON CONFLICT DO NOTHING")
     print('Synthetic seed ready: seven actors, two tenants, four local tickets and PSA simulator fixtures. Existing records preserved.')
 
 

@@ -48,6 +48,10 @@ def fresh(psa,actor,tid):
 @router.get('/tickets/{tid}/context')
 def context(tid:str,actor:Actor):
     allow(actor,('operator','approver'))
+    return read_context(tid,actor)
+
+
+def read_context(tid,actor):
     with PSA(actor['tenant_id']) as psa:
         ticket=fresh(psa,actor,tid)
         notes=psa.all(f'service/tickets/{ticket["id"]}/notes')
@@ -82,6 +86,10 @@ class Prepare(Strict):
 
 @router.post('/proposals',status_code=201)
 def prepare(body:Prepare,actor:Actor,request:Request):
+    return prepare_proposal(body,actor,request)
+
+
+def prepare_proposal(body,actor,request,pid=None,transaction=None):
     allow(actor,('operator','approver'))
     with PSA(actor['tenant_id']) as psa:
         ticket=fresh(psa,actor,body.ticket_id)
@@ -105,13 +113,14 @@ def prepare(body:Prepare,actor:Actor,request:Request):
                 'addToDetailDescriptionFlag':False,'addToInternalAnalysisFlag':True,'addToResolutionFlag':False,
                 'emailResourceFlag':False,'emailContactFlag':False,'emailCcFlag':False}
         snapshot={'ticket':ticket,'mapping':mapping(psa)}
-    pid=uuid4()
+    pid=pid or uuid4()
     # Recovery marker is visible in the preview and covered by approval's hash.
     payload['text' if body.kind=='note' else 'notes']+=f'\n[cw-op:{pid}]'
     ph=digest(payload);expires=datetime.now(timezone.utc)+timedelta(minutes=30)
     evidence={'duration_minutes':body.duration_minutes,'duration_evidence':body.duration_evidence,
               'source':f'service/tickets/{ticket["id"]}','duration_source':'technician_input' if body.kind=='time' else None}
-    with connection() as conn:
+    from contextlib import nullcontext
+    with (nullcontext(transaction) if transaction is not None else connection()) as conn:
         conn.execute('''INSERT INTO proposals (id,tenant_id,actor_id,ticket_id,external_ticket_id,kind,payload,payload_hash,
          source_hash,source_snapshot,evidence,expires_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
          (pid,actor['tenant_id'],actor['id'],body.ticket_id,ticket['id'],body.kind,Jsonb(payload),ph,digest(snapshot),Jsonb(snapshot),Jsonb(evidence),expires))

@@ -1,0 +1,18 @@
+{
+  "checked": "2026-10-08",
+  "prompt_version": "evidence-selector-1.0.0",
+  "schema_version": "selection-1.0.0",
+  "skill_version": "1.0.0",
+  "sources": {
+    "openai": "https://developers.openai.com/api/docs/guides/structured-outputs",
+    "anthropic": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+    "xai": "https://docs.x.ai/developers/model-capabilities/text/structured-outputs",
+    "ollama": "https://docs.ollama.com/api/chat"
+  },
+  "hosted_canary_status": {
+    "openai": "pending key",
+    "anthropic": "pending key",
+    "xai": "pending key"
+  },
+  "method": "direct official HTTP APIs; no provider SDK dependency; no automatic fallback"
+}

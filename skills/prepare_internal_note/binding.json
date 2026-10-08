@@ -1,0 +1,15 @@
+{
+  "skill": "prepare_internal_note",
+  "version": "1.0.0",
+  "handler": "app.assistant.run_skill",
+  "request_model": "app.assistant.RunInput",
+  "output_model": "assistant-run-v1",
+  "permissions": [
+    "ticket_scope",
+    "local proposal only; separate human approval before execution"
+  ],
+  "tests": [
+    "tests/test_assistant.py",
+    "tests/test_ai_providers.py"
+  ]
+}

@@ -13,3 +13,11 @@ else:
         f.write(f'POSTGRES_PASSWORD={secrets.token_hex(24)}\nDEMO_PASSWORD={secrets.token_hex(24)}\nSIMULATOR_SECRET={secrets.token_hex(24)}\nAPI_PORT=8030\n')
     path.chmod(0o600)
     print('Created .env; credentials remain local.')
+
+# Append optional provider settings from the example without reading out secrets.
+present={line.split('=',1)[0] for line in path.read_text().splitlines() if '=' in line}
+example=path.with_name('.env.example')
+with path.open('a',encoding='utf-8') as f:
+    for line in example.read_text().splitlines():
+        if '=' in line and not line.lstrip().startswith('#') and line.split('=',1)[0] not in present:
+            f.write(line+'\n')

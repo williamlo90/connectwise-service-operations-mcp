@@ -1,0 +1,15 @@
+{
+  "skill": "summarize_service_ticket",
+  "version": "1.0.0",
+  "handler": "app.assistant.run_skill",
+  "request_model": "app.assistant.RunInput",
+  "output_model": "assistant-run-v1",
+  "permissions": [
+    "ticket_scope",
+    "read-only; no approval needed"
+  ],
+  "tests": [
+    "tests/test_assistant.py",
+    "tests/test_ai_providers.py"
+  ]
+}

@@ -63,7 +63,7 @@ The interactive CLI is intended for operator/approver ticket reads. It reports 4
 python scripts/test_local.py
 ```
 
-This builds a separate `cw-ops-test` Compose project, initializes a fresh PostgreSQL database in temporary memory, runs HTTP acceptance plus the compiled TypeScript client, checks API logs for secret leakage, and removes only that test stack in a `finally` block. It does not use `.env`, publish ports, or reset the persistent local database. Run one instance of this test script at a time. Result and source fingerprints are recorded in `docs/evidence/phase-2-run.json`.
+This builds a separate `cw-ops-test` Compose project, initializes a fresh PostgreSQL database in temporary memory, runs HTTP acceptance plus the compiled TypeScript client, checks API logs for secret leakage, and removes only that test stack in a `finally` block. It does not use `.env`, publish ports, or reset the persistent local database. Run one instance of this test script at a time. Result and source fingerprints are recorded in `docs/evidence/phase-3-run.json`.
 
 For a reset after a forcibly interrupted test:
 
@@ -99,3 +99,7 @@ Only if you intend to erase this project's synthetic data permanently, use `dock
 ## Code layout
 
 `backend/app` contains API/auth/config and database commands; `backend/migrations` holds versioned SQL; `client/src` is the TypeScript reference client; `tests` contains HTTP acceptance; `scripts` handles setup and isolated testing; `docs` holds operator documentation and evidence. `mcp-server`, `skills`, and cloud `deploy` code will be created when those features are implemented, rather than as empty placeholders.
+
+## AI extension
+
+See [PHASE-3-ASSISTANT.md](PHASE-3-ASSISTANT.md) for local Ollama, provider keys, AI drafts and canaries. The base workflow remains usable without starting a model.

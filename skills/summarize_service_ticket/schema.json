@@ -1,0 +1,247 @@
+{
+  "input": {
+    "additionalProperties": false,
+    "properties": {
+      "request_id": {
+        "format": "uuid",
+        "title": "Request Id",
+        "type": "string"
+      },
+      "skill": {
+        "enum": [
+          "summarize_service_ticket",
+          "prepare_internal_note",
+          "prepare_time_entry",
+          "verify_ticket_write"
+        ],
+        "title": "Skill",
+        "type": "string"
+      },
+      "ticket_id": {
+        "maxLength": 100,
+        "minLength": 1,
+        "title": "Ticket Id",
+        "type": "string"
+      },
+      "provider": {
+        "default": "ollama",
+        "enum": [
+          "ollama",
+          "openai",
+          "anthropic",
+          "xai"
+        ],
+        "title": "Provider",
+        "type": "string"
+      },
+      "local_only": {
+        "default": true,
+        "title": "Local Only",
+        "type": "boolean"
+      },
+      "technician_notes": {
+        "default": "",
+        "maxLength": 2000,
+        "title": "Technician Notes",
+        "type": "string"
+      },
+      "duration_minutes": {
+        "anyOf": [
+          {
+            "maximum": 1440,
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Duration Minutes"
+      },
+      "duration_evidence": {
+        "anyOf": [
+          {
+            "maxLength": 1000,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Duration Evidence"
+      },
+      "time_start": {
+        "anyOf": [
+          {
+            "format": "date-time",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Time Start"
+      },
+      "operation_id": {
+        "anyOf": [
+          {
+            "format": "uuid",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Operation Id"
+      }
+    },
+    "required": [
+      "request_id",
+      "skill",
+      "ticket_id"
+    ],
+    "title": "RunInput",
+    "type": "object"
+  },
+  "model_output": {
+    "additionalProperties": false,
+    "properties": {
+      "decision": {
+        "enum": [
+          "ready",
+          "abstain"
+        ],
+        "title": "Decision",
+        "type": "string"
+      },
+      "selected_sources": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 8,
+        "title": "Selected Sources",
+        "type": "array"
+      },
+      "missing_information": {
+        "items": {
+          "enum": [
+            "resolution_unknown",
+            "insufficient_evidence"
+          ],
+          "type": "string"
+        },
+        "maxItems": 2,
+        "title": "Missing Information",
+        "type": "array"
+      }
+    },
+    "required": [
+      "decision",
+      "selected_sources",
+      "missing_information"
+    ],
+    "title": "Selection",
+    "type": "object"
+  },
+  "output": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "skill": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      },
+      "provider": {
+        "type": "string"
+      },
+      "prompt_version": {
+        "type": "string"
+      },
+      "schema_version": {
+        "type": "string"
+      },
+      "skill_version": {
+        "type": "string"
+      },
+      "created_at": {
+        "type": "string"
+      },
+      "model": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "proposal_id": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "latency_ms": {
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "error_code": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "finished_at": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "cost_usd": {
+        "type": [
+          "number",
+          "null"
+        ]
+      },
+      "usage": {
+        "type": [
+          "object",
+          "null"
+        ]
+      },
+      "result": {
+        "type": [
+          "object",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "id",
+      "skill",
+      "status",
+      "provider",
+      "prompt_version",
+      "schema_version",
+      "skill_version",
+      "created_at",
+      "model",
+      "proposal_id",
+      "latency_ms",
+      "error_code",
+      "finished_at",
+      "cost_usd",
+      "usage",
+      "result"
+    ]
+  },
+  "version": "1.0.0"
+}

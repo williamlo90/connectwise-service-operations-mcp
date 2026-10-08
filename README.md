@@ -1,6 +1,6 @@
-# Service Operations MCP — phase-2
+# Service Operations MCP — phase-3-local
 
-Deterministic PSA workflows and recovery.
+Local AI evidence selection and reusable skills.
 
 This learning checkpoint uses synthetic data. It does not claim live ConnectWise or Azure validation.
 

@@ -1,6 +1,6 @@
 # Learning checkpoints
 
-Current checkpoint: **phase-2**.
+Current checkpoint: **phase-3-local**, hosted validation pending.
 
 | Tag | Learning objective | Verification |
 | --- | --- | --- |
@@ -37,3 +37,7 @@ python scripts/test_local.py
 ```
 
 The repository is private, so GitHub access is required. The test runner creates and removes its own temporary database; run only one checkpoint test runner at a time. For separate persistent demos, use a different Compose project name and API port per phase (for example, set `COMPOSE_PROJECT_NAME=cw-ops-phase-1` and `API_PORT=8031` in that clone's generated `.env`). Merely cloning into a different folder does not isolate the default Compose database volume.
+
+| Additional tag | Scope | Verification |
+| --- | --- | --- |
+| phase-3-local | AI source selection, four reusable skills, provider adapters and Ollama | 41 regression cases, 5 real local sanity cases and a verified simulator write; hosted canaries pending |

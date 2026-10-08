@@ -1,0 +1,12 @@
+{
+  "timestamp_utc": "2026-10-08T11:21:31.798181+00:00",
+  "status": "passed",
+  "transport": "compiled TypeScript CLI -> HTTP API -> real Ollama",
+  "run_id": "642f3ccf-08e0-4174-9341-532275e5ec40",
+  "model": "qwen3:0.6b@sha256:7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435",
+  "latency_ms": 28170,
+  "usage": {
+    "input_tokens": 519,
+    "output_tokens": 61
+  }
+}

@@ -1,6 +1,7 @@
 import { createInterface } from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
 import { consumerSmoke,workflowCLI } from './workflow-cli.js';
+import { assistantCLI } from './assistant-cli.js';
 
 type Identity = {id:string;tenant_id:string;role:string;platform_mode:string};
 type Ticket = {id:string;summary:string;company_name:string;status:string};
@@ -11,7 +12,7 @@ if (base.protocol !== 'https:' && !(base.protocol === 'http:' && ['api','localho
 let token: string | undefined;
 async function call<T>(path: string, method='GET', body?: unknown): Promise<T> {
   const response = await fetch(new URL(path,base), {method,headers:{'Content-Type':'application/json',...(token ? {Authorization:`Bearer ${token}`} : {})},
-    body:body===undefined?undefined:JSON.stringify(body),signal:AbortSignal.timeout(10000)});
+    body:body===undefined?undefined:JSON.stringify(body),signal:AbortSignal.timeout(path.startsWith('/assistant/')?110000:10000)});
   if (!response.ok) throw new Error(`Request failed (${response.status}); correlation=${response.headers.get('x-correlation-id') ?? 'unknown'}`);
   return response.status===204 ? undefined as T : await response.json() as T;
 }
@@ -27,8 +28,10 @@ try {
     console.table(page.items);
     return page.items;
   }
-  const rows=await list();
-  if(process.argv.includes('--consumer-smoke')) {
+  const rows=process.argv.includes('--ai')?[]:await list();
+  if(process.argv.includes('--ai')) {
+    await assistantCLI(call,process.argv.slice(process.argv.indexOf('--ai')+1));
+  } else if(process.argv.includes('--consumer-smoke')) {
     await consumerSmoke(call);
   } else if(process.argv.includes('--workflow')) {
     await workflowCLI(call,process.argv.slice(process.argv.indexOf('--workflow')+1));

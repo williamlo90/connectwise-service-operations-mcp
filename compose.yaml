@@ -12,11 +12,15 @@ x-backend: &backend
     PLATFORM_MODE: synthetic
     SIMULATOR_SECRET: ${SIMULATOR_SECRET:?Run python scripts/setup_local.py}
   networks: [internal]
+  mem_limit: 384m
+  cpus: 1.0
   read_only: true
   tmpfs: [/tmp]
   security_opt: [no-new-privileges:true]
 services:
   db:
+    mem_limit: 256m
+    cpus: 1.0
     image: postgres:17-bookworm@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826
     environment:
       POSTGRES_DB: cw_ops
@@ -55,6 +59,16 @@ services:
       retries: 30
   api:
     <<: *backend
+    environment:
+      <<: *environment
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      XAI_API_KEY: ${XAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini-2025-04-14}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-haiku-4-5-20251001}
+      XAI_MODEL: ${XAI_MODEL:-grok-4-fast-non-reasoning}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3:0.6b}
+      AI_HOSTED_ENABLED: ${AI_HOSTED_ENABLED:-false}
     ports: ['127.0.0.1:${API_PORT:-8030}:8000']
     depends_on:
       simulator: {condition: service_healthy}
@@ -65,11 +79,14 @@ services:
       timeout: 4s
       retries: 20
   client:
+    mem_limit: 192m
+    cpus: 1.0
     build:
       context: .
       dockerfile: client/Dockerfile
     profiles: [tools]
     environment:
+      AI_PROVIDER: ${AI_DEFAULT_PROVIDER:-ollama}
       API_URL: http://api:8000
       DEMO_PASSWORD: ${DEMO_PASSWORD:?Run python scripts/setup_local.py}
     networks: [internal]

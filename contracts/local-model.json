@@ -1,0 +1,43 @@
+{
+  "model": "qwen3:0.6b",
+  "manifest_sha256": "sha256:7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435",
+  "manifest": {
+    "schemaVersion": 2,
+    "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+    "config": {
+      "mediaType": "application/vnd.docker.container.image.v1+json",
+      "digest": "sha256:b0830f4ff6a0220cfd995455206353b0ed23c0aee865218b154b7a75087b4e55",
+      "size": 490
+    },
+    "layers": [
+      {
+        "mediaType": "application/vnd.ollama.image.model",
+        "digest": "sha256:7f4030143c1c477224c5434f8272c662a8b042079a0a584f0a27a1684fe2e1fa",
+        "size": 522640096
+      },
+      {
+        "mediaType": "application/vnd.ollama.image.template",
+        "digest": "sha256:ae370d884f108d16e7cc8fd5259ebc5773a0afa6e078b11f4ed7e39a27e0dfc4",
+        "size": 1723
+      },
+      {
+        "mediaType": "application/vnd.ollama.image.license",
+        "digest": "sha256:d18a5cc71b84bc4af394a31116bd3932b42241de70c77d2b76d69a314ec8aa12",
+        "size": 11338
+      },
+      {
+        "mediaType": "application/vnd.ollama.image.params",
+        "digest": "sha256:cff3f395ef3756ab63e58b0ad1b32bb6f802905cae1472e6a12034e4246fbbdb",
+        "size": 120
+      }
+    ]
+  },
+  "source": "https://registry.ollama.ai/v2/library/qwen3/manifests/0.6b",
+  "license_source": "https://huggingface.co/Qwen/Qwen3-0.6B",
+  "license": "Apache-2.0",
+  "runtime": "ollama 0.12.3",
+  "runtime_image": "ollama/ollama:0.12.3@sha256:c622a7adec67cf5bd7fe1802b7e26aa583a955a54e91d132889301f50c3e0bd0",
+  "context": 4096,
+  "concurrency": 1,
+  "gpu": false
+}
