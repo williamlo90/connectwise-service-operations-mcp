@@ -1,0 +1,25 @@
+# Optional local operator inbox. No hosted-provider credentials or outbound notification.
+services:
+  monitor:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: [python, -m, app.monitor]
+    environment:
+      DB_HOST: db
+      DB_NAME: cw_ops
+      DB_USER: cw_ops
+      DB_PASSWORD: ${POSTGRES_PASSWORD:?Run python scripts/setup_local.py}
+      APP_ENVIRONMENT: local
+      PLATFORM_MODE: synthetic
+      SIMULATOR_SECRET: ${SIMULATOR_SECRET:?Run python scripts/setup_local.py}
+    networks: [internal]
+    volumes: [./local/monitor:/inbox]
+    mem_limit: 128m
+    cpus: 0.25
+    read_only: true
+    tmpfs: [/tmp]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    depends_on:
+      api: {condition: service_healthy}

@@ -1,6 +1,6 @@
 # Learning checkpoints
 
-Current checkpoint: **phase-6**, frozen provider evaluation and critical controls passed.
+Current checkpoint: **phase-7**, bounded local reliability, security and performance qualification passed.
 
 | Tag | Learning objective | Verification |
 | --- | --- | --- |
@@ -45,3 +45,4 @@ The repository is private, so GitHub access is required. The test runner creates
 | phase-4 | Real MCP server/client, scoped tools, separate approval and recovery | 41 regression tests, 11 MCP protocol scenarios, HTTP/MCP CLI, verified note/time writes |
 | phase-5 | Scheduled cache sync, durable jobs, bounded retries and review queue | 52 backend tests, 11 MCP scenarios, two-tenant worker runtime and process-crash recovery |
 | phase-6 | Frozen quality rubric, family-separated cases and provider/baseline comparison | 8/8 evaluation cases per provider, 57 backend tests, 11 MCP scenarios and independent read-back fields |
+| phase-7 | Local alert inbox, telemetry, bounded load, backup/restore and rollback | 60 backend tests, 11 MCP scenarios, 135 tasks / 33 verified writes, actual Ollama OOM safely handled |

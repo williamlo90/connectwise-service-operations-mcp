@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "collected_at": "2026-10-08T14:06:14.374271+00:00",
+  "active_incidents": [],
+  "worker_healthy": true,
+  "database": "ready",
+  "queue": {
+    "pending": 0,
+    "review": 0,
+    "oldest_seconds": "0"
+  },
+  "stale_sync_count": 0,
+  "monitor_running": true,
+  "monitor_image": "sha256:568b77e0c298427dfc54c7965eb353acb1d2c066823b623faa0395503672905b",
+  "memory_limit_bytes": 134217728,
+  "nano_cpus": 250000000,
+  "read_only_root": true,
+  "inbox": "local/monitor (ignored, local operator access)",
+  "external_notifications": false,
+  "hosted_provider_credentials_present": false
+}

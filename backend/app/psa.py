@@ -1,6 +1,8 @@
 """HTTP transport with bounded read retries; POST is never automatically retried."""
 import os
 import time
+import json
+import logging
 from urllib.parse import urlparse
 import httpx
 from fastapi import HTTPException
@@ -28,10 +30,23 @@ class PSA:
     def __enter__(self):return self
     def __exit__(self,*args):self.client.close()
 
+    def request(self, method, path, **kwargs):
+        start=time.monotonic(); status=None
+        try:
+            response=self.client.request(method,path,**kwargs)
+            status=response.status_code
+            return response
+        finally:
+            # No path/query/body/credentials: correlation links the downstream
+            # duration to its API request or scheduler job without leaking data.
+            logging.getLogger('service_ops').info(json.dumps({'event':'psa_request',
+                'correlation_id':correlation_id.get(),'method':method,'status':status,
+                'elapsed_ms':round((time.monotonic()-start)*1000,3)}))
+
     def get(self,path,params=None):
         for attempt in range(3):
             try:
-                response=self.client.get(path,params=params)
+                response=self.request('GET',path,params=params)
                 if response.status_code in (429,502,503,504) and attempt<2:
                     time.sleep(0.05*(2**attempt));continue
                 if response.status_code in (401,403):raise HTTPException(502,'downstream_credentials_rejected')
@@ -54,7 +69,7 @@ class PSA:
 
     def post(self,path,payload):
         try:
-            response=self.client.post(path,json=payload)
+            response=self.request('POST',path,json=payload)
             if not response.is_success:return None
             value=response.json()
             return value if isinstance(value,dict) and isinstance(value.get('id'),int) else None

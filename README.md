@@ -1,6 +1,6 @@
-# Service Operations MCP — phase-6
+# Service Operations MCP — phase-7
 
-Frozen synthetic quality evaluation.
+Local reliability and recovery qualification.
 
 This learning checkpoint uses synthetic data. It does not claim live ConnectWise or Azure validation.
 

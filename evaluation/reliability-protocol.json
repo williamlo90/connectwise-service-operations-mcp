@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "scope": "Synthetic local two-tenant V1, HTTP API through PSA simulator; no inference under load",
+  "profiles": [
+    {"name": "normal", "seconds": 30, "arrival_rate_per_second": 0.5},
+    {"name": "peak", "seconds": 30, "arrival_rate_per_second": 2},
+    {"name": "soak", "seconds": 120, "arrival_rate_per_second": 0.5}
+  ],
+  "maximum_in_flight": 4,
+  "mix": "Three context reads then one approved write; alternating tenants; alternating note/time writes",
+  "gates": {"errors": 0, "dropped": 0, "duplicate_or_incorrect_effects": 0, "read_p95_ms": 3000, "workflow_p95_ms": 10000},
+  "resources": "API/simulator/test runner <=384 MiB and 1 CPU each; DB <=256 MiB and 1 CPU; no host ports",
+  "stop": "Abort profile on first failed outcome; stop isolated stack on failure; never touch unrelated projects",
+  "limitations": "Short desktop qualification, not sustained production soak or capacity certification. Real-provider timing and quality are separately recorded in Phase 6."
+}

@@ -46,7 +46,7 @@ def main():
         if mcp['status'] != 'passed':
             raise RuntimeError('MCP acceptance failed')
         logs = run('logs', '--no-color', 'api', capture=True).stdout
-        for secret in ('synthetic-test-user-password-only', 'synthetic-test-database-password-only', 'synthetic-test-simulator-secret-only', 'Bearer ', 'access_token'):
+        for secret in ('pii-probe-only@example.invalid', 'synthetic-test-user-password-only', 'synthetic-test-database-password-only', 'synthetic-test-simulator-secret-only', 'Bearer ', 'access_token'):
             if secret in logs:
                 raise RuntimeError('Sensitive content found in API log')
         events = []
@@ -67,7 +67,7 @@ def main():
         status = 'passed'
     finally:
         run('down', '--remove-orphans', check=False)
-        evidence = ROOT / 'docs' / 'evidence' / 'phase-6-regression.json'
+        evidence = ROOT / 'docs' / 'evidence' / 'phase-7-regression.json'
         files = {}
         for directory in ('backend', 'client', 'tests', 'scripts', 'contracts', 'skills', 'evaluation'):
             for path in sorted((ROOT / directory).rglob('*')):

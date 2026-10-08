@@ -109,6 +109,16 @@ class FoundationTests(unittest.TestCase):
             self.assertEqual(len(session['token_hash']),64)
             self.assertNotEqual(session['token_hash'],headers['Authorization'][7:])
 
+    def test_sensitive_input_not_reflected_in_error_or_correlation(self):
+        marker='pii-probe-only@example.invalid'
+        response=self.client.post('/auth/login',json={'username':marker,'password':marker},headers={'X-Correlation-ID':marker})
+        self.assertEqual(response.status_code,422)
+        self.assertNotIn(marker,response.text)
+        self.assertNotIn(marker,response.headers['x-correlation-id'])
+        response=self.client.get('/tickets',params={'q':marker},headers=self.auth())
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.json()['items'],[])
+
     def test_idempotent_migration_and_seed(self):
         migrate()
         seed()
