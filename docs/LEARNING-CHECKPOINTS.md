@@ -1,6 +1,6 @@
 # Learning checkpoints
 
-Current checkpoint: **phase-4**, MCP stdio and verified simulator workflows passed.
+Current checkpoint: **phase-5**, scheduled synchronization and worker recovery passed.
 
 | Tag | Learning objective | Verification |
 | --- | --- | --- |
@@ -43,3 +43,4 @@ The repository is private, so GitHub access is required. The test runner creates
 | phase-3-local | AI source selection, four reusable skills, provider adapters and Ollama | 41 regression cases, 5 real local sanity cases and a verified simulator write; hosted validation deferred in this snapshot |
 | phase-3 | Required OpenAI + Ollama scope; Claude/Grok optional | Local validation plus one real OpenAI structured summary canary passed |
 | phase-4 | Real MCP server/client, scoped tools, separate approval and recovery | 41 regression tests, 11 MCP protocol scenarios, HTTP/MCP CLI, verified note/time writes |
+| phase-5 | Scheduled cache sync, durable jobs, bounded retries and review queue | 52 backend tests, 11 MCP scenarios, two-tenant worker runtime and process-crash recovery |

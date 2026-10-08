@@ -37,6 +37,8 @@ def main():
         run('run', '--rm', '--no-deps', 'client', '--consumer-smoke')
         check_cli(COMMAND)
         check_cli(COMMAND, mcp=True)
+        run('run', '--rm', '--no-deps', '-e', 'DEMO_USERNAME=admin-a', 'client', '--automation', 'status')
+        run('run', '--rm', '--no-deps', '-e', 'DEMO_USERNAME=admin-a', 'client', '--automation', 'jobs')
         mcp_run = run('run', '--rm', '--no-deps', '--entrypoint', 'node', 'client', 'dist/mcp-acceptance.js', capture=True, check=False)
         print(mcp_run.stdout + mcp_run.stderr)
         mcp_run.check_returncode()
@@ -55,16 +57,17 @@ def main():
             raise RuntimeError('Missing structured denied-access evidence')
         result = {'tests_total': int(summary[1]), 'suite_seconds': float(summary[2]),
                   'http_tests': len(re.findall(r'^test_\w+ \(test_(?:phase2|smoke)\.', output, re.MULTILINE)),
+                  'automation_tests': len(re.findall(r'^test_\w+ \(test_automation\.', output, re.MULTILINE)),
                   'asgi_assistant_tests': len(re.findall(r'^test_\w+ \(test_assistant\.', output, re.MULTILINE)),
                   'provider_contract_tests': len(re.findall(r'^test_\w+ \(test_ai_providers\.', output, re.MULTILINE)),
                   'skill_package_tests': len(re.findall(r'^test_\w+ \(test_skill_contracts\.', output, re.MULTILINE)),
                   'test_cases': re.findall(r'^(test_\w+) .*? \.\.\. ok$', output, re.MULTILINE),
                   'structured_http_events': len(events), 'log_secret_check': 'passed',
-                  'mcp_cli': 'passed', 'mcp_acceptance': mcp, 'typescript_client': 'passed', 'workflow_cli': 'passed', 'consumer_contract_1_0_0': 'passed (HTTP bridge)', 'http_acceptance': 'passed'}
+                  'automation_cli': 'passed', 'mcp_cli': 'passed', 'mcp_acceptance': mcp, 'typescript_client': 'passed', 'workflow_cli': 'passed', 'consumer_contract_1_0_0': 'passed (HTTP bridge)', 'http_acceptance': 'passed'}
         status = 'passed'
     finally:
         run('down', '--remove-orphans', check=False)
-        evidence = ROOT / 'docs' / 'evidence' / 'phase-4-run.json'
+        evidence = ROOT / 'docs' / 'evidence' / 'phase-5-run.json'
         files = {}
         for directory in ('backend', 'client', 'tests', 'scripts', 'contracts', 'skills'):
             for path in sorted((ROOT / directory).rglob('*')):

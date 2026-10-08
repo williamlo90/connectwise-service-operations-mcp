@@ -1,3 +1,4 @@
+import { automationCLI } from './automation-cli.js';
 import { connectMCP } from './mcp-client.js';
 import { createInterface } from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
@@ -31,8 +32,10 @@ try {
     console.table(page.items);
     return page.items;
   }
-  const rows=process.argv.includes('--ai')?[]:await list();
-  if(process.argv.includes('--ai')) {
+  const rows=(process.argv.includes('--ai')||process.argv.includes('--automation'))?[]:await list();
+  if(process.argv.includes('--automation')) {
+    await automationCLI(call,process.argv.slice(process.argv.indexOf('--automation')+1));
+  } else if(process.argv.includes('--ai')) {
     await assistantCLI(call,process.argv.slice(process.argv.indexOf('--ai')+1));
   } else if(process.argv.includes('--consumer-smoke')) {
     await consumerSmoke(call,mcp?.ops);

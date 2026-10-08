@@ -266,25 +266,45 @@ def recommend(tid:str,body:Recommend,actor:Actor):
             'source':f'service/boards/{ticket["board"]["id"]}/statuses','executed':False}
 
 
+def sync_page(tenant,conn):
+    with PSA(tenant) as psa:
+        cursor=conn.execute('SELECT * FROM sync_cursors WHERE tenant_id=%s FOR UPDATE',(tenant,)).fetchone()
+        batch=psa.get('service/tickets',{'page':cursor['page'],'pageSize':2,'orderBy':'id asc'})
+        if not isinstance(batch,list) or len(batch)>2:raise HTTPException(502,'invalid_downstream_schema')
+        try:
+            ids=[]
+            for row in batch:
+                if type(row['id']) is not int or row['id']<1:raise ValueError()
+                if not all(type(row[k]['id']) is int for k in ('company','board','status')):raise ValueError()
+                if not isinstance(row['summary'],str) or not isinstance(row['_info']['lastUpdated'],str):raise ValueError()
+                ids.append(row['id'])
+            if ids!=sorted(set(ids)):raise ValueError()
+        except (KeyError,TypeError,ValueError):raise HTTPException(502,'invalid_downstream_schema')
+        for row in batch:
+            source_hash=digest(row)
+            old=conn.execute('SELECT source_hash FROM ticket_source_cache WHERE tenant_id=%s AND external_id=%s',(tenant,row['id'])).fetchone()
+            if not old or old['source_hash']!=source_hash:
+                conn.execute('INSERT INTO ticket_change_events(id,tenant_id,external_id,generation,source_hash) VALUES (%s,%s,%s,%s,%s) ON CONFLICT DO NOTHING',
+                    (uuid4(),tenant,row['id'],cursor['generation'],source_hash))
+            conn.execute('''INSERT INTO ticket_source_cache VALUES (%s,%s,%s,%s,now(),%s)
+                ON CONFLICT(tenant_id,external_id) DO UPDATE SET payload=excluded.payload,source_hash=excluded.source_hash,
+                fetched_at=now(),generation=excluded.generation''',(tenant,row['id'],Jsonb(row),source_hash,cursor['generation']))
+        completed=len(batch)<2
+        if completed:
+            conn.execute('UPDATE sync_cursors SET page=1,generation=generation+1,last_completed_at=now() WHERE tenant_id=%s',(tenant,))
+        else:
+            conn.execute('UPDATE sync_cursors SET page=page+1 WHERE tenant_id=%s',(tenant,))
+        return {'processed':len(batch),'completed':completed,'next_page':1 if completed else cursor['page']+1,
+            'generation':cursor['generation'],'strategy':'full_scan_refresh','deletion_policy':'retain_stale_until_confirmed'}
+
+
 @router.post('/sync')
 def sync(actor:Actor,request:Request):
     allow(actor,('administrator',))
-    with PSA(actor['tenant_id']) as psa,connection() as conn:
-        cursor=conn.execute('SELECT * FROM sync_cursors WHERE tenant_id=%s FOR UPDATE',(actor['tenant_id'],)).fetchone()
-        batch=psa.get('service/tickets',{'page':cursor['page'],'pageSize':2,'orderBy':'id asc'})
-        if not isinstance(batch,list):raise HTTPException(502,'invalid_downstream_schema')
-        for row in batch:
-            conn.execute('''INSERT INTO ticket_source_cache VALUES (%s,%s,%s,%s,now(),%s)
-             ON CONFLICT(tenant_id,external_id) DO UPDATE SET payload=excluded.payload,source_hash=excluded.source_hash,
-             fetched_at=now(),generation=excluded.generation''',(actor['tenant_id'],row['id'],Jsonb(row),digest(row),cursor['generation']))
-        completed=len(batch)<2
-        if completed:
-            conn.execute('''UPDATE sync_cursors SET page=1,generation=generation+1,last_completed_at=now() WHERE tenant_id=%s''',(actor['tenant_id'],))
-        else:
-            conn.execute('UPDATE sync_cursors SET page=page+1 WHERE tenant_id=%s',(actor['tenant_id'],))
+    with connection() as conn:
+        result=sync_page(actor['tenant_id'],conn)
         audit(conn,actor,'sync_page',request)
-        return {'processed':len(batch),'completed':completed,'next_page':1 if completed else cursor['page']+1,
-            'generation':cursor['generation'],'strategy':'full_scan_refresh','deletion_policy':'retain_stale_until_confirmed'}
+        return result
 
 
 @router.get('/sync/status')

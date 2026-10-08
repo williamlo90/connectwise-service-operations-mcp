@@ -1,6 +1,6 @@
-# Service Operations MCP — phase-4
+# Service Operations MCP — phase-5
 
-MCP protocol and consumer acceptance.
+Durable scheduled synchronization.
 
 This learning checkpoint uses synthetic data. It does not claim live ConnectWise or Azure validation.
 

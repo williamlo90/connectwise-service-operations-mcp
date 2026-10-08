@@ -1,0 +1,58 @@
+{
+  "timestamp_utc": "2026-10-08T13:12:13.217361+00:00",
+  "status": "passed",
+  "environment": "local Docker Linux",
+  "dataset": "synthetic tenants A/B",
+  "connectwise": "simulator only",
+  "worker_health": "healthy",
+  "memory_limit_bytes": 134217728,
+  "nano_cpus": 500000000,
+  "jobs": [
+    {
+      "tenant_id": "a",
+      "status": "completed",
+      "pages": 2,
+      "total_attempts": 2,
+      "last_error": null,
+      "created_at": "2026-10-08 13:11:40.253932+00:00",
+      "finished_at": "2026-10-08 13:11:47.251114+00:00"
+    },
+    {
+      "tenant_id": "b",
+      "status": "completed",
+      "pages": 2,
+      "total_attempts": 2,
+      "last_error": null,
+      "created_at": "2026-10-08 13:11:40.253932+00:00",
+      "finished_at": "2026-10-08 13:11:49.381619+00:00"
+    }
+  ],
+  "cursors": [
+    {
+      "tenant_id": "a",
+      "page": 1,
+      "generation": 2,
+      "last_completed_at": "2026-10-08 13:11:47.251114+00:00"
+    },
+    {
+      "tenant_id": "b",
+      "page": 1,
+      "generation": 2,
+      "last_completed_at": "2026-10-08 13:11:49.381619+00:00"
+    }
+  ],
+  "heartbeat": {
+    "last_tick": "2026-10-08 13:12:13.765591+00:00",
+    "healthy": true
+  },
+  "change_events": [
+    {
+      "tenant_id": "a",
+      "count": 3
+    },
+    {
+      "tenant_id": "b",
+      "count": 3
+    }
+  ]
+}

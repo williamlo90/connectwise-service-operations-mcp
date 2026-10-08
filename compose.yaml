@@ -78,6 +78,22 @@ services:
       interval: 5s
       timeout: 4s
       retries: 20
+  worker:
+    <<: *backend
+    profiles: [automation]
+    command: [python, -m, app.worker]
+    mem_limit: 128m
+    cpus: 0.5
+    restart: unless-stopped
+    stop_grace_period: 20s
+    depends_on:
+      api: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -m, app.worker, --health]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
   client:
     mem_limit: 192m
     cpus: 1.0

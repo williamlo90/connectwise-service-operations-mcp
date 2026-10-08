@@ -34,6 +34,8 @@ class PSA:
                 response=self.client.get(path,params=params)
                 if response.status_code in (429,502,503,504) and attempt<2:
                     time.sleep(0.05*(2**attempt));continue
+                if response.status_code in (401,403):raise HTTPException(502,'downstream_credentials_rejected')
+                if response.status_code==429:raise HTTPException(503,'downstream_rate_limited')
                 if response.status_code==404:raise HTTPException(404,'downstream_not_found')
                 if not response.is_success:raise HTTPException(502,'downstream_read_failed')
                 return response.json()
