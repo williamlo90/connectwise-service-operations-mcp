@@ -3,6 +3,7 @@ import os
 from .config import settings
 from .db import connection
 from .passwords import hash_password
+from .seed_phase2 import seed_phase2
 
 USERS = [('op-a','a','operator'),('approver-a','a','approver'),('admin-a','a','administrator'),
          ('auditor-a','a','auditor'),('worker-a','a','worker'),('op-b','b','operator')]
@@ -33,7 +34,8 @@ def seed():
         for tenant,tid,cid,bid,summary in fixtures:
             conn.execute("INSERT INTO tickets (tenant_id,id,company_id,board_id,summary,status) VALUES (%s,%s,%s,%s,%s,'New') ON CONFLICT DO NOTHING",
                          (tenant,tid,cid,bid,summary))
-    print('Synthetic seed ready: six actors, two tenants, four tickets. Existing records preserved.')
+        seed_phase2(conn, password)
+    print('Synthetic seed ready: seven actors, two tenants, four local tickets and PSA simulator fixtures. Existing records preserved.')
 
 
 if __name__ == '__main__':

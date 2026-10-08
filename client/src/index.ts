@@ -1,5 +1,6 @@
 import { createInterface } from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
+import { consumerSmoke,workflowCLI } from './workflow-cli.js';
 
 type Identity = {id:string;tenant_id:string;role:string;platform_mode:string};
 type Ticket = {id:string;summary:string;company_name:string;status:string};
@@ -27,7 +28,11 @@ try {
     return page.items;
   }
   const rows=await list();
-  if(process.argv.includes('--smoke')) {
+  if(process.argv.includes('--consumer-smoke')) {
+    await consumerSmoke(call);
+  } else if(process.argv.includes('--workflow')) {
+    await workflowCLI(call,process.argv.slice(process.argv.indexOf('--workflow')+1));
+  } else if(process.argv.includes('--smoke')) {
     if(rows.length!==1) throw new Error('Unexpected scope result');
     const detail=await call<Ticket>(`/tickets/${encodeURIComponent(rows[0]!.id)}`);
     if(detail.id!==rows[0]!.id) throw new Error('Unexpected ticket detail');

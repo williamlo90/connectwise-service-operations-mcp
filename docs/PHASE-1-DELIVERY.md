@@ -29,7 +29,7 @@ Command: `python scripts/test_local.py`.
 9. List and direct-ID access isolation across tenants, companies and boards.
 10. Login privilege-field injection, SQL-like query input and pagination bounds.
 
-The compiled TypeScript client also passed login/list/detail against the test stack. The runner verified structured request events and absence of the tested password/token markers in API logs, then removed the disposable stack. Full result, case names, timing and source SHA-256 fingerprints are in [phase-1-run.json](evidence/phase-1-run.json). The `phase-1` Git tag identifies this learning checkpoint; source fingerprints identify the tested files.
+The compiled TypeScript client also passed login/list/detail against the test stack. The runner verified structured request events and absence of the tested password/token markers in API logs, then removed the disposable stack. Full result, case names, timing and source SHA-256 fingerprints are in [phase-1-run.json](evidence/phase-1-run.json). The `phase-1` Git tag identifies the tested learning checkpoint; its source fingerprints are recorded in the evidence file.
 
 The documented setup commands were also run against a newly created persistent local stack: build, migrations, readiness, seed and client smoke passed. Host HTTP checks returned 200 for `/health/live` and `/health/ready`. The API remains available at `http://127.0.0.1:8030`; local API and PostgreSQL containers were healthy at handoff. No other project containers or data were reset.
 

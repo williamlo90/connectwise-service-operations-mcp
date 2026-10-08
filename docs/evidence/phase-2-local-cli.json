@@ -1,0 +1,16 @@
+{
+  "timestamp_utc": "2026-10-08T10:38:22.055098+00:00",
+  "status": "passed",
+  "environment": "persistent local Docker simulator",
+  "flow": "CLI prepare/decline/approve/execute/verify and time draft",
+  "receipt": {
+    "id": "4e363403-64d4-4487-8648-f451622c7a33",
+    "proposal_id": "4e363403-64d4-4487-8648-f451622c7a33",
+    "status": "verified",
+    "external_id": 1000,
+    "error_code": null,
+    "created_at": "2026-10-08T10:38:21.680032+00:00",
+    "verified_at": "2026-10-08T10:38:21.732295+00:00"
+  },
+  "connectwise": "not tested"
+}

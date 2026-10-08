@@ -1,6 +1,6 @@
-# Service Operations MCP — phase-1
+# Service Operations MCP — phase-2
 
-Authentication and tenant-scoped foundation.
+Deterministic PSA workflows and recovery.
 
 This learning checkpoint uses synthetic data. It does not claim live ConnectWise or Azure validation.
 

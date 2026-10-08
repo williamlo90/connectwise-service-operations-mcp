@@ -1,6 +1,6 @@
-# Local setup and use — Phase 1
+# Local setup and use — Phase 2
 
-This release implements a synthetic service-ticket read workflow. It does not call ConnectWise or an AI provider. The reference client is a TypeScript command-line application, not a browser UI or an MCP client yet.
+This release implements deterministic service-ticket workflows against a local HTTP simulator. It does not call ConnectWise or an AI provider. The reference client is a TypeScript command-line application, not a browser UI or an MCP client yet.
 
 ## Requirements
 
@@ -19,7 +19,7 @@ docker compose run --rm seed
 docker compose run --rm client --smoke
 ```
 
-The setup script creates unique passwords in the ignored `.env` file without printing them. Re-running it preserves existing credentials without changing them. Restrict local access to this file; it is not a cloud secret store. `.env.example` contains placeholders only. Changing the database password in `.env` does not rotate an existing database's password. Seed is idempotent and does not overwrite existing users or tickets.
+The setup script creates unique passwords in the ignored `.env` file without printing them. Re-running it preserves existing credentials and adds a missing simulator secret. Restrict local access to this file; it is not a cloud secret store. `.env.example` contains placeholders only. Changing the database password in `.env` does not rotate an existing database's password. Seed is idempotent and does not overwrite existing users or tickets.
 
 Readiness: `http://127.0.0.1:8030/health/ready`. This is a JSON API; the root URL is not a website. `API_PORT` in `.env` can select another unused local port. Configuration currently accepts only `synthetic` mode; connected mode is intentionally unavailable until the adapter phases.
 
@@ -39,16 +39,19 @@ docker compose run --rm -e DEMO_USERNAME=op-b client
 
 Tenant B sees `B-100`; attempting `A-100` returns 404. Tenant A sees only `A-100`, not its other company/board fixtures `A-101` and `A-102`. The same checks apply to direct HTTP requests; client headers cannot choose another tenant or role.
 
+For the note/time proposal → approval → execute → verify workflow, follow [PHASE-2-WORKFLOW.md](PHASE-2-WORKFLOW.md).
+
 ## Demo identities
 
-All six synthetic accounts use the generated `DEMO_PASSWORD`. This shared password is a local seed convenience, not a production account-management design.
+All seven synthetic accounts use the generated `DEMO_PASSWORD`. This shared password is a local seed convenience, not a production account-management design.
 
 | Username | Role / tenant | Available access |
 | --- | --- | --- |
 | op-a | Operator / A | `/me`, scoped ticket list/detail |
-| approver-a | Approver / A | Scoped ticket reads; approvals are introduced in Phase 2 |
+| approver-a | Approver / A | Scoped reads, draft preparation and approval of another user’s proposal |
 | op-b | Operator / B | `/me`, B-scoped ticket list/detail |
-| admin-a | Administrator / A | `/me`, sanitized `/admin/config`; no ticket/approval privilege by default |
+| approver-b | Approver / B | B-scoped reads and separate-user approval |
+| admin-a | Administrator / A | `/me`, sanitized `/admin/config` and sync checkpoints; no ticket/approval privilege by default |
 | auditor-a | Auditor / A | `/me`, sanitized `/audit` for A |
 | worker-a | Worker / A | `/me` only; no assigned tools or ticket scopes yet |
 
@@ -60,7 +63,7 @@ The interactive CLI is intended for operator/approver ticket reads. It reports 4
 python scripts/test_local.py
 ```
 
-This builds a separate `cw-ops-test` Compose project, initializes a fresh PostgreSQL database in temporary memory, runs HTTP acceptance plus the compiled TypeScript client, checks API logs for secret leakage, and removes only that test stack in a `finally` block. It does not use `.env`, publish ports, or reset the persistent local database. Run one instance of this test script at a time. Result and source fingerprints are recorded in `docs/evidence/phase-1-run.json`.
+This builds a separate `cw-ops-test` Compose project, initializes a fresh PostgreSQL database in temporary memory, runs HTTP acceptance plus the compiled TypeScript client, checks API logs for secret leakage, and removes only that test stack in a `finally` block. It does not use `.env`, publish ports, or reset the persistent local database. Run one instance of this test script at a time. Result and source fingerprints are recorded in `docs/evidence/phase-2-run.json`.
 
 For a reset after a forcibly interrupted test:
 

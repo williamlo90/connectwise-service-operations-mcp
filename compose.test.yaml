@@ -12,6 +12,7 @@ x-test-backend: &backend
     DEMO_PASSWORD: synthetic-test-user-password-only
     APP_ENVIRONMENT: test
     PLATFORM_MODE: synthetic
+    SIMULATOR_SECRET: synthetic-test-simulator-secret-only
   read_only: true
   tmpfs: [/tmp]
   security_opt: [no-new-privileges:true]
@@ -38,9 +39,20 @@ services:
     command: [python, -m, app.seed]
     depends_on:
       migrate: {condition: service_completed_successfully}
+  simulator:
+    <<: *backend
+    command: [uvicorn, app.simulator:app, --host, 0.0.0.0, --port, '8000', --no-access-log]
+    depends_on:
+      seed: {condition: service_completed_successfully}
+    healthcheck:
+      test: [CMD, python, -c, 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:8000/health/ready", timeout=3)']
+      interval: 2s
+      timeout: 4s
+      retries: 30
   api:
     <<: *backend
     depends_on:
+      simulator: {condition: service_healthy}
       seed: {condition: service_completed_successfully}
     healthcheck:
       test: [CMD, python, -c, 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:8000/health/ready", timeout=3)']

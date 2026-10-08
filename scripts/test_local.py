@@ -6,6 +6,7 @@ import re
 import subprocess
 import sys
 from datetime import datetime, timezone
+from check_workflow_cli import check_cli
 
 ROOT = Path(__file__).resolve().parents[1]
 COMMAND = ['docker', 'compose', '--env-file', '.env.example', '-p', 'cw-ops-test', '-f', 'compose.test.yaml']
@@ -33,8 +34,10 @@ def main():
         if not summary:
             raise RuntimeError('Missing test summary')
         run('run', '--rm', '--no-deps', 'client')
+        run('run', '--rm', '--no-deps', 'client', '--consumer-smoke')
+        check_cli(COMMAND)
         logs = run('logs', '--no-color', 'api', capture=True).stdout
-        for secret in ('synthetic-test-user-password-only', 'synthetic-test-database-password-only', 'Bearer ', 'access_token'):
+        for secret in ('synthetic-test-user-password-only', 'synthetic-test-database-password-only', 'synthetic-test-simulator-secret-only', 'Bearer ', 'access_token'):
             if secret in logs:
                 raise RuntimeError('Sensitive content found in API log')
         events = []
@@ -46,13 +49,13 @@ def main():
         result = {'http_tests': int(summary[1]), 'http_test_seconds': float(summary[2]),
                   'test_cases': re.findall(r'^(test_\w+) .*? \.\.\. ok$', output, re.MULTILINE),
                   'structured_http_events': len(events), 'log_secret_check': 'passed',
-                  'typescript_client': 'passed', 'http_acceptance': 'passed'}
+                  'typescript_client': 'passed', 'workflow_cli': 'passed', 'consumer_contract_1_0_0': 'passed (HTTP bridge)', 'http_acceptance': 'passed'}
         status = 'passed'
     finally:
         run('down', '--remove-orphans', check=False)
-        evidence = ROOT / 'docs' / 'evidence' / 'phase-1-run.json'
+        evidence = ROOT / 'docs' / 'evidence' / 'phase-2-run.json'
         files = {}
-        for directory in ('backend', 'client', 'tests', 'scripts'):
+        for directory in ('backend', 'client', 'tests', 'scripts', 'contracts'):
             for path in sorted((ROOT / directory).rglob('*')):
                 if path.is_file() and not any(part in ('node_modules', 'dist', '__pycache__') for part in path.parts) and path.name != 'resolved.json':
                     files[path.relative_to(ROOT).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
@@ -60,7 +63,7 @@ def main():
             files[name] = hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
         evidence.write_text(json.dumps({'timestamp_utc': datetime.now(timezone.utc).isoformat(),
             'status': status, 'environment': 'local Docker Linux / isolated PostgreSQL tmpfs',
-            'dataset': 'synthetic phase-1 seed: 2 tenants, 6 actors, 4 tickets',
+            'dataset': 'synthetic phase-2 seed: 2 tenants, 7 actors, 4 local tickets, 6 remote tickets',
             'connectwise': 'not tested', 'source_sha256': files, **result}, indent=2)+'\n', encoding='utf-8')
     return 0 if status == 'passed' else 1
 

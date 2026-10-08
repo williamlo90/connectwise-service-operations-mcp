@@ -1,0 +1,45 @@
+{
+  "repository": "https://github.com/k-grube/connectwise-rest",
+  "revision": "b62dad91be3a5a4a6578278c832b76a4581928b3",
+  "accessed": "2026-10-08",
+  "files": [
+    {
+      "path": "LICENSE.md",
+      "url": "https://raw.githubusercontent.com/k-grube/connectwise-rest/b62dad91be3a5a4a6578278c832b76a4581928b3/LICENSE.md",
+      "sha256": "a501d36c435316b83ee85c7ed6b2736b8d7b17fbd80b4cac19bc1e166a22d754"
+    },
+    {
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/k-grube/connectwise-rest/b62dad91be3a5a4a6578278c832b76a4581928b3/README.md",
+      "sha256": "cd86bc4dda9475c50d109c67d66214dc4b90ef6c4111ca2a674d7fb6c3bbe375"
+    },
+    {
+      "path": "src/Manage/ServiceAPI.ts",
+      "url": "https://raw.githubusercontent.com/k-grube/connectwise-rest/b62dad91be3a5a4a6578278c832b76a4581928b3/src/Manage/ServiceAPI.ts",
+      "sha256": "fbb4d1c9c1903563c6de551604982e6347b9fe21ea9d01a61b702a7c9eac1a80"
+    },
+    {
+      "path": "src/Manage/TimeAPI.ts",
+      "url": "https://raw.githubusercontent.com/k-grube/connectwise-rest/b62dad91be3a5a4a6578278c832b76a4581928b3/src/Manage/TimeAPI.ts",
+      "sha256": "2fc5da140ce74e80fe3a9a6dd10eecf67e7b84f37cc655d02460ec2e22d42e4f"
+    },
+    {
+      "path": "src/ManageTypes.ts",
+      "url": "https://raw.githubusercontent.com/k-grube/connectwise-rest/b62dad91be3a5a4a6578278c832b76a4581928b3/src/ManageTypes.ts",
+      "sha256": "82e07380d44ac52c66fcaf550a0c6b5c08749aca686ab103623bd34a7f490f17"
+    },
+    {
+      "path": "src/ManageAPI.ts",
+      "url": "https://raw.githubusercontent.com/k-grube/connectwise-rest/b62dad91be3a5a4a6578278c832b76a4581928b3/src/ManageAPI.ts",
+      "sha256": "e0c82c3fd42c39455ec2567d27464784a7a6db9f3cb3b0c4741aff6e1b45caa8"
+    },
+    {
+      "path": "src/BaseAPI.ts",
+      "url": "https://raw.githubusercontent.com/k-grube/connectwise-rest/b62dad91be3a5a4a6578278c832b76a4581928b3/src/BaseAPI.ts",
+      "sha256": "63ff2011a2db8182c912b3236ad0bf56b8afb1652508ff21baf57e55b96752f8"
+    }
+  ],
+  "license": "MIT",
+  "claimed_spec": "README claims Manage 2026.11; not verified against vendor or tenant",
+  "contract_status": "public-reference subset, live validation pending"
+}

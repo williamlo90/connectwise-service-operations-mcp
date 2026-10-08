@@ -114,7 +114,7 @@ class FoundationTests(unittest.TestCase):
         seed()
         with connection() as conn:
             self.assertEqual(conn.execute('SELECT count(*) AS n FROM tickets').fetchone()['n'],4)
-            self.assertEqual(conn.execute('SELECT count(*) AS n FROM actors').fetchone()['n'],6)
+            self.assertEqual(conn.execute('SELECT count(*) AS n FROM actors').fetchone()['n'],7)
 
 
 if __name__=='__main__':
