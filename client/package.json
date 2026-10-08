@@ -1,0 +1,1 @@
+{"name":"service-ops-reference-client","version":"0.1.0","private":true,"type":"module","scripts":{"build":"tsc","start":"node dist/index.js"},"devDependencies":{"typescript":"5.9.3","@types/node":"22.19.0"}}

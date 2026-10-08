@@ -1,0 +1,69 @@
+name: cw-ops-local
+x-backend: &backend
+  build:
+    context: .
+    dockerfile: backend/Dockerfile
+  environment: &environment
+    DB_HOST: db
+    DB_NAME: cw_ops
+    DB_USER: cw_ops
+    DB_PASSWORD: ${POSTGRES_PASSWORD:?Run python scripts/setup_local.py}
+    APP_ENVIRONMENT: local
+    PLATFORM_MODE: synthetic
+  networks: [internal]
+  read_only: true
+  tmpfs: [/tmp]
+  security_opt: [no-new-privileges:true]
+services:
+  db:
+    image: postgres:17-bookworm@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826
+    environment:
+      POSTGRES_DB: cw_ops
+      POSTGRES_USER: cw_ops
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python scripts/setup_local.py}
+    volumes: [database:/var/lib/postgresql/data]
+    networks: [internal]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U cw_ops -d cw_ops']
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  migrate:
+    <<: *backend
+    command: [python, -m, app.migrate]
+    depends_on:
+      db: {condition: service_healthy}
+  seed:
+    <<: *backend
+    profiles: [tools]
+    environment:
+      <<: *environment
+      DEMO_PASSWORD: ${DEMO_PASSWORD:?Run python scripts/setup_local.py}
+    command: [python, -m, app.seed]
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+  api:
+    <<: *backend
+    ports: ['127.0.0.1:${API_PORT:-8030}:8000']
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+    healthcheck:
+      test: [CMD, python, -c, 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:8000/health/ready", timeout=3)']
+      interval: 5s
+      timeout: 4s
+      retries: 20
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    profiles: [tools]
+    environment:
+      API_URL: http://api:8000
+      DEMO_PASSWORD: ${DEMO_PASSWORD:?Run python scripts/setup_local.py}
+    networks: [internal]
+    depends_on:
+      api: {condition: service_healthy}
+networks:
+  internal: {}
+volumes:
+  database: {}

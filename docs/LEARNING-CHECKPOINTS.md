@@ -1,6 +1,6 @@
 # Learning checkpoints
 
-Current checkpoint: **phase-0**.
+Current checkpoint: **phase-1**.
 
 | Tag | Learning objective | Verification |
 | --- | --- | --- |
@@ -11,8 +11,8 @@ Current checkpoint: **phase-0**.
 Each phase builds on the previous commit. Tags identify completed learning checkpoints; later phases may still be planned in the documents.
 
 ```sh
-git switch --detach phase-0
-git switch -c learning/phase-0
+git switch --detach phase-1
+git switch -c learning/phase-1
 ```
 
 Use a clean checkout and save your own work before switching. Return to the latest checkpoint with `git switch main`. For executable checkpoints, start with their own setup guide. Use `python scripts/test_local.py` for an isolated temporary test database. Do not run an older checkpoint against the newer persistent database; phase migrations are forward-only. Use a separate clone/environment when running different phases.

@@ -1,0 +1,69 @@
+"""Rebuild a disposable test stack, run HTTP and client acceptance, then clean up."""
+from pathlib import Path
+import hashlib
+import json
+import re
+import subprocess
+import sys
+from datetime import datetime, timezone
+
+ROOT = Path(__file__).resolve().parents[1]
+COMMAND = ['docker', 'compose', '--env-file', '.env.example', '-p', 'cw-ops-test', '-f', 'compose.test.yaml']
+
+
+def run(*args, check=True, capture=False):
+    return subprocess.run(COMMAND + list(args), cwd=ROOT, check=check,
+                          capture_output=capture, text=True, encoding='utf-8')
+
+
+def main():
+    status = 'failed'
+    result = {}
+    logs = ''
+    try:
+        # Only this named test project is reset. Its PostgreSQL data lives in tmpfs.
+        run('down', '--remove-orphans')
+        run('build')
+        run('up', '-d', '--wait', 'api')
+        acceptance = run('run', '--rm', '--no-deps', 'tests', capture=True, check=False)
+        output = acceptance.stdout + acceptance.stderr
+        print(output)
+        acceptance.check_returncode()
+        summary = re.search(r'Ran (\d+) tests in ([\d.]+)s', output)
+        if not summary:
+            raise RuntimeError('Missing test summary')
+        run('run', '--rm', '--no-deps', 'client')
+        logs = run('logs', '--no-color', 'api', capture=True).stdout
+        for secret in ('synthetic-test-user-password-only', 'synthetic-test-database-password-only', 'Bearer ', 'access_token'):
+            if secret in logs:
+                raise RuntimeError('Sensitive content found in API log')
+        events = []
+        for line in logs.splitlines():
+            if '{"event": "http_request"' in line:
+                events.append(json.loads(line[line.index('{'):]))
+        if not events or not any(e['status'] == 404 for e in events):
+            raise RuntimeError('Missing structured denied-access evidence')
+        result = {'http_tests': int(summary[1]), 'http_test_seconds': float(summary[2]),
+                  'test_cases': re.findall(r'^(test_\w+) .*? \.\.\. ok$', output, re.MULTILINE),
+                  'structured_http_events': len(events), 'log_secret_check': 'passed',
+                  'typescript_client': 'passed', 'http_acceptance': 'passed'}
+        status = 'passed'
+    finally:
+        run('down', '--remove-orphans', check=False)
+        evidence = ROOT / 'docs' / 'evidence' / 'phase-1-run.json'
+        files = {}
+        for directory in ('backend', 'client', 'tests', 'scripts'):
+            for path in sorted((ROOT / directory).rglob('*')):
+                if path.is_file() and not any(part in ('node_modules', 'dist', '__pycache__') for part in path.parts) and path.name != 'resolved.json':
+                    files[path.relative_to(ROOT).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
+        for name in ('compose.yaml','compose.test.yaml'):
+            files[name] = hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
+        evidence.write_text(json.dumps({'timestamp_utc': datetime.now(timezone.utc).isoformat(),
+            'status': status, 'environment': 'local Docker Linux / isolated PostgreSQL tmpfs',
+            'dataset': 'synthetic phase-1 seed: 2 tenants, 6 actors, 4 tickets',
+            'connectwise': 'not tested', 'source_sha256': files, **result}, indent=2)+'\n', encoding='utf-8')
+    return 0 if status == 'passed' else 1
+
+
+if __name__ == '__main__':
+    sys.exit(main())

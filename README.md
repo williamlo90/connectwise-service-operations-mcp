@@ -1,19 +1,9 @@
-# Service Operations MCP — phase-0
+# Service Operations MCP — phase-1
 
-Scope and acceptance design.
+Authentication and tenant-scoped foundation.
 
 This learning checkpoint uses synthetic data. It does not claim live ConnectWise or Azure validation.
 
-## Scope
-
-Build scoped ticket context, internal notes and documented time entries with separate-user approval, verified read-back and unknown-outcome recovery. Keep AI assistance optional and enforce permissions in the domain service.
-
-## Acceptance goals
-
-- Isolate tenants and company/board scopes.
-- Require explicit time evidence and private-note visibility.
-- Bind approval to an exact payload and fresh source state.
-- Reconcile uncertain writes without automatic reposting.
-- Validate locally before connected tenant acceptance.
+Start with the [local setup guide](docs/LOCAL-SETUP.md). Run only this checkpoint in its own isolated environment.
 
 Return to `main` for the current product workspace and documentation.

@@ -1,0 +1,64 @@
+# Standalone test stack: no host ports, no persistent volumes, no local .env.
+name: cw-ops-test
+x-test-backend: &backend
+  build:
+    context: .
+    dockerfile: backend/Dockerfile
+  environment: &environment
+    DB_HOST: db
+    DB_NAME: cw_ops_test
+    DB_USER: cw_test
+    DB_PASSWORD: synthetic-test-database-password-only
+    DEMO_PASSWORD: synthetic-test-user-password-only
+    APP_ENVIRONMENT: test
+    PLATFORM_MODE: synthetic
+  read_only: true
+  tmpfs: [/tmp]
+  security_opt: [no-new-privileges:true]
+services:
+  db:
+    image: postgres:17-bookworm@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826
+    environment:
+      POSTGRES_DB: cw_ops_test
+      POSTGRES_USER: cw_test
+      POSTGRES_PASSWORD: synthetic-test-database-password-only
+    tmpfs: [/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U cw_test -d cw_ops_test']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  migrate:
+    <<: *backend
+    command: [python, -m, app.migrate]
+    depends_on:
+      db: {condition: service_healthy}
+  seed:
+    <<: *backend
+    command: [python, -m, app.seed]
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+  api:
+    <<: *backend
+    depends_on:
+      seed: {condition: service_completed_successfully}
+    healthcheck:
+      test: [CMD, python, -c, 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:8000/health/ready", timeout=3)']
+      interval: 2s
+      timeout: 4s
+      retries: 30
+  tests:
+    <<: *backend
+    command: [python, -m, unittest, discover, -s, tests, -v]
+    depends_on:
+      api: {condition: service_healthy}
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    environment:
+      API_URL: http://api:8000
+      DEMO_PASSWORD: synthetic-test-user-password-only
+    command: [--smoke]
+    depends_on:
+      api: {condition: service_healthy}
