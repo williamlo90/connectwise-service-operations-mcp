@@ -1,6 +1,6 @@
-# Service Operations MCP — phase-3-local
+# Service Operations MCP — phase-3
 
-Local AI evidence selection and reusable skills.
+OpenAI and Ollama provider validation.
 
 This learning checkpoint uses synthetic data. It does not claim live ConnectWise or Azure validation.
 

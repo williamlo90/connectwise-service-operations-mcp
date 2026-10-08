@@ -1,0 +1,74 @@
+{
+  "timestamp_utc": "2026-10-08T12:47:13.737004+00:00",
+  "provider": "openai",
+  "dataset": "synthetic A-100 seed",
+  "hosted_request_limit": 1,
+  "connectwise": "simulator only",
+  "status": "passed",
+  "run": {
+    "id": "f372777e-909f-4c21-80e2-74ea91de8e78",
+    "skill": "summarize_service_ticket",
+    "status": "completed",
+    "provider": "openai",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "prompt_version": "evidence-selector-1.0.0",
+    "schema_version": "selection-1.0.0",
+    "skill_version": "1.0.0",
+    "result": {
+      "facts": [
+        {
+          "id": "ticket.summary",
+          "text": "VPN connection fails",
+          "source": "service/tickets/100"
+        },
+        {
+          "id": "ticket.status",
+          "text": "New",
+          "source": "service/tickets/100"
+        },
+        {
+          "id": "note.1",
+          "text": "Technician confirmed the reported issue.",
+          "source": "service/tickets/100/notes/1",
+          "visibility": "internal"
+        },
+        {
+          "id": "note.2",
+          "text": "Customer reported a service interruption.",
+          "source": "service/tickets/100/notes/2",
+          "visibility": "public"
+        },
+        {
+          "id": "note.1000",
+          "text": "Phase 2 local CLI verification note.\n[cw-op:4e363403-64d4-4487-8648-f451622c7a33]",
+          "source": "service/tickets/100/notes/1000",
+          "visibility": "internal"
+        },
+        {
+          "id": "note.1001",
+          "text": "Technician report: Technician checked VPN settings; customer retest is pending.\nTicket context: VPN connection fails; status New\n[cw-op:9d04d6ac-cb48-4573-8798-0362bc95a335]",
+          "source": "service/tickets/100/notes/1001",
+          "visibility": "internal"
+        }
+      ],
+      "reason": "source_selection_validated",
+      "summary": "ticket.summary: VPN connection fails\nticket.status: New\nnote.1: Technician confirmed the reported issue.\nnote.2: Customer reported a service interruption.\nnote.1000: Phase 2 local CLI verification note.\n[cw-op:4e363403-64d4-4487-8648-f451622c7a33]\nnote.1001: Technician report: Technician checked VPN settings; customer retest is pending.\nTicket context: VPN connection fails; status New\n[cw-op:9d04d6ac-cb48-4573-8798-0362bc95a335]",
+      "source_hash": "f4074d6ed8b2a9672d9347e7491c4db2f00db709e06061c105a3be28c8095626",
+      "claim_policy": "extractive; source text is not independently verified",
+      "proposed_actions": [],
+      "missing_information": [
+        "resolution_unknown"
+      ]
+    },
+    "proposal_id": null,
+    "latency_ms": 5228,
+    "usage": {
+      "input_tokens": 564,
+      "output_tokens": 41
+    },
+    "cost_usd": null,
+    "error_code": null,
+    "created_at": "2026-10-08T12:47:16.019896+00:00",
+    "finished_at": "2026-10-08T12:47:21.249389+00:00"
+  }
+}

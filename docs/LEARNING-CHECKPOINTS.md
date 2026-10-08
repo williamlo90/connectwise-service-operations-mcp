@@ -1,6 +1,6 @@
 # Learning checkpoints
 
-Current checkpoint: **phase-3-local**, hosted validation pending.
+Current checkpoint: **phase-3**, OpenAI + Ollama validation passed.
 
 | Tag | Learning objective | Verification |
 | --- | --- | --- |
@@ -40,4 +40,5 @@ The repository is private, so GitHub access is required. The test runner creates
 
 | Additional tag | Scope | Verification |
 | --- | --- | --- |
-| phase-3-local | AI source selection, four reusable skills, provider adapters and Ollama | 41 regression cases, 5 real local sanity cases and a verified simulator write; hosted canaries pending |
+| phase-3-local | AI source selection, four reusable skills, provider adapters and Ollama | 41 regression cases, 5 real local sanity cases and a verified simulator write; hosted validation deferred in this snapshot |
+| phase-3 | Required OpenAI + Ollama scope; Claude/Grok optional | Local validation plus one real OpenAI structured summary canary passed |

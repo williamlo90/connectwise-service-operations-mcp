@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-08T11:22:50.503311+00:00",
+  "timestamp_utc": "2026-10-08T12:49:23.137647+00:00",
   "status": "passed",
   "environment": "local Docker Linux / isolated PostgreSQL tmpfs",
   "dataset": "synthetic phase-2 seed: 2 tenants, 7 actors, 4 local tickets, 6 remote tickets",
@@ -43,7 +43,7 @@
     "scripts/evaluate_local_ai.py": "66a4d49e8432c1d458bf9fed4a84f75389cd7713071a874211afaeda3debad9b",
     "scripts/setup_local.py": "727387652dd2149e5899853a332978707310980d01032ed8fd5c650ea796d5c7",
     "scripts/test_local.py": "3f5ed261d47300e00997b2d00c85b4c46cc0456dfdeef7ac1f124be7d2be22d7",
-    "contracts/ai-provider-references.json": "dbec33154e7e45747774b39448945452d12ad94ec2eeb8a563156856cd05d2f0",
+    "contracts/ai-provider-references.json": "047ba32b4230a8e63e541e3e326502eaf393cbb005485aeb019d043c065a8f03",
     "contracts/assistant-v1.schema.json": "9c3f06cb93a00ebb4b8aef1549127bcac02271734e6adf9173c75a51e53f4701",
     "contracts/local-model.json": "a5c859a837b29677a7fa99b0fd433345f557b123da7d221d8f41b9aa4f40263f",
     "contracts/MCP-CONSUMERS-V1.md": "e6bccc4875c48cd5c58e5126694fab105f2bc2b5368780a10b8bee518411fc85",
@@ -66,7 +66,7 @@
     "compose.ai.yaml": "2108d3ac4dabbb939cac7bd6437b57fc00c92961131a278c0f5aac58955ad9a5"
   },
   "tests_total": 41,
-  "suite_seconds": 11.662,
+  "suite_seconds": 11.992,
   "http_tests": 27,
   "asgi_assistant_tests": 9,
   "provider_contract_tests": 4,
@@ -114,7 +114,7 @@
     "test_scope_and_direct_id",
     "test_validation_and_query_injection"
   ],
-  "structured_http_events": 225,
+  "structured_http_events": 226,
   "log_secret_check": "passed",
   "typescript_client": "passed",
   "workflow_cli": "passed",

@@ -1,6 +1,6 @@
 # Phase 3 — local AI implementation and provider adapters
 
-Status: **local AI workflow validated; hosted canaries pending keys**. This is an extractive service assistant over the PSA simulator. It does not claim real ConnectWise integration, MCP protocol acceptance or production model quality.
+Status: **Phase 3 complete: Ollama workflow and OpenAI canary validated**. This is an extractive service assistant over the PSA simulator. It does not claim real ConnectWise integration, MCP protocol acceptance or production model quality.
 
 ## Implemented behavior
 
@@ -26,15 +26,15 @@ The five local sanity cases took approximately 12.8–26.4 seconds per assistant
 
 Host context: Windows with approximately 16 GiB RAM and RTX 4050 6 GiB; the tested profile used CPU inference, not GPU. Other local containers remained in use. The system has not been qualified for sustained load or forced OOM recovery; those require additional isolated reliability work. Shared-machine contention remains possible despite per-container limits.
 
-## Provider status and remaining gate
+## Provider validation
 
 | Provider | Contract tests | Real inference |
 | --- | --- | --- |
 | Ollama / pinned Qwen3 | Passed | Local workflow and sanity cases passed |
-| OpenAI | Passed with controlled HTTP responses | Pending `.env` key and enabled canary |
-| Claude / Anthropic | Passed with controlled HTTP responses | Pending `.env` key and enabled canary |
-| Grok / xAI | Passed with controlled HTTP responses | Pending `.env` key and enabled canary |
+| OpenAI (required hosted provider) | Passed with controlled HTTP responses | Real summary canary passed; [evidence](evidence/phase-3-openai-canary.json) |
+| Claude / Anthropic (optional) | Passed with controlled HTTP responses | Not live-validated |
+| Grok / xAI (optional) | Passed with controlled HTTP responses | Not live-validated |
 
-The root `.env` contains empty provider key fields and `AI_HOSTED_ENABLED=false`. No paid request was sent during this delivery. After keys are supplied, recreate the API container and run one summary-only canary per configured provider using [the guide](PHASE-3-ASSISTANT.md). Model availability, schema support, actual usage/cost and latency must be established from those runs. Do not interpret the mocked wire tests as live provider validation.
+One real OpenAI summary request passed using `gpt-4.1-mini-2025-04-14`: 5,228 ms, 564 input tokens and 41 output tokens, with a 512-token output cap. Only synthetic simulator ticket context was sent; no downstream write was requested. Cost remains null because billing was not calculated. This establishes a bounded integration canary, not a quality benchmark. OpenAI is the only required hosted provider; Claude/Grok keys and live canaries are optional. See [setup](PHASE-3-ASSISTANT.md).
 
-Phase 3 is recorded as a **local checkpoint**, with hosted validation still open. Phase 0A/8A ConnectWise access and Phase 4 MCP transport remain separate work. The previous phase tags stay unchanged.
+Phase 3 is complete for the selected OpenAI + Ollama scope, recorded by the **phase-3** checkpoint. The earlier **phase-3-local** tag remains available for learning. Phase 0A/8A ConnectWise access and Phase 4 MCP transport remain separate work; model comparison and reliability qualification continue in Phases 6 and 7.

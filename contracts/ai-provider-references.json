@@ -10,9 +10,13 @@
     "ollama": "https://docs.ollama.com/api/chat"
   },
   "hosted_canary_status": {
-    "openai": "pending key",
-    "anthropic": "pending key",
-    "xai": "pending key"
+    "openai": "passed; docs/evidence/phase-3-openai-canary.json",
+    "anthropic": "optional; not live-validated",
+    "xai": "optional; not live-validated"
   },
-  "method": "direct official HTTP APIs; no provider SDK dependency; no automatic fallback"
+  "method": "direct official HTTP APIs; no provider SDK dependency; no automatic fallback",
+  "required_profiles": [
+    "openai",
+    "ollama"
+  ]
 }

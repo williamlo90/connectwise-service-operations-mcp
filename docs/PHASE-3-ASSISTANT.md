@@ -38,7 +38,7 @@ Cancellation is logical: late output is discarded, but upstream inference/billin
 
 ## Hosted providers
 
-The ignored root `.env` has empty `OPENAI_API_KEY`, `ANTHROPIC_API_KEY` and `XAI_API_KEY` entries. Add keys there, not in chat or command arguments. Example model IDs are configurable and availability must be verified against the account. Credentials are passed only to the API container and official endpoints; prompts do not contain them.
+Only `OPENAI_API_KEY` is required for the hosted path. Set it in the ignored root `.env`, not in chat or command arguments. `ANTHROPIC_API_KEY` and `XAI_API_KEY` can stay empty; those adapters are optional. Example model IDs are configurable and availability must be verified against the account. Credentials are passed only to the API container and official endpoints; prompts do not contain them.
 
 Set `AI_HOSTED_ENABLED=true` when ready, then recreate the API container to load the changed environment:
 
@@ -47,7 +47,7 @@ docker compose -f compose.yaml -f compose.ai.yaml up -d --wait api
 docker compose run --rm -e AI_PROVIDER=openai client --ai summary A-100
 ```
 
-Use `anthropic` or `xai` for the other adapters. `local_only=true` rejects hosted selection, and local failures never fall back to a hosted provider. Each run makes one generation request, with no automatic retries. Provider refusal, truncation, rate limit, missing key, unreachable runtime and invalid selection produce explicit non-success outcomes.
+Optionally use `anthropic` or `xai` after configuring and validating that provider. `local_only=true` rejects hosted selection, and local failures never fall back to a hosted provider. Each run makes one generation request, with no automatic retries. Provider refusal, truncation, rate limit, missing key, unreachable runtime and invalid selection produce explicit non-success outcomes.
 
 Token usage is recorded only when reported by the provider. `cost_usd=null` means no verified cost calculation is available; it is not zero cost. This release does not estimate hosted billing or local electricity/hardware costs.
 
