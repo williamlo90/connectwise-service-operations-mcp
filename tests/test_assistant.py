@@ -35,6 +35,16 @@ class AssistantTests(unittest.TestCase):
     def post(self,path,body=None,user='op-a',code=200):
         r=self.client.post(path,headers=self.auth[user],json=body);self.assertEqual(r.status_code,code,r.text);return r.json()
 
+    def test_resolution_uncertainty_is_enforced_when_model_omits_it(self):
+        def omits(*args):
+            generated=selection(*args)
+            generated.value['missing_information']=[]
+            return generated
+        with patch('app.ai_providers.generate',side_effect=omits):
+            result=self.post('/assistant/runs',self.body())
+            self.assertEqual(result['status'],'completed')
+            self.assertIn('resolution_unknown',result['result']['missing_information'])
+
     def test_summary_scopes_and_reuse(self):
         with patch('app.ai_providers.generate',side_effect=selection) as g:
             for user,tid,endpoint in [('op-a','A-100','/assistant/runs'),('op-b','B-100','/assistant/runs'),('worker-a','A-100','/skills/summarize_service_ticket/runs')]:

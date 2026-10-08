@@ -1,0 +1,30 @@
+{
+  "frozen_utc": "2026-10-08T13:32:09.001055+00:00",
+  "application_baseline": "5d64b19b2c059818dc578b5ccfede6408d7a4837",
+  "prompt_version": "evidence-selector-1.1.0",
+  "application_sha256": {
+    "backend/app/__init__.py": "051a5b35dc121804a9f3232ce12d18a1eae8d546c43f98417a9de5f135a1d942",
+    "backend/app/ai_providers.py": "33448bca7de2f6d223b4ae5364bce20bdf1390f98362919b653fb37e1616bb4d",
+    "backend/app/assistant.py": "ce18f2b2a5fe783dd2a84383d52e123d16fdba2b64e9b8389ff2cf5ad20c8fb6",
+    "backend/app/automation.py": "9327d062d9e5097aff8dfc3d8df73ae3667b10322a4992a0d84c2196c01e1ecf",
+    "backend/app/config.py": "d56a26a4904808b6dc029f130606bcf9f520db142bbe06ceb3018b77f923c4e7",
+    "backend/app/db.py": "5d4c264cb0d3c92b693466529cedd07e72730822f12f04cdfa3ffa66a61a3d37",
+    "backend/app/main.py": "0bc748d6f72f1f470ea7ecfbf7aec567aa50521dc1857cc04c8769f6120e0eb0",
+    "backend/app/migrate.py": "9bd391db20ee4960f8e42175248750d20df962df90d85cae2b3abc2364e381ed",
+    "backend/app/passwords.py": "afce54f0ad02aa3a028d523f124c1f3ca02c8e64ab12ceafd7492e01a6fb50fc",
+    "backend/app/psa.py": "f4019007247546942f770b95a2203a239d8b2f7cfde51eb5472ad84c86e52e36",
+    "backend/app/seed.py": "738ca3c0a84a654773f7db1c7d4cb2d2d3a182344f5524822256cc7f40b6adc3",
+    "backend/app/seed_phase2.py": "57a54ceba2c71c1d9bfaa97463734d8439dcbed5d6f8429d89f6d99624e5e7b0",
+    "backend/app/simulator.py": "6e8b7bebc6064a78914913aa234b9fb0a95b9112f0bc0d85b9bb2457c328e392",
+    "backend/app/tracing.py": "aa5baf630c327ee57af98ca367b935153237a273a9587bbca94cc82b394586ad",
+    "backend/app/worker.py": "09e3174174677a166f5c029fe54a9284a15b5d4284e4b9b3cb8c9e0900d71ad4",
+    "backend/app/workflows.py": "1ba963a0a9fb7c933e7545d272c2633ba09de7e315ce4792439e4b694be64b60"
+  },
+  "sha256": {
+    "cases-v2.json": "9476406417090672e5220c885f34001772e9960851f5e1cfc3aab9ad3f353e78",
+    "protocol-v2.json": "9408a99ead9b4ecd7963a7bd6c699eb0df17996bd75b8e523cc61df9c7b0461a",
+    "scoring.py": "26b40ef17020806c437810341864b1572fef726fb45d7e6e8e4259f283b74d07",
+    "run.py": "2110313f14be3e2040846ae090bbb9f80fe797acf13c42792949eacee44e2278"
+  },
+  "note": "New evaluation families frozen before any v2 model outputs; thresholds unchanged."
+}

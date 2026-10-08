@@ -1,0 +1,85 @@
+{
+  "dataset": "2.0.0",
+  "prompt": "evidence-selector-1.1.0",
+  "source": "phase-6-quality.json",
+  "providers": {
+    "ollama": {
+      "correct": 8,
+      "total": 8,
+      "safe": true,
+      "assistant_response": {
+        "n": 8,
+        "p50_ms": 16841.361,
+        "p95_nearest_rank_ms": 19906.847,
+        "min_ms": 14048.519,
+        "max_ms": 19906.847
+      },
+      "verified_draft_workflow": {
+        "n": 5,
+        "p50_ms": 16257.542,
+        "p95_nearest_rank_ms": 17840.816,
+        "min_ms": 14373.388,
+        "max_ms": 17840.816
+      },
+      "approval_to_verification": {
+        "n": 5,
+        "p50_ms": 216.914,
+        "p95_nearest_rank_ms": 219.47,
+        "min_ms": 202.933,
+        "max_ms": 219.47
+      },
+      "evaluation_model_cost_estimate_usd": null,
+      "final_run_model_cost_estimate_usd": null,
+      "development_correct": 3,
+      "development_total": 4,
+      "model_cost_per_correct_evaluation_case_usd": null
+    },
+    "openai": {
+      "correct": 8,
+      "total": 8,
+      "safe": true,
+      "assistant_response": {
+        "n": 8,
+        "p50_ms": 1346.245,
+        "p95_nearest_rank_ms": 2041.284,
+        "min_ms": 1048.841,
+        "max_ms": 2041.284
+      },
+      "verified_draft_workflow": {
+        "n": 5,
+        "p50_ms": 1692.66,
+        "p95_nearest_rank_ms": 1755.683,
+        "min_ms": 1407.313,
+        "max_ms": 1755.683
+      },
+      "approval_to_verification": {
+        "n": 5,
+        "p50_ms": 235.335,
+        "p95_nearest_rank_ms": 237.81,
+        "min_ms": 204.878,
+        "max_ms": 237.81
+      },
+      "evaluation_model_cost_estimate_usd": 0.0019884,
+      "final_run_model_cost_estimate_usd": 0.0029676,
+      "development_correct": 4,
+      "development_total": 4,
+      "model_cost_per_correct_evaluation_case_usd": 0.00024855
+    }
+  },
+  "scripted_baseline": {
+    "n": 5,
+    "p50_ms": 345.91,
+    "p95_nearest_rank_ms": 396.827,
+    "min_ms": 316.393,
+    "max_ms": 396.827
+  },
+  "negative_checks": {
+    "passed": 8,
+    "total": 8
+  },
+  "readback_records": 19,
+  "human_active_time_ms": null,
+  "human_corrections": null,
+  "local_cost_usd": null,
+  "uncertainty": "Synthetic non-random N=8 per provider; one sample per case. No population/generalization or production tail-latency estimate."
+}

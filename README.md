@@ -1,6 +1,6 @@
-# Service Operations MCP — phase-5
+# Service Operations MCP — phase-6
 
-Durable scheduled synchronization.
+Frozen synthetic quality evaluation.
 
 This learning checkpoint uses synthetic data. It does not claim live ConnectWise or Azure validation.
 

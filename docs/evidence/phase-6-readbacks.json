@@ -1,0 +1,780 @@
+{
+  "source": "persisted domain read-back receipts in isolated evaluation database",
+  "operations": [
+    {
+      "operation_id": "26d2f048-1316-4d5f-9358-39813dcbc58a",
+      "tenant": "a",
+      "proposal_id": "26d2f048-1316-4d5f-9358-39813dcbc58a",
+      "status": "verified",
+      "external_id": 1000,
+      "expected": {
+        "text": "Technician report: Flushed the resolver cache; application retest is pending.\nTicket context: DNS name resolves to an old address; status New\n[cw-op:26d2f048-1316-4d5f-9358-39813dcbc58a]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1000,
+        "text": "Technician report: Flushed the resolver cache; application retest is pending.\nTicket context: DNS name resolves to an old address; status New\n[cw-op:26d2f048-1316-4d5f-9358-39813dcbc58a]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:34:02.84844+00:00"
+    },
+    {
+      "operation_id": "db05ca1c-03f2-4acd-b9be-dccd3a8a1631",
+      "tenant": "a",
+      "proposal_id": "db05ca1c-03f2-4acd-b9be-dccd3a8a1631",
+      "status": "verified",
+      "external_id": 1001,
+      "expected": {
+        "text": "Technician report: Flushed the resolver cache; application retest is pending.\nTicket context: DNS name resolves to an old address; status New\n[cw-op:db05ca1c-03f2-4acd-b9be-dccd3a8a1631]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1001,
+        "text": "Technician report: Flushed the resolver cache; application retest is pending.\nTicket context: DNS name resolves to an old address; status New\n[cw-op:db05ca1c-03f2-4acd-b9be-dccd3a8a1631]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:34:21.201918+00:00"
+    },
+    {
+      "operation_id": "6844ae60-7116-4acf-af15-74dd6087605b",
+      "tenant": "b",
+      "proposal_id": "6844ae60-7116-4acf-af15-74dd6087605b",
+      "status": "verified",
+      "external_id": 1002,
+      "expected": {
+        "notes": "Technician report: Inspected the print queue and restarted the spooler.\nTicket context: Print queue remains paused; status New\n[cw-op:6844ae60-7116-4acf-af15-74dd6087605b]",
+        "member": {
+          "id": 9
+        },
+        "timeEnd": "2026-10-08T02:25:00+00:00",
+        "workRole": {
+          "id": 2
+        },
+        "workType": {
+          "id": 2
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.4166666666666667,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1002,
+        "notes": "Technician report: Inspected the print queue and restarted the spooler.\nTicket context: Print queue remains paused; status New\n[cw-op:6844ae60-7116-4acf-af15-74dd6087605b]",
+        "member": {
+          "id": 9
+        },
+        "timeEnd": "2026-10-08T02:25:00+00:00",
+        "workRole": {
+          "id": 2
+        },
+        "workType": {
+          "id": 2
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.4166666666666667,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:34:43.139853+00:00"
+    },
+    {
+      "operation_id": "99092a1f-2113-40d4-926d-cd881f2ef5d9",
+      "tenant": "b",
+      "proposal_id": "99092a1f-2113-40d4-926d-cd881f2ef5d9",
+      "status": "verified",
+      "external_id": 1003,
+      "expected": {
+        "notes": "Technician report: Inspected the print queue and restarted the spooler.\nTicket context: Print queue remains paused; status New\n[cw-op:99092a1f-2113-40d4-926d-cd881f2ef5d9]",
+        "member": {
+          "id": 9
+        },
+        "timeEnd": "2026-10-08T02:25:00+00:00",
+        "workRole": {
+          "id": 2
+        },
+        "workType": {
+          "id": 2
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.4166666666666667,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1003,
+        "notes": "Technician report: Inspected the print queue and restarted the spooler.\nTicket context: Print queue remains paused; status New\n[cw-op:99092a1f-2113-40d4-926d-cd881f2ef5d9]",
+        "member": {
+          "id": 9
+        },
+        "timeEnd": "2026-10-08T02:25:00+00:00",
+        "workRole": {
+          "id": 2
+        },
+        "workType": {
+          "id": 2
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.4166666666666667,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:34:44.616976+00:00"
+    },
+    {
+      "operation_id": "41326356-db1a-491c-b0b9-1c8f437ebb39",
+      "tenant": "b",
+      "proposal_id": "41326356-db1a-491c-b0b9-1c8f437ebb39",
+      "status": "verified",
+      "external_id": 1004,
+      "expected": {
+        "text": "Technician report: Recorded the battery alert and requested a replacement availability check.\nTicket context: UPS battery inspection is pending; status New\n[cw-op:41326356-db1a-491c-b0b9-1c8f437ebb39]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1004,
+        "text": "Technician report: Recorded the battery alert and requested a replacement availability check.\nTicket context: UPS battery inspection is pending; status New\n[cw-op:41326356-db1a-491c-b0b9-1c8f437ebb39]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:35:23.678567+00:00"
+    },
+    {
+      "operation_id": "c1f8a874-a7ea-4720-9041-527a6e03ff63",
+      "tenant": "b",
+      "proposal_id": "c1f8a874-a7ea-4720-9041-527a6e03ff63",
+      "status": "verified",
+      "external_id": 1005,
+      "expected": {
+        "text": "Technician report: Recorded the battery alert and requested a replacement availability check.\nTicket context: UPS battery inspection is pending; status New\n[cw-op:c1f8a874-a7ea-4720-9041-527a6e03ff63]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1005,
+        "text": "Technician report: Recorded the battery alert and requested a replacement availability check.\nTicket context: UPS battery inspection is pending; status New\n[cw-op:c1f8a874-a7ea-4720-9041-527a6e03ff63]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:35:25.38988+00:00"
+    },
+    {
+      "operation_id": "47a76a0b-88eb-425d-91b1-174d26e2b87b",
+      "tenant": "b",
+      "proposal_id": "47a76a0b-88eb-425d-91b1-174d26e2b87b",
+      "status": "verified",
+      "external_id": 1006,
+      "expected": {
+        "text": "Technician report: Recorded the battery alert and requested a replacement availability check.\nTicket context: UPS battery inspection is pending; status New\n[cw-op:47a76a0b-88eb-425d-91b1-174d26e2b87b]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1006,
+        "text": "Technician report: Recorded the battery alert and requested a replacement availability check.\nTicket context: UPS battery inspection is pending; status New\n[cw-op:47a76a0b-88eb-425d-91b1-174d26e2b87b]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:35:43.218222+00:00"
+    },
+    {
+      "operation_id": "296c484d-f9a4-49d2-9c4c-966bd6ed76b8",
+      "tenant": "a",
+      "proposal_id": "296c484d-f9a4-49d2-9c4c-966bd6ed76b8",
+      "status": "verified",
+      "external_id": 1007,
+      "expected": {
+        "notes": "Technician report: Compared effective permissions for the two groups.\nTicket context: File share access differs between user groups; status New\n[cw-op:296c484d-f9a4-49d2-9c4c-966bd6ed76b8]",
+        "member": {
+          "id": 7
+        },
+        "timeEnd": "2026-10-08T02:19:00+00:00",
+        "workRole": {
+          "id": 1
+        },
+        "workType": {
+          "id": 1
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.31666666666666665,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1007,
+        "notes": "Technician report: Compared effective permissions for the two groups.\nTicket context: File share access differs between user groups; status New\n[cw-op:296c484d-f9a4-49d2-9c4c-966bd6ed76b8]",
+        "member": {
+          "id": 7
+        },
+        "timeEnd": "2026-10-08T02:19:00+00:00",
+        "workRole": {
+          "id": 1
+        },
+        "workType": {
+          "id": 1
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.31666666666666665,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:35:43.607813+00:00"
+    },
+    {
+      "operation_id": "9ab5d1ce-18a0-4627-a578-42a325fafe56",
+      "tenant": "a",
+      "proposal_id": "9ab5d1ce-18a0-4627-a578-42a325fafe56",
+      "status": "verified",
+      "external_id": 1008,
+      "expected": {
+        "notes": "Technician report: Compared effective permissions for the two groups.\nTicket context: File share access differs between user groups; status New\n[cw-op:9ab5d1ce-18a0-4627-a578-42a325fafe56]",
+        "member": {
+          "id": 7
+        },
+        "timeEnd": "2026-10-08T02:19:00+00:00",
+        "workRole": {
+          "id": 1
+        },
+        "workType": {
+          "id": 1
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.31666666666666665,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1008,
+        "notes": "Technician report: Compared effective permissions for the two groups.\nTicket context: File share access differs between user groups; status New\n[cw-op:9ab5d1ce-18a0-4627-a578-42a325fafe56]",
+        "member": {
+          "id": 7
+        },
+        "timeEnd": "2026-10-08T02:19:00+00:00",
+        "workRole": {
+          "id": 1
+        },
+        "workType": {
+          "id": 1
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.31666666666666665,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:36:04.193777+00:00"
+    },
+    {
+      "operation_id": "763e9036-7fc0-4a90-8f76-ac665f4c7574",
+      "tenant": "a",
+      "proposal_id": "763e9036-7fc0-4a90-8f76-ac665f4c7574",
+      "status": "verified",
+      "external_id": 1009,
+      "expected": {
+        "notes": "Technician report: Compared effective permissions for the two groups.\nTicket context: File share access differs between user groups; status New\n[cw-op:763e9036-7fc0-4a90-8f76-ac665f4c7574]",
+        "member": {
+          "id": 7
+        },
+        "timeEnd": "2026-10-08T02:19:00+00:00",
+        "workRole": {
+          "id": 1
+        },
+        "workType": {
+          "id": 1
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.31666666666666665,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1009,
+        "notes": "Technician report: Compared effective permissions for the two groups.\nTicket context: File share access differs between user groups; status New\n[cw-op:763e9036-7fc0-4a90-8f76-ac665f4c7574]",
+        "member": {
+          "id": 7
+        },
+        "timeEnd": "2026-10-08T02:19:00+00:00",
+        "workRole": {
+          "id": 1
+        },
+        "workType": {
+          "id": 1
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.31666666666666665,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:36:05.670189+00:00"
+    },
+    {
+      "operation_id": "64cd6f64-b487-442c-a53a-707a4f6d3657",
+      "tenant": "a",
+      "proposal_id": "64cd6f64-b487-442c-a53a-707a4f6d3657",
+      "status": "verified",
+      "external_id": 1010,
+      "expected": {
+        "text": "Technician report: Collected the presented certificate chain for issuer review.\nTicket context: Application certificate chain review is pending; status New\n[cw-op:64cd6f64-b487-442c-a53a-707a4f6d3657]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1010,
+        "text": "Technician report: Collected the presented certificate chain for issuer review.\nTicket context: Application certificate chain review is pending; status New\n[cw-op:64cd6f64-b487-442c-a53a-707a4f6d3657]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:36:25.592457+00:00"
+    },
+    {
+      "operation_id": "b6ea511d-c467-4b64-8724-bcb55dffc8b3",
+      "tenant": "a",
+      "proposal_id": "b6ea511d-c467-4b64-8724-bcb55dffc8b3",
+      "status": "verified",
+      "external_id": 1011,
+      "expected": {
+        "text": "Technician report: Collected the presented certificate chain for issuer review.\nTicket context: Application certificate chain review is pending; status New\n[cw-op:b6ea511d-c467-4b64-8724-bcb55dffc8b3]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1011,
+        "text": "Technician report: Collected the presented certificate chain for issuer review.\nTicket context: Application certificate chain review is pending; status New\n[cw-op:b6ea511d-c467-4b64-8724-bcb55dffc8b3]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:36:44.623892+00:00"
+    },
+    {
+      "operation_id": "ceed384b-8985-4a96-9e37-83cd71ce06bb",
+      "tenant": "a",
+      "proposal_id": "ceed384b-8985-4a96-9e37-83cd71ce06bb",
+      "status": "verified",
+      "external_id": 1012,
+      "expected": {
+        "text": "Technician report: Collected the presented certificate chain for issuer review.\nTicket context: Application certificate chain review is pending; status New\n[cw-op:ceed384b-8985-4a96-9e37-83cd71ce06bb]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1012,
+        "text": "Technician report: Collected the presented certificate chain for issuer review.\nTicket context: Application certificate chain review is pending; status New\n[cw-op:ceed384b-8985-4a96-9e37-83cd71ce06bb]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:36:46.410821+00:00"
+    },
+    {
+      "operation_id": "577339cd-f455-4ad6-a128-9fd12b9f9c35",
+      "tenant": "b",
+      "proposal_id": "577339cd-f455-4ad6-a128-9fd12b9f9c35",
+      "status": "verified",
+      "external_id": 1013,
+      "expected": {
+        "notes": "Technician report: Reviewed account state and submitted a session revocation request.\nTicket context: Offboarding session revocation awaits confirmation; status New\n[cw-op:577339cd-f455-4ad6-a128-9fd12b9f9c35]",
+        "member": {
+          "id": 9
+        },
+        "timeEnd": "2026-10-08T02:37:00+00:00",
+        "workRole": {
+          "id": 2
+        },
+        "workType": {
+          "id": 2
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.6166666666666667,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1013,
+        "notes": "Technician report: Reviewed account state and submitted a session revocation request.\nTicket context: Offboarding session revocation awaits confirmation; status New\n[cw-op:577339cd-f455-4ad6-a128-9fd12b9f9c35]",
+        "member": {
+          "id": 9
+        },
+        "timeEnd": "2026-10-08T02:37:00+00:00",
+        "workRole": {
+          "id": 2
+        },
+        "workType": {
+          "id": 2
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.6166666666666667,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:36:46.814793+00:00"
+    },
+    {
+      "operation_id": "bf2856d2-07db-4e3f-8188-9e18e656527c",
+      "tenant": "b",
+      "proposal_id": "bf2856d2-07db-4e3f-8188-9e18e656527c",
+      "status": "verified",
+      "external_id": 1014,
+      "expected": {
+        "notes": "Technician report: Reviewed account state and submitted a session revocation request.\nTicket context: Offboarding session revocation awaits confirmation; status New\n[cw-op:bf2856d2-07db-4e3f-8188-9e18e656527c]",
+        "member": {
+          "id": 9
+        },
+        "timeEnd": "2026-10-08T02:37:00+00:00",
+        "workRole": {
+          "id": 2
+        },
+        "workType": {
+          "id": 2
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.6166666666666667,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1014,
+        "notes": "Technician report: Reviewed account state and submitted a session revocation request.\nTicket context: Offboarding session revocation awaits confirmation; status New\n[cw-op:bf2856d2-07db-4e3f-8188-9e18e656527c]",
+        "member": {
+          "id": 9
+        },
+        "timeEnd": "2026-10-08T02:37:00+00:00",
+        "workRole": {
+          "id": 2
+        },
+        "workType": {
+          "id": 2
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.6166666666666667,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:36:48.638643+00:00"
+    },
+    {
+      "operation_id": "599b31d4-32bc-4d2e-a2d5-9aa9e2110621",
+      "tenant": "b",
+      "proposal_id": "599b31d4-32bc-4d2e-a2d5-9aa9e2110621",
+      "status": "verified",
+      "external_id": 1015,
+      "expected": {
+        "notes": "Technician report: Reviewed account state and submitted a session revocation request.\nTicket context: Offboarding session revocation awaits confirmation; status New\n[cw-op:599b31d4-32bc-4d2e-a2d5-9aa9e2110621]",
+        "member": {
+          "id": 9
+        },
+        "timeEnd": "2026-10-08T02:37:00+00:00",
+        "workRole": {
+          "id": 2
+        },
+        "workType": {
+          "id": 2
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.6166666666666667,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1015,
+        "notes": "Technician report: Reviewed account state and submitted a session revocation request.\nTicket context: Offboarding session revocation awaits confirmation; status New\n[cw-op:599b31d4-32bc-4d2e-a2d5-9aa9e2110621]",
+        "member": {
+          "id": 9
+        },
+        "timeEnd": "2026-10-08T02:37:00+00:00",
+        "workRole": {
+          "id": 2
+        },
+        "workType": {
+          "id": 2
+        },
+        "timeStart": "2026-10-08T02:00:00+00:00",
+        "chargeToId": 100,
+        "actualHours": 0.6166666666666667,
+        "emailCcFlag": false,
+        "chargeToType": "ServiceTicket",
+        "billableOption": "DoNotBill",
+        "emailContactFlag": false,
+        "emailResourceFlag": false,
+        "addToResolutionFlag": false,
+        "addToInternalAnalysisFlag": true,
+        "addToDetailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:37:05.045624+00:00"
+    },
+    {
+      "operation_id": "6515423d-80bc-41e4-b3dc-b9349b8eb19e",
+      "tenant": "b",
+      "proposal_id": "6515423d-80bc-41e4-b3dc-b9349b8eb19e",
+      "status": "verified",
+      "external_id": 1016,
+      "expected": {
+        "text": "Technician report: Checked agent registration; telemetry delivery remains unverified.\nTicket context: Monitoring agent registration is incomplete; status New\n[cw-op:6515423d-80bc-41e4-b3dc-b9349b8eb19e]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1016,
+        "text": "Technician report: Checked agent registration; telemetry delivery remains unverified.\nTicket context: Monitoring agent registration is incomplete; status New\n[cw-op:6515423d-80bc-41e4-b3dc-b9349b8eb19e]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:37:31.74402+00:00"
+    },
+    {
+      "operation_id": "c5d3e39b-b778-4a3b-ada4-24bc501fb047",
+      "tenant": "b",
+      "proposal_id": "c5d3e39b-b778-4a3b-ada4-24bc501fb047",
+      "status": "verified",
+      "external_id": 1017,
+      "expected": {
+        "text": "Technician report: Checked agent registration; telemetry delivery remains unverified.\nTicket context: Monitoring agent registration is incomplete; status New\n[cw-op:c5d3e39b-b778-4a3b-ada4-24bc501fb047]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1017,
+        "text": "Technician report: Checked agent registration; telemetry delivery remains unverified.\nTicket context: Monitoring agent registration is incomplete; status New\n[cw-op:c5d3e39b-b778-4a3b-ada4-24bc501fb047]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:37:33.393651+00:00"
+    },
+    {
+      "operation_id": "b789c108-b3e8-46be-8ef3-5ee5050dc58c",
+      "tenant": "b",
+      "proposal_id": "b789c108-b3e8-46be-8ef3-5ee5050dc58c",
+      "status": "verified",
+      "external_id": 1018,
+      "expected": {
+        "text": "Technician report: Checked agent registration; telemetry delivery remains unverified.\nTicket context: Monitoring agent registration is incomplete; status New\n[cw-op:b789c108-b3e8-46be-8ef3-5ee5050dc58c]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "observed": {
+        "id": 1018,
+        "text": "Technician report: Checked agent registration; telemetry delivery remains unverified.\nTicket context: Monitoring agent registration is incomplete; status New\n[cw-op:b789c108-b3e8-46be-8ef3-5ee5050dc58c]",
+        "ticketId": 100,
+        "externalFlag": false,
+        "internalFlag": true,
+        "resolutionFlag": false,
+        "internalAnalysisFlag": true,
+        "processNotifications": false,
+        "detailDescriptionFlag": false
+      },
+      "verified_at": "2026-10-08T13:37:49.167527+00:00"
+    }
+  ]
+}

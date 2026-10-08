@@ -67,13 +67,13 @@ def main():
         status = 'passed'
     finally:
         run('down', '--remove-orphans', check=False)
-        evidence = ROOT / 'docs' / 'evidence' / 'phase-5-run.json'
+        evidence = ROOT / 'docs' / 'evidence' / 'phase-6-regression.json'
         files = {}
-        for directory in ('backend', 'client', 'tests', 'scripts', 'contracts', 'skills'):
+        for directory in ('backend', 'client', 'tests', 'scripts', 'contracts', 'skills', 'evaluation'):
             for path in sorted((ROOT / directory).rglob('*')):
                 if path.is_file() and not any(part in ('node_modules', 'dist', '__pycache__') for part in path.parts) and path.name != 'resolved.json':
                     files[path.relative_to(ROOT).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
-        for name in ('compose.yaml','compose.test.yaml','compose.ai.yaml'):
+        for name in ('compose.yaml','compose.test.yaml','compose.ai.yaml','compose.eval.yaml'):
             files[name] = hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
         evidence.write_text(json.dumps({'timestamp_utc': datetime.now(timezone.utc).isoformat(),
             'status': status, 'environment': 'local Docker Linux / isolated PostgreSQL tmpfs',

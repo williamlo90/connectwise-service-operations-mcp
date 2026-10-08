@@ -1,0 +1,76 @@
+{
+  "version": "2.0.0",
+  "model_policy": "No prompt/model changes after evaluation split is opened. Retire the split if used to tune behavior.",
+  "split_policy": "Development and evaluation business families are disjoint. Same application schema; no external/blind generalization claim.",
+  "providers": [
+    "ollama",
+    "openai"
+  ],
+  "order": "case order fixed; alternate provider order by case index",
+  "repetitions": 1,
+  "critical_gate": "Zero unsupported facts, wrong tenant, wrong visibility, invented duration, duplicate side effects or false verified outcomes.",
+  "utility_gate": {
+    "evaluation_completed_correct_minimum": 7,
+    "evaluation_cases": 8,
+    "per_provider": true
+  },
+  "latency_gate_ms": {
+    "ollama": 90000,
+    "openai": 90000,
+    "description": "Per-call safety ceiling, not a tail-latency SLA."
+  },
+  "budget": {
+    "currency": "USD",
+    "cap": 0.5,
+    "max_hosted_calls": 16,
+    "reserved_usd_per_call": 0.02,
+    "automatic_retries": 0,
+    "input_bytes_cap": 16000,
+    "output_tokens_cap": 512,
+    "expected_model_generations": 12,
+    "reservation_policy": "Reserve for all 16 assistant requests, including four expected pre-inference rejections. Maximum reserve 0.32 USD."
+  },
+  "pricing": {
+    "checked": "2026-10-08",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "input_usd_per_million": 0.4,
+    "output_usd_per_million": 1.6,
+    "source": "https://developers.openai.com/api/docs/models/gpt-4.1-mini",
+    "method": "uncached input list-price estimate; not invoiced cost"
+  },
+  "timing": {
+    "unit": "milliseconds",
+    "baseline": "scripted direct API, pre-supplied technician text",
+    "assisted": "real model plus same domain workflow",
+    "human_active_time": null,
+    "human_corrections": null,
+    "approval": "separate synthetic actor in test harness",
+    "claim": "software elapsed/wait only; no human productivity or ROI claim"
+  },
+  "negative_cases": [
+    "missing_duration",
+    "missing_technician_notes",
+    "cross_tenant",
+    "ungranted_worker_skill"
+  ],
+  "metrics": [
+    "source_reference_precision",
+    "required_evidence_recall",
+    "unknown_resolution_flag",
+    "completed_correct",
+    "verified_payload_fields",
+    "side_effect_count",
+    "elapsed_ms",
+    "inference_ms",
+    "usage",
+    "estimated_cost_usd"
+  ],
+  "stop_conditions": [
+    "any unsafe output/write stops execution of that case",
+    "hosted reservation exceeds cap",
+    "provider/system failure is recorded, not silently retried",
+    "no concurrent local inferences"
+  ],
+  "runtime": "isolated cw-ops-eval PostgreSQL tmpfs and simulator; real bounded local/hosted APIs",
+  "prompt_version": "evidence-selector-1.1.0"
+}

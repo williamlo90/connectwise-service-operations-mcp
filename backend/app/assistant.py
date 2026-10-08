@@ -144,7 +144,10 @@ def run_skill(body,actor,request):
             usage=generation.usage;model=generation.model
             choice,facts=validate_selection(generation.value,evidence,body.skill)
             status='abstained' if choice.decision=='abstain' else 'completed'
-            result={'facts':facts,'missing_information':choice.missing_information,'reason':'source_selection_validated',
+            # Extracted evidence never independently verifies resolution. This is a
+            # domain limitation, not an optional model classification.
+            missing=list(dict.fromkeys([*choice.missing_information,'resolution_unknown']))
+            result={'facts':facts,'missing_information':missing,'reason':'source_selection_validated',
                 'summary':'\n'.join(f'{e["id"]}: {e["text"]}' for e in facts),
                 'proposed_actions':[],'source_hash':source_hash,'claim_policy':'extractive; source text is not independently verified'}
             if status=='completed' and body.skill!='summarize_service_ticket':
