@@ -7,7 +7,7 @@ Synthetic local data | op-a | tenant a | operator
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
 {
   "ticket": {
@@ -109,9 +109,9 @@ Synthetic local data | op-a | tenant a | operator
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
-{"error":"not_found","correlation_id":"646c39b5-3a0d-41b5-9b56-d04d8b449e05"}
+{"error":"not_found","correlation_id":"511a18eb-e510-4d09-94ef-6c9dfd881f49"}
 
 $ client (op-a) --mcp --workflow note A-100
 Synthetic supplied input: Checked VPN settings; customer retest is pending.
@@ -119,13 +119,13 @@ Synthetic local data | op-a | tenant a | operator
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
 Internal note > {
-  "id": "0ec6f36d-d79f-461a-811e-597813d87e9c",
+  "id": "413f11e1-2b66-4479-afc0-e48090993875",
   "payload": {
     "ticketId": 100,
-    "text": "Checked VPN settings; customer retest is pending.\n[cw-op:0ec6f36d-d79f-461a-811e-597813d87e9c]",
+    "text": "Checked VPN settings; customer retest is pending.\n[cw-op:413f11e1-2b66-4479-afc0-e48090993875]",
     "internalAnalysisFlag": true,
     "detailDescriptionFlag": false,
     "resolutionFlag": false,
@@ -133,42 +133,42 @@ Internal note > {
     "externalFlag": false,
     "processNotifications": false
   },
-  "payload_hash": "3c103f18855814b1212a21f2b37dff021e797e2937308065310a814d80890469",
+  "payload_hash": "77e3c369d941329af23d96e7601cd4402aa449af34c50b686b0c8bcc2611a7e6",
   "evidence": {
     "duration_minutes": null,
     "duration_evidence": null,
     "source": "service/tickets/100",
     "duration_source": null
   },
-  "expires_at": "2026-10-08T14:52:19.419105+00:00",
+  "expires_at": "2026-10-09T06:27:50.333901+00:00",
   "status": "proposed"
 }
 
-$ client (op-a) --mcp --workflow execute 0ec6f36d-d79f-461a-811e-597813d87e9c
+$ client (op-a) --mcp --workflow execute 413f11e1-2b66-4479-afc0-e48090993875
 Synthetic local data | op-a | tenant a | operator
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
-Keep this idempotency key for retries: dbd3d34d-c458-4241-a3cc-729d73656eab
-{"error":"forbidden","correlation_id":"5728ca94-968e-4764-ab7f-5160150c8709"}
+Keep this idempotency key for retries: 5041d5a1-9221-4a9f-a361-7a11ae459d08
+{"error":"forbidden","correlation_id":"d0acc2b1-4e00-47d8-b6ad-c27e7601418c"}
 
-$ client (approver-a) --mcp --workflow approve 0ec6f36d-d79f-461a-811e-597813d87e9c
+$ client (approver-a) --mcp --workflow approve 413f11e1-2b66-4479-afc0-e48090993875
 Synthetic supplied input: APPROVE
 Synthetic local data | approver-a | tenant a | approver
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
 {
-  "id": "0ec6f36d-d79f-461a-811e-597813d87e9c",
+  "id": "413f11e1-2b66-4479-afc0-e48090993875",
   "ticket_id": "A-100",
   "kind": "note",
   "actor_id": "op-a",
   "payload": {
-    "text": "Checked VPN settings; customer retest is pending.\n[cw-op:0ec6f36d-d79f-461a-811e-597813d87e9c]",
+    "text": "Checked VPN settings; customer retest is pending.\n[cw-op:413f11e1-2b66-4479-afc0-e48090993875]",
     "ticketId": 100,
     "externalFlag": false,
     "internalFlag": true,
@@ -177,53 +177,53 @@ Synthetic local data | approver-a | tenant a | approver
     "processNotifications": false,
     "detailDescriptionFlag": false
   },
-  "payload_hash": "3c103f18855814b1212a21f2b37dff021e797e2937308065310a814d80890469",
+  "payload_hash": "77e3c369d941329af23d96e7601cd4402aa449af34c50b686b0c8bcc2611a7e6",
   "evidence": {
     "source": "service/tickets/100",
     "duration_source": null,
     "duration_minutes": null,
     "duration_evidence": null
   },
-  "expires_at": "2026-10-08T14:52:19.419105+00:00"
+  "expires_at": "2026-10-09T06:27:50.333901+00:00"
 }
 Review payload and duration evidence. Type APPROVE > {
-  "proposal_id": "0ec6f36d-d79f-461a-811e-597813d87e9c",
+  "proposal_id": "413f11e1-2b66-4479-afc0-e48090993875",
   "status": "approved"
 }
 
-$ client (op-a) --mcp --workflow execute 0ec6f36d-d79f-461a-811e-597813d87e9c
+$ client (op-a) --mcp --workflow execute 413f11e1-2b66-4479-afc0-e48090993875
 Synthetic local data | op-a | tenant a | operator
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
-Keep this idempotency key for retries: 17ccebd4-1bf8-4563-b5f9-f1fa199d7735
+Keep this idempotency key for retries: 47184f73-c9e9-490d-9a4e-cb898e264300
 {
-  "id": "0ec6f36d-d79f-461a-811e-597813d87e9c",
-  "proposal_id": "0ec6f36d-d79f-461a-811e-597813d87e9c",
+  "id": "413f11e1-2b66-4479-afc0-e48090993875",
+  "proposal_id": "413f11e1-2b66-4479-afc0-e48090993875",
   "status": "verified",
   "external_id": 1000,
   "error_code": null,
-  "created_at": "2026-10-08T14:22:23.457865+00:00",
-  "verified_at": "2026-10-08T14:22:23.506767+00:00"
+  "created_at": "2026-10-09T05:57:54.523378+00:00",
+  "verified_at": "2026-10-09T05:57:54.562756+00:00"
 }
 
-$ client (op-a) --mcp --workflow verify 0ec6f36d-d79f-461a-811e-597813d87e9c
+$ client (op-a) --mcp --workflow verify 413f11e1-2b66-4479-afc0-e48090993875
 Synthetic local data | op-a | tenant a | operator
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
 {
-  "id": "0ec6f36d-d79f-461a-811e-597813d87e9c",
-  "proposal_id": "0ec6f36d-d79f-461a-811e-597813d87e9c",
+  "id": "413f11e1-2b66-4479-afc0-e48090993875",
+  "proposal_id": "413f11e1-2b66-4479-afc0-e48090993875",
   "status": "verified",
   "external_id": 1000,
   "error_code": null,
-  "created_at": "2026-10-08T14:22:23.457865+00:00",
-  "verified_at": "2026-10-08T14:22:23.506767+00:00"
+  "created_at": "2026-10-09T05:57:54.523378+00:00",
+  "verified_at": "2026-10-09T05:57:54.562756+00:00"
 }
 
 $ client (op-a) --mcp --workflow time A-100
@@ -232,10 +232,10 @@ Synthetic local data | op-a | tenant a | operator
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
 Work description > Documented minutes > Timer/work-log evidence > Start ISO timestamp including timezone > {
-  "id": "a34f16c9-9dfb-4804-b458-d3a4ee18a7d1",
+  "id": "d9a54056-74bb-4d44-aa34-1bf72f69c58b",
   "payload": {
     "chargeToId": 100,
     "chargeToType": "ServiceTicket",
@@ -252,7 +252,7 @@ Work description > Documented minutes > Timer/work-log evidence > Start ISO time
     "timeEnd": "2026-10-08T02:25:00+00:00",
     "actualHours": 0.4166666666666667,
     "billableOption": "DoNotBill",
-    "notes": "Checked VPN connection\n[cw-op:a34f16c9-9dfb-4804-b458-d3a4ee18a7d1]",
+    "notes": "Checked VPN connection\n[cw-op:d9a54056-74bb-4d44-aa34-1bf72f69c58b]",
     "addToDetailDescriptionFlag": false,
     "addToInternalAnalysisFlag": true,
     "addToResolutionFlag": false,
@@ -260,32 +260,32 @@ Work description > Documented minutes > Timer/work-log evidence > Start ISO time
     "emailContactFlag": false,
     "emailCcFlag": false
   },
-  "payload_hash": "5ad04c1d72f168c15882b917d9e6612290d4ea734eb60e048c771a2629553f12",
+  "payload_hash": "295dd553db7859f35bd9ceaee88731d06dcf9543191377b66758c6fd844ce83d",
   "evidence": {
     "duration_minutes": 25,
     "duration_evidence": "Technician timer recorded 25 minutes",
     "source": "service/tickets/100",
     "duration_source": "technician_input"
   },
-  "expires_at": "2026-10-08T14:52:26.789755+00:00",
+  "expires_at": "2026-10-09T06:27:57.651032+00:00",
   "status": "proposed"
 }
 
-$ client (approver-a) --mcp --workflow approve a34f16c9-9dfb-4804-b458-d3a4ee18a7d1
+$ client (approver-a) --mcp --workflow approve d9a54056-74bb-4d44-aa34-1bf72f69c58b
 Synthetic supplied input: APPROVE
 Synthetic local data | approver-a | tenant a | approver
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
 {
-  "id": "a34f16c9-9dfb-4804-b458-d3a4ee18a7d1",
+  "id": "d9a54056-74bb-4d44-aa34-1bf72f69c58b",
   "ticket_id": "A-100",
   "kind": "time",
   "actor_id": "op-a",
   "payload": {
-    "notes": "Checked VPN connection\n[cw-op:a34f16c9-9dfb-4804-b458-d3a4ee18a7d1]",
+    "notes": "Checked VPN connection\n[cw-op:d9a54056-74bb-4d44-aa34-1bf72f69c58b]",
     "member": {
       "id": 7
     },
@@ -308,36 +308,36 @@ Synthetic local data | approver-a | tenant a | approver
     "addToInternalAnalysisFlag": true,
     "addToDetailDescriptionFlag": false
   },
-  "payload_hash": "5ad04c1d72f168c15882b917d9e6612290d4ea734eb60e048c771a2629553f12",
+  "payload_hash": "295dd553db7859f35bd9ceaee88731d06dcf9543191377b66758c6fd844ce83d",
   "evidence": {
     "source": "service/tickets/100",
     "duration_source": "technician_input",
     "duration_minutes": 25,
     "duration_evidence": "Technician timer recorded 25 minutes"
   },
-  "expires_at": "2026-10-08T14:52:26.789755+00:00"
+  "expires_at": "2026-10-09T06:27:57.651032+00:00"
 }
 Review payload and duration evidence. Type APPROVE > {
-  "proposal_id": "a34f16c9-9dfb-4804-b458-d3a4ee18a7d1",
+  "proposal_id": "d9a54056-74bb-4d44-aa34-1bf72f69c58b",
   "status": "approved"
 }
 
-$ client (op-a) --mcp --workflow execute a34f16c9-9dfb-4804-b458-d3a4ee18a7d1
+$ client (op-a) --mcp --workflow execute d9a54056-74bb-4d44-aa34-1bf72f69c58b
 Synthetic local data | op-a | tenant a | operator
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
-Keep this idempotency key for retries: a54a4469-0d74-4e44-9187-9a6a5a0fe0b7
+Keep this idempotency key for retries: 04415a3f-a436-45c0-b280-848511cca308
 {
-  "id": "a34f16c9-9dfb-4804-b458-d3a4ee18a7d1",
-  "proposal_id": "a34f16c9-9dfb-4804-b458-d3a4ee18a7d1",
+  "id": "d9a54056-74bb-4d44-aa34-1bf72f69c58b",
+  "proposal_id": "d9a54056-74bb-4d44-aa34-1bf72f69c58b",
   "status": "verified",
   "external_id": 1001,
   "error_code": null,
-  "created_at": "2026-10-08T14:22:29.571602+00:00",
-  "verified_at": "2026-10-08T14:22:29.628911+00:00"
+  "created_at": "2026-10-09T05:58:00.445833+00:00",
+  "verified_at": "2026-10-09T05:58:00.505325+00:00"
 }
 
 $ client (op-a) --mcp --workflow note A-100
@@ -346,13 +346,13 @@ Synthetic local data | op-a | tenant a | operator
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
 Internal note > {
-  "id": "3df24d71-c817-4c8d-8aed-907093548bf8",
+  "id": "c38802d3-1419-46c8-bc7a-bf33bca7d0bd",
   "payload": {
     "ticketId": 100,
-    "text": "Recovery demo: awaiting customer confirmation.\n[cw-op:3df24d71-c817-4c8d-8aed-907093548bf8]",
+    "text": "Recovery demo: awaiting customer confirmation.\n[cw-op:c38802d3-1419-46c8-bc7a-bf33bca7d0bd]",
     "internalAnalysisFlag": true,
     "detailDescriptionFlag": false,
     "resolutionFlag": false,
@@ -360,32 +360,32 @@ Internal note > {
     "externalFlag": false,
     "processNotifications": false
   },
-  "payload_hash": "be1f330f3d6f8ff9a32cd5c335953ba358dd98ebf3f880f8c54bb9e66baf641d",
+  "payload_hash": "7d1a91dee2d180e3b761a2cacba4574fa27b51fcda65be7520fc1c79a64344b5",
   "evidence": {
     "duration_minutes": null,
     "duration_evidence": null,
     "source": "service/tickets/100",
     "duration_source": null
   },
-  "expires_at": "2026-10-08T14:52:31.103877+00:00",
+  "expires_at": "2026-10-09T06:28:02.043311+00:00",
   "status": "proposed"
 }
 
-$ client (approver-a) --mcp --workflow approve 3df24d71-c817-4c8d-8aed-907093548bf8
+$ client (approver-a) --mcp --workflow approve c38802d3-1419-46c8-bc7a-bf33bca7d0bd
 Synthetic supplied input: APPROVE
 Synthetic local data | approver-a | tenant a | approver
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
 {
-  "id": "3df24d71-c817-4c8d-8aed-907093548bf8",
+  "id": "c38802d3-1419-46c8-bc7a-bf33bca7d0bd",
   "ticket_id": "A-100",
   "kind": "note",
   "actor_id": "op-a",
   "payload": {
-    "text": "Recovery demo: awaiting customer confirmation.\n[cw-op:3df24d71-c817-4c8d-8aed-907093548bf8]",
+    "text": "Recovery demo: awaiting customer confirmation.\n[cw-op:c38802d3-1419-46c8-bc7a-bf33bca7d0bd]",
     "ticketId": 100,
     "externalFlag": false,
     "internalFlag": true,
@@ -394,73 +394,73 @@ Synthetic local data | approver-a | tenant a | approver
     "processNotifications": false,
     "detailDescriptionFlag": false
   },
-  "payload_hash": "be1f330f3d6f8ff9a32cd5c335953ba358dd98ebf3f880f8c54bb9e66baf641d",
+  "payload_hash": "7d1a91dee2d180e3b761a2cacba4574fa27b51fcda65be7520fc1c79a64344b5",
   "evidence": {
     "source": "service/tickets/100",
     "duration_source": null,
     "duration_minutes": null,
     "duration_evidence": null
   },
-  "expires_at": "2026-10-08T14:52:31.103877+00:00"
+  "expires_at": "2026-10-09T06:28:02.043311+00:00"
 }
 Review payload and duration evidence. Type APPROVE > {
-  "proposal_id": "3df24d71-c817-4c8d-8aed-907093548bf8",
+  "proposal_id": "c38802d3-1419-46c8-bc7a-bf33bca7d0bd",
   "status": "approved"
 }
 
 [Isolated simulator fixture: write commits, response is delayed; first read-back is unavailable.]
 
-$ client (op-a) --mcp --workflow execute 3df24d71-c817-4c8d-8aed-907093548bf8 1032f4d2-70bb-46c9-b01a-844b84794157
+$ client (op-a) --mcp --workflow execute c38802d3-1419-46c8-bc7a-bf33bca7d0bd b727ef68-2974-427b-99ba-f78b9700a4e1
 Synthetic local data | op-a | tenant a | operator
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
-Keep this idempotency key for retries: 1032f4d2-70bb-46c9-b01a-844b84794157
+Keep this idempotency key for retries: b727ef68-2974-427b-99ba-f78b9700a4e1
 {
-  "id": "3df24d71-c817-4c8d-8aed-907093548bf8",
-  "proposal_id": "3df24d71-c817-4c8d-8aed-907093548bf8",
+  "id": "c38802d3-1419-46c8-bc7a-bf33bca7d0bd",
+  "proposal_id": "c38802d3-1419-46c8-bc7a-bf33bca7d0bd",
   "status": "unknown",
   "external_id": null,
   "error_code": "readback_unavailable",
-  "created_at": "2026-10-08T14:22:34.257949+00:00",
+  "created_at": "2026-10-09T05:58:08.065907+00:00",
   "verified_at": null
 }
 
-$ client (op-a) --mcp --workflow verify 3df24d71-c817-4c8d-8aed-907093548bf8
+$ client (op-a) --mcp --workflow verify c38802d3-1419-46c8-bc7a-bf33bca7d0bd
 Synthetic local data | op-a | tenant a | operator
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
 {
-  "id": "3df24d71-c817-4c8d-8aed-907093548bf8",
-  "proposal_id": "3df24d71-c817-4c8d-8aed-907093548bf8",
+  "id": "c38802d3-1419-46c8-bc7a-bf33bca7d0bd",
+  "proposal_id": "c38802d3-1419-46c8-bc7a-bf33bca7d0bd",
   "status": "verified",
   "external_id": 1002,
   "error_code": null,
-  "created_at": "2026-10-08T14:22:34.257949+00:00",
-  "verified_at": "2026-10-08T14:22:36.586007+00:00"
+  "created_at": "2026-10-09T05:58:08.065907+00:00",
+  "verified_at": "2026-10-09T05:58:10.338096+00:00"
 }
 
-$ client (op-a) --mcp --workflow execute 3df24d71-c817-4c8d-8aed-907093548bf8 1032f4d2-70bb-46c9-b01a-844b84794157
+$ client (op-a) --mcp --workflow execute c38802d3-1419-46c8-bc7a-bf33bca7d0bd b727ef68-2974-427b-99ba-f78b9700a4e1
 Synthetic local data | op-a | tenant a | operator
 ┌─────────┬─────────┬────────────────────────┬────────┬────────────┬───────────┬─────────┬────────────────────────────────────┬──────────────┐
 │ (index) │ id      │ summary                │ status │ company_id │ board_id  │ version │ updated_at                         │ company_name │
 ├─────────┼─────────┼────────────────────────┼────────┼────────────┼───────────┼─────────┼────────────────────────────────────┼──────────────┤
-│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-08T14:22:07.380978+00:00' │ 'Acme Demo'  │
+│ 0       │ 'A-100' │ 'VPN connection fails' │ 'New'  │ 'acme'     │ 'support' │ 1       │ '2026-10-09T05:57:40.695122+00:00' │ 'Acme Demo'  │
 └─────────┴─────────┴────────────────────────┴────────┴────────────┴───────────┴─────────┴────────────────────────────────────┴──────────────┘
-Keep this idempotency key for retries: 1032f4d2-70bb-46c9-b01a-844b84794157
+Keep this idempotency key for retries: b727ef68-2974-427b-99ba-f78b9700a4e1
 {
-  "id": "3df24d71-c817-4c8d-8aed-907093548bf8",
-  "proposal_id": "3df24d71-c817-4c8d-8aed-907093548bf8",
+  "id": "c38802d3-1419-46c8-bc7a-bf33bca7d0bd",
+  "proposal_id": "c38802d3-1419-46c8-bc7a-bf33bca7d0bd",
   "status": "verified",
   "external_id": 1002,
   "error_code": null,
-  "created_at": "2026-10-08T14:22:34.257949+00:00",
-  "verified_at": "2026-10-08T14:22:36.586007+00:00"
+  "created_at": "2026-10-09T05:58:08.065907+00:00",
+  "verified_at": "2026-10-09T05:58:10.338096+00:00"
 }
 
 Independent simulator check: exactly ONE effect for the recovered operation.

@@ -1,9 +1,9 @@
 {
   "status": "passed",
-  "timestamp_utc": "2026-10-08T17:04:21.857184+00:00",
-  "source_revision": "4fbbaf9d8875de1ee5d99c905e9c3ea015bd2c42",
+  "timestamp_utc": "2026-10-09T05:58:15.682241+00:00",
+  "source_revision": "b17529ff2302811495fa191fe9e08fbdb4f9f29d",
   "environment": "fresh Git archive, generated secrets, new named volumes and loopback dynamic port; existing Docker download/build cache",
-  "project": "cw-ops-install-daa19b51",
+  "project": "cw-ops-install-674e27d8",
   "hosted_requests": 0,
   "steps": [
     {
@@ -11,43 +11,43 @@
       "status": "passed"
     },
     {
-      "command": "docker compose -p cw-ops-install-daa19b51 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation build",
+      "command": "docker compose -p cw-ops-install-674e27d8 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation build",
       "status": "passed"
     },
     {
-      "command": "docker compose -p cw-ops-install-daa19b51 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation up -d --wait api",
+      "command": "docker compose -p cw-ops-install-674e27d8 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation up -d --wait api",
       "status": "passed"
     },
     {
-      "command": "docker compose -p cw-ops-install-daa19b51 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps seed",
+      "command": "docker compose -p cw-ops-install-674e27d8 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps seed",
       "status": "passed"
     },
     {
-      "command": "docker compose -p cw-ops-install-daa19b51 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps client --smoke",
+      "command": "docker compose -p cw-ops-install-674e27d8 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps client --smoke",
       "status": "passed"
     },
     {
-      "command": "docker compose -p cw-ops-install-daa19b51 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps client --mcp --workflow context A-100",
+      "command": "docker compose -p cw-ops-install-674e27d8 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps client --mcp --workflow context A-100",
       "status": "passed"
     },
     {
-      "command": "docker compose -p cw-ops-install-daa19b51 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps seed",
+      "command": "docker compose -p cw-ops-install-674e27d8 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps seed",
       "status": "passed"
     },
     {
-      "command": "docker compose -p cw-ops-install-daa19b51 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation up -d --wait worker monitor",
+      "command": "docker compose -p cw-ops-install-674e27d8 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation up -d --wait worker monitor",
       "status": "passed"
     },
     {
-      "command": "docker compose -p cw-ops-install-daa19b51 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation stop",
+      "command": "docker compose -p cw-ops-install-674e27d8 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation stop",
       "status": "passed"
     },
     {
-      "command": "docker compose -p cw-ops-install-daa19b51 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation up -d --wait api worker monitor",
+      "command": "docker compose -p cw-ops-install-674e27d8 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation up -d --wait api worker monitor",
       "status": "passed"
     },
     {
-      "command": "docker compose -p cw-ops-install-daa19b51 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps client --smoke",
+      "command": "docker compose -p cw-ops-install-674e27d8 -f compose.yaml -f compose.ops.yaml --profile tools --profile automation run --rm --no-deps client --smoke",
       "status": "passed"
     }
   ],

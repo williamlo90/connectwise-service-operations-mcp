@@ -1,8 +1,8 @@
 {
   "status": "passed",
   "scope": "single-operator synthetic simulator; scripted separate-user approval",
-  "recorded_at": "2026-10-08T14:21:58.571952+00:00",
-  "source_revision": "e3541f19dde89dec6c0b07ff4609662267f60b0f",
+  "recorded_at": "2026-10-09T05:57:28.565924+00:00",
+  "source_revision": "b17529ff2302811495fa191fe9e08fbdb4f9f29d",
   "paid_requests": 0,
   "model_requests": 0,
   "cases": [
@@ -14,12 +14,12 @@
   ],
   "verified_operations": [
     {
-      "id": "0ec6f36d-d79f-461a-811e-597813d87e9c",
+      "id": "413f11e1-2b66-4479-afc0-e48090993875",
       "tenant_id": "a",
       "status": "verified",
       "external_id": 1000,
       "expected": {
-        "text": "Checked VPN settings; customer retest is pending.\n[cw-op:0ec6f36d-d79f-461a-811e-597813d87e9c]",
+        "text": "Checked VPN settings; customer retest is pending.\n[cw-op:413f11e1-2b66-4479-afc0-e48090993875]",
         "ticketId": 100,
         "externalFlag": false,
         "internalFlag": true,
@@ -30,7 +30,7 @@
       },
       "observed": {
         "id": 1000,
-        "text": "Checked VPN settings; customer retest is pending.\n[cw-op:0ec6f36d-d79f-461a-811e-597813d87e9c]",
+        "text": "Checked VPN settings; customer retest is pending.\n[cw-op:413f11e1-2b66-4479-afc0-e48090993875]",
         "ticketId": 100,
         "externalFlag": false,
         "internalFlag": true,
@@ -41,12 +41,12 @@
       }
     },
     {
-      "id": "a34f16c9-9dfb-4804-b458-d3a4ee18a7d1",
+      "id": "d9a54056-74bb-4d44-aa34-1bf72f69c58b",
       "tenant_id": "a",
       "status": "verified",
       "external_id": 1001,
       "expected": {
-        "notes": "Checked VPN connection\n[cw-op:a34f16c9-9dfb-4804-b458-d3a4ee18a7d1]",
+        "notes": "Checked VPN connection\n[cw-op:d9a54056-74bb-4d44-aa34-1bf72f69c58b]",
         "member": {
           "id": 7
         },
@@ -71,7 +71,7 @@
       },
       "observed": {
         "id": 1001,
-        "notes": "Checked VPN connection\n[cw-op:a34f16c9-9dfb-4804-b458-d3a4ee18a7d1]",
+        "notes": "Checked VPN connection\n[cw-op:d9a54056-74bb-4d44-aa34-1bf72f69c58b]",
         "member": {
           "id": 7
         },
@@ -96,12 +96,12 @@
       }
     },
     {
-      "id": "3df24d71-c817-4c8d-8aed-907093548bf8",
+      "id": "c38802d3-1419-46c8-bc7a-bf33bca7d0bd",
       "tenant_id": "a",
       "status": "verified",
       "external_id": 1002,
       "expected": {
-        "text": "Recovery demo: awaiting customer confirmation.\n[cw-op:3df24d71-c817-4c8d-8aed-907093548bf8]",
+        "text": "Recovery demo: awaiting customer confirmation.\n[cw-op:c38802d3-1419-46c8-bc7a-bf33bca7d0bd]",
         "ticketId": 100,
         "externalFlag": false,
         "internalFlag": true,
@@ -112,7 +112,7 @@
       },
       "observed": {
         "id": 1002,
-        "text": "Recovery demo: awaiting customer confirmation.\n[cw-op:3df24d71-c817-4c8d-8aed-907093548bf8]",
+        "text": "Recovery demo: awaiting customer confirmation.\n[cw-op:c38802d3-1419-46c8-bc7a-bf33bca7d0bd]",
         "ticketId": 100,
         "externalFlag": false,
         "internalFlag": true,
@@ -124,7 +124,7 @@
     }
   ],
   "duplicate_effects": 0,
-  "elapsed_seconds": 42.057,
+  "elapsed_seconds": 43.025,
   "source_sha256": {
     "backend/app/__init__.py": "051a5b35dc121804a9f3232ce12d18a1eae8d546c43f98417a9de5f135a1d942",
     "backend/app/ai_providers.py": "33448bca7de2f6d223b4ae5364bce20bdf1390f98362919b653fb37e1616bb4d",
@@ -132,7 +132,7 @@
     "backend/app/automation.py": "9327d062d9e5097aff8dfc3d8df73ae3667b10322a4992a0d84c2196c01e1ecf",
     "backend/app/config.py": "d56a26a4904808b6dc029f130606bcf9f520db142bbe06ceb3018b77f923c4e7",
     "backend/app/db.py": "5d4c264cb0d3c92b693466529cedd07e72730822f12f04cdfa3ffa66a61a3d37",
-    "backend/app/main.py": "0bc748d6f72f1f470ea7ecfbf7aec567aa50521dc1857cc04c8769f6120e0eb0",
+    "backend/app/main.py": "8cbc0daa9453989eafe1b2e552a31d4c133e46870d6336f4444e0cc93c518027",
     "backend/app/migrate.py": "9bd391db20ee4960f8e42175248750d20df962df90d85cae2b3abc2364e381ed",
     "backend/app/monitor.py": "76e855e9c0cb98c05ba2c4ad6eeaa0375962ebb204e7a8a52300fe7c3d31c7b7",
     "backend/app/passwords.py": "afce54f0ad02aa3a028d523f124c1f3ca02c8e64ab12ceafd7492e01a6fb50fc",
@@ -143,20 +143,23 @@
     "backend/app/tracing.py": "aa5baf630c327ee57af98ca367b935153237a273a9587bbca94cc82b394586ad",
     "backend/app/worker.py": "09e3174174677a166f5c029fe54a9284a15b5d4284e4b9b3cb8c9e0900d71ad4",
     "backend/app/workflows.py": "1ba963a0a9fb7c933e7545d272c2633ba09de7e315ce4792439e4b694be64b60",
-    "backend/Dockerfile": "7fb7825dc248ebfb2adf9beae47d243bf403c94b014d9691f2c5777ce2e12b1d",
+    "backend/Dockerfile": "989f6b9f910011026d61c2f581f11eadb119eebb310917364d90608ce6b3aee2",
     "backend/migrations/001_foundation.sql": "c780f17e82ec489d739b654bc4ddfffe28935b463769c50a5c240c15524c768c",
     "backend/migrations/002_workflows.sql": "c5ced285cbf36c10852fa6db229df9ea224e65eab1af63e327fe3d2dc98c2c9e",
     "backend/migrations/003_assistant.sql": "13f2c45a6cd9d723c7aa9eb9bc027c0fb41790340e45e511b3fdf0ed045c9158",
     "backend/migrations/004_automation.sql": "a4669a2ddfb2b85e1b0e34c7b0f6d8e148d10fcc18bd524a62a3ebb0e60a6a91",
     "backend/requirements.in": "4167f842090b2a1386d96d374dc3cee5a6005e260288d26aa4595edd0fe73505",
     "backend/requirements.lock": "4e183e70b18ca78eed13066d58981404eb83c077883c00ed595361ae3edd3403",
+    "backend/static/index.html": "edd9eb3b8ad5696d042b45dac87f6e6cbc4cdea1ec878979c54dc758a3f62925",
+    "backend/static/workspace.css": "8ae3890fb15abfb78008b50c5489f9e32294935bd4d6885c5c64dfa027d96a3d",
+    "backend/static/workspace.js": "71090971779c3850d4d2dc71ba9aa6a3f0f90fdff2b3a2a01cc5eea234e76663",
     "client/Dockerfile": "53aced4ad6de40dd48cbf28e1755fe74538b44013cfb93fda7f8e4f0bd604261",
     "client/package-lock.json": "91bc621b6e6b7b9d6e9e26745536ccfdbde3baa63058352fd7b643bf57a096e2",
     "client/package.json": "27f5d405865530e85af6ad1e5777973e5408c709657a5776c7ee228f5503a729",
     "client/src/assistant-cli.ts": "49a836a0f4dddf281dacad494c11a3a58ac26d72ba225d8fb9ca89be96a69144",
     "client/src/automation-cli.ts": "3712d58526f32895a3ed0ea4b5f59b946700f7757df3067dc319c23fb7d3cdce",
     "client/src/consumer-examples.ts": "cc1ab2c0b9eeff93aa6d8541d79bd09048161c69fa9d745938d78ddea91ae055",
-    "client/src/index.ts": "fe06f63d28ab6068667a38cd45f05ca1f8dc7f21b45a52c1c8f33ed426f88ed3",
+    "client/src/index.ts": "83e6e27d49625e2a99e309c05331c12cf65ff495a0de48ced1545b13296b563f",
     "client/src/mcp-acceptance.ts": "60cde823fff6082e624af534cbd863458f4fa9b651625e44760393364449d03d",
     "client/src/mcp-client.ts": "f6dc31a7c21512d11022c7be59048db230f10a952da125cc4a51d1de41be18ed",
     "client/src/mcp-server.ts": "e930891b185082807f2cbf5a1bc25fe48f301e20520d14b705ef5fbec223996b",
