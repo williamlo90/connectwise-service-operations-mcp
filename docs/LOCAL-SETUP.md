@@ -1,6 +1,6 @@
 # Local setup and quick start
 
-This is the current local/simulator release: FastAPI, PostgreSQL, a PSA HTTP simulator, TypeScript CLI/stdio MCP, optional AI, scheduled sync and a local alert inbox. The browser workspace is served by the API; the CLI and stdio MCP are also available. It does not contact a real ConnectWise tenant.
+This is the current local/simulator release: FastAPI, PostgreSQL, a PSA HTTP simulator, TypeScript CLI/stdio MCP, optional AI, scheduled sync and a local alert inbox. The minimal human review page is served by the API; the CLI and stdio MCP handle preparation and execution. It does not contact a real ConnectWise tenant.
 
 ## Requirements
 
@@ -21,11 +21,12 @@ docker compose -f compose.yaml -f compose.ops.yaml --profile automation up -d --
 
 Setup creates unique passwords in ignored `.env` without printing or overwriting existing values. Keep that file private. `.env.example` is a template, not a credential. Changing `.env` does not rotate a password already stored in PostgreSQL. Seed is idempotent: rerunning it preserves users, records and settings. Hosted AI remains disabled in a fresh setup; no provider key is needed for these steps.
 
-Browser workspace: **http://localhost:8030/**. Readiness endpoint: `http://127.0.0.1:8030/health/ready`. Change `API_PORT` in `.env` if necessary. Read `local/monitor/metrics.json` and `alerts.jsonl` for local monitoring; the worker needs a few seconds to perform its first sync.
+Human review page: **http://localhost:8030/**. Readiness endpoint: `http://127.0.0.1:8030/health/ready`. Change `API_PORT` in `.env` if necessary. Read `local/monitor/metrics.json` and `alerts.jsonl` for local monitoring; the worker needs a few seconds to perform its first sync.
 
 ## First task
 
 ```sh
+docker compose run --rm client --mcp --tools
 docker compose run --rm client --mcp --workflow context A-100
 docker compose run --rm client --mcp --workflow note A-100
 ```

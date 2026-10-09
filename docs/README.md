@@ -6,7 +6,7 @@ Start with the product and its measured results, then follow the implementation 
 
 | Guide | Purpose |
 | --- | --- |
-| [Product walkthrough](showcase/README.md) | See preparation, separate approval, execution and recovery in the browser |
+| [Product walkthrough](showcase/README.md) | Follow real MCP preparation and execution, browser approval, and recovery |
 | [Engineering case study](CASE-STUDY.md) | Understand the problem, contribution and design decisions |
 | [Business brief](BUSINESS-BRIEF.md) | Review users, scope and expected operational value |
 | [Portfolio copy](PORTFOLIO-COPY.md) | English CV, LinkedIn and interview material |
@@ -27,7 +27,9 @@ Start with the product and its measured results, then follow the implementation 
 | Guide | Purpose |
 | --- | --- |
 | [Architecture](ARCHITECTURE.md) | Map components, authority and failure handling |
-| [Browser workspace](WORKSPACE-UI.md) | Understand the UI implementation and reproduce browser checks |
+| [Human review page](WORKSPACE-UI.md) | Understand the narrow UI and reproduce browser checks |
+| [Six-tool map](MCP-TOOL-MAP.md) | Inputs, outputs, authorization and evidence for each tool |
+| [MCP-first walkthrough](MCP-WALKTHROUGH.md) | Follow one recorded synthetic operation end to end |
 | [Deterministic workflow](PHASE-2-WORKFLOW.md) | Inspect proposal, approval, execution and verification behavior |
 | [MCP server](PHASE-4-MCP.md) | Inspect the tool catalog and stdio protocol contract |
 | [Consumer contract](../contracts/MCP-CONSUMERS-V1.md) | Integrate bounded service operations with another consumer |

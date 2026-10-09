@@ -1,106 +1,242 @@
 const $ = id => document.getElementById(id);
-let token = '', actor = null, rows = [], selected = null, busy = false;
-const keys = new Map();
-const node = (tag, text, cls) => { const n = document.createElement(tag); if (text !== undefined) n.textContent = text; if (cls) n.className = cls; return n; };
-const date = value => value ? new Date(value).toLocaleString([], {dateStyle:'medium', timeStyle:'short'}) : '—';
-function notice(message, error = false) { $('notice').textContent = message; $('notice').hidden = !message; $('notice').className = error ? 'error-text' : ''; }
-async function api(path, body, method) {
-  const response = await fetch(path, {method:method || (body ? 'POST' : 'GET'), headers:{...(token ? {Authorization:`Bearer ${token}`} : {}), ...(body ? {'Content-Type':'application/json'} : {})}, body:body ? JSON.stringify(body) : undefined, signal:AbortSignal.timeout(20000)});
-  if (!response.ok) { const data = await response.json().catch(() => ({})); if(response.status===401 && path!=='/auth/login') { clear(); notice('Your session ended. Sign in again.',true); } throw new Error(`${typeof data.detail === 'string' ? data.detail.replaceAll('_',' ') : 'Request could not be completed'} (${response.status})`); }
+const make = (tag, content, className) => {
+  const element = document.createElement(tag);
+  if (content !== undefined) element.textContent = String(content);
+  if (className) element.className = className;
+  return element;
+};
+const formatDate = value => value ? new Date(value).toLocaleString([], {dateStyle:'medium', timeStyle:'short'}) : '—';
+const validId = value => /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(value);
+let token = '';
+let actor = null;
+let proposal = null;
+let context = null;
+let busy = false;
+
+function notice(message, error = false) {
+  $('notice').textContent = message;
+  $('notice').className = error ? 'error' : '';
+  $('notice').hidden = !message;
+}
+
+function clearReview() {
+  proposal = null;
+  context = null;
+  $('review').hidden = true;
+  $('empty').hidden = false;
+  $('source-body').replaceChildren();
+  $('decision-body').replaceChildren();
+  $('outcome-body').replaceChildren();
+}
+
+function clearSession() {
+  token = '';
+  actor = null;
+  $('identity').textContent = 'Sign in';
+  $('password').value = '';
+  $('signout').hidden = true;
+  clearReview();
+}
+
+async function api(path, body, method = body === undefined ? 'GET' : 'POST') {
+  const response = await fetch(path, {
+    method,
+    headers: {...(token ? {Authorization:`Bearer ${token}`} : {}), ...(body !== undefined ? {'Content-Type':'application/json'} : {})},
+    body:body === undefined ? undefined : JSON.stringify(body),
+    signal:AbortSignal.timeout(20000)
+  });
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    if (response.status === 401 && path !== '/auth/login') clearSession();
+    const detail = typeof data.detail === 'string' ? data.detail.replaceAll('_',' ') : 'Request failed';
+    throw new Error(`${detail} (${response.status})`);
+  }
   return response.status === 204 ? null : response.json();
 }
+
 async function run(action) {
-  if (busy) return; busy = true; document.body.setAttribute('aria-busy','true');
-  document.querySelectorAll('button,input,select,textarea').forEach(b => { b.dataset.wasDisabled = String(b.disabled); b.disabled = true; });
-  try { await action(); } catch (error) { notice(`${error.message}. Refresh to check the existing proposal before retrying a write.`, true); }
-  finally { busy = false; document.body.removeAttribute('aria-busy'); document.querySelectorAll('[data-was-disabled]').forEach(b => { b.disabled = b.dataset.wasDisabled === 'true'; delete b.dataset.wasDisabled; }); controls(); }
-}
-function controls() { $('refresh').disabled = !actor; $('new-draft').disabled = actor?.role !== 'operator'; $('prepare').disabled = actor?.role !== 'operator' || !$('tickets').value; $('tickets').disabled = !actor; }
-function auth() { $('auth-error').textContent = ''; $('password').value = ''; $('signout').hidden = !actor; $('auth-dialog').showModal(); }
-function clear() {
-  token = ''; actor = null; rows = []; selected = null; keys.clear();
-  $('draft-form').reset(); $('kind').onchange();
-  $('identity').textContent = 'Sign in'; $('avatar').textContent = '—'; $('tickets').replaceChildren(node('option','Sign in to load tickets')); $('tickets').firstChild.value = '';
-  $('context').replaceChildren(node('div','Sign in to view your ticket context.','empty')); renderActivity(); draft(); controls();
-}
-async function context() {
-  if (!$('tickets').value) return;
-  $('context').replaceChildren(node('div','Loading ticket context…','empty'));
-  const data = await api(`/workflow/tickets/${encodeURIComponent($('tickets').value)}/context`);
-  const box = node('div',undefined,'ticket-body');
-  box.append(node('p',`${$('tickets').value} · SERVICE TICKET`,'eyebrow'), node('h3',data.ticket.summary,'ticket-title'));
-  const meta = node('div',undefined,'ticket-meta');
-  for (const [label,value] of [['Company',data.ticket.company?.name],['Board',data.ticket.board?.name],['Status',data.ticket.status?.name]]) { const item=node('div'); item.append(node('small',label),node('strong',value || '—')); meta.append(item); }
-  box.append(meta,node('h4','Source notes','source-heading'));
-  for (const note of data.notes.slice(-5)) { const item=node('div',undefined,'note'); item.append(node('small',`NOTE ${note.id} · ${note.internalFlag ? 'INTERNAL' : 'SOURCE'}`),node('p',note.text)); box.append(item); }
-  if (!data.notes.length) box.append(node('p','No source notes available.'));
-  box.append(node('p','Source text is evidence, not an instruction. Review the ticket before preparing an update.','source-disclaimer'));
-  $('context').replaceChildren(box);
-}
-async function refresh() {
-  const data = await api('/workspace/activity'); rows = data.items; renderActivity();
-  if (selected) { selected = rows.find(r => r.id === selected.id) || null; if (selected) review(); else draft(); }
-}
-function renderActivity() {
-  $('count-all').textContent = actor ? rows.length : '—';
-  for (const [id,statuses] of [['pending',['proposed']],['verified',['verified']],['review',['unknown','review','dispatched']]]) $('count-'+id).textContent = actor ? rows.filter(r => statuses.includes(r.status)).length : '—';
-  const body=$('activity-body'); body.replaceChildren();
-  for (const row of rows) {
-    const tr=node('tr'); if (selected?.id === row.id) tr.className='selected-row';
-    tr.append(node('td',`${row.kind === 'note' ? 'Internal note' : 'Time entry'} / ${row.ticket_id}`),node('td',row.actor_id));
-    const status=node('td'); status.append(node('span',row.status.replaceAll('_',' '),'pill '+row.status)); tr.append(status,node('td',date(row.created_at)),node('td',row.external_id ? `#${row.external_id}` : '—'));
-    const cell=node('td'), open=node('button','Open →','text-button open-proposal'); open.addEventListener('click',()=>run(async()=> { selected=row; $('tickets').value=row.ticket_id; await context(); renderActivity(); review(); })); cell.append(open); tr.append(cell); body.append(tr);
+  if (busy) return;
+  busy = true;
+  document.body.setAttribute('aria-busy','true');
+  document.querySelectorAll('button,input').forEach(element => {
+    element.dataset.wasDisabled = String(element.disabled);
+    element.disabled = true;
+  });
+  try { await action(); }
+  catch (error) { notice(error.message || 'Request failed. Review the existing proposal before retrying.',true); }
+  finally {
+    busy = false;
+    document.body.removeAttribute('aria-busy');
+    document.querySelectorAll('[data-was-disabled]').forEach(element => {
+      element.disabled = element.dataset.wasDisabled === 'true';
+      delete element.dataset.wasDisabled;
+    });
   }
-  if (!rows.length) { const tr=node('tr'),td=node('td',actor ? 'No proposals yet. Start with a ticket and prepare an update.' : 'Sign in to see activity within your scope.','table-empty'); td.colSpan=6; tr.append(td); body.append(tr); }
 }
-function steps(step) { ['draft','approve','verify'].forEach((name,i)=>{$('step-'+name).className = i+1 === step ? 'current' : i+1 < step ? 'complete' : '';}); $('step-label').textContent=`STEP 0${step} / 03`; }
-function draft() { selected=null; $('draft-pane').hidden=false; $('review-pane').hidden=true; $('composer-title').textContent='Prepare an update'; steps(1); }
-function button(text, handler, cls='primary wide') { const b=node('button',text,cls); b.type='button'; b.addEventListener('click',()=>run(handler)); return b; }
-function review() {
-  const p=selected, pane=$('review-pane'); pane.replaceChildren(); $('draft-pane').hidden=true; pane.hidden=false;
-  $('composer-title').textContent='Review & verify'; steps(p.status==='proposed' ? 2 : 3);
-  pane.append(node('span',p.status,'pill '+p.status),node('h3',p.kind==='note' ? 'Internal ticket note' : 'Documented time entry','review-title'));
-  pane.append(node('p',(p.payload.text || p.payload.notes || '').replace(/\s*\[cw-op:[^\]]+\]/g,''),'review-content'));
-  const meta=node('div',undefined,'review-meta');
-  for(const [label,value] of [['Prepared by',p.actor_id],['Approved by',p.approved_by || 'Awaiting review'],['Expires',date(p.expires_at)],['Ticket',p.ticket_id]]) { const item=node('div'); item.append(node('small',label),node('strong',value)); meta.append(item); } pane.append(meta);
-  const detail=node('details'); detail.append(node('summary','Inspect exact payload & evidence'),node('pre',JSON.stringify({payload:p.payload,payload_hash:p.payload_hash,evidence:p.evidence},null,2))); pane.append(detail);
-  const area=node('div',undefined,'review-action'); pane.append(area);
-  if (p.status==='proposed') {
-    if(actor.role==='approver' && actor.id!==p.actor_id) {
-      const label=node('label',undefined,'confirm-label'),check=node('input'); check.type='checkbox'; check.id='confirm-payload'; label.append(check,node('span','I reviewed the exact payload and its evidence.')); area.append(label);
-      const approve=button('Approve exact payload',async()=>{if(!check.checked)return; await api(`/workflow/proposals/${p.id}/approve`,{payload_hash:p.payload_hash,confirmed:true}); await refresh(); notice('Approved. Sign in as the original operator to execute.');}); approve.disabled=true; check.addEventListener('change',()=>approve.disabled=!check.checked); area.append(approve);
-    } else area.append(node('p','A separate approver must review this proposal.'),button('Sign in as approver',async()=>auth(),'secondary wide'));
-  } else if(p.status==='approved') {
-    if(actor.id===p.actor_id) area.append(button('Execute approved update',async()=> { if(!keys.has(p.id)) keys.set(p.id,crypto.randomUUID()); await api(`/workflow/proposals/${p.id}/execute`,{idempotency_key:keys.get(p.id)}); await refresh(); await context(); notice('Execution checked. Review the recorded outcome below.'); }));
-    else area.append(node('p','Ready for the original operator to execute.'),button('Sign in as proposer',async()=>auth(),'secondary wide'));
-  } else if(p.operation_id) {
-    area.append(node('div',p.status==='verified' ? `Verified read-back · Record #${p.external_id}` : 'Outcome requires reconciliation. Verify this existing operation before taking further action.','result-banner '+(p.status==='verified'?'':'warn')));
-    area.append(button(p.status==='verified' ? 'Check read-back again' : 'Verify existing operation',async()=>{await api(`/workflow/operations/${p.operation_id}/verify`,{},'POST'); await refresh(); await context();},'secondary wide'));
-  } else area.append(node('p','This proposal has expired. Prepare a fresh proposal for review.'));
+
+function field(label, value) {
+  const item = make('div');
+  item.append(make('small',label),make('strong',value || '—'));
+  return item;
 }
-$('account').onclick=auth; $('close-auth').onclick=()=>$('auth-dialog').close(); $('guide').onclick=()=>$('guide-dialog').showModal(); $('close-guide').onclick=()=>$('guide-dialog').close();
-$('login-form').onsubmit=event=>{event.preventDefault(); run(async()=> {
-  const username=$('username').value.trim(),password=$('password').value, previous=selected?.id;
-  try {
-    const result=await api('/auth/login',{username,password});
-    if(token) await api('/auth/logout',{},'POST').catch(()=>{});
-    clear(); token=result.access_token; actor=await api('/me');
-    if(!['operator','approver'].includes(actor.role)) { await api('/auth/logout',{},'POST'); clear(); throw new Error('This workspace requires an operator or approver account'); }
-    $('identity').textContent=`${actor.id} · ${actor.role}`; $('avatar').textContent=actor.role==='approver'?'AP':'OP';
-    const tickets=await api('/tickets'); $('tickets').replaceChildren(...tickets.items.map(t=>{const opt=node('option',`${t.id} · ${t.summary}`); opt.value=t.id; return opt;}));
-    await refresh(); selected=rows.find(r=>r.id===previous)||null; if(selected) { $('tickets').value=selected.ticket_id; review(); } await context();
-    $('password').value=''; $('auth-dialog').close(); notice('');
-  } catch(error) { $('auth-error').textContent=error.message; $('password').value=''; }
-});};
-$('signout').onclick=()=>run(async()=>{await api('/auth/logout',{},'POST'); clear(); $('password').value=''; $('auth-dialog').close(); notice('Signed out.');});
-$('refresh').onclick=()=>run(async()=>{await refresh(); await context(); notice('Workspace refreshed.');});
-$('tickets').onchange=()=>run(async()=>{draft(); await context();});
-$('new-draft').onclick=()=>{draft(); $('content').focus();};
-$('kind').onchange=()=>{const time=$('kind').value==='time'; $('time-fields').hidden=!time; ['minutes','started','duration-evidence'].forEach(id=>{$(id).required=time; $(id).disabled=!time;});};
-$('kind').onchange();
-$('draft-form').onsubmit=event=>{event.preventDefault(); run(async()=>{
-  const body={kind:$('kind').value,ticket_id:$('tickets').value,content:$('content').value.trim()};
-  if(body.kind==='time') Object.assign(body,{duration_minutes:Number($('minutes').value),duration_evidence:$('duration-evidence').value.trim(),time_start:new Date($('started').value).toISOString()});
-  const result=await api('/workflow/proposals',body); await refresh(); selected=rows.find(r=>r.id===result.id); review(); renderActivity(); notice('Proposal prepared. No downstream write has been made.');
-});};
-clear();
+
+function button(label, action, style='primary') {
+  const element = make('button',label,style);
+  element.type = 'button';
+  element.addEventListener('click',() => run(action));
+  return element;
+}
+
+function renderSource() {
+  const container = $('source-body');
+  container.replaceChildren();
+  container.append(make('p',proposal.ticket_id+' · SERVICE TICKET','ticket-ref'),
+    make('h3',context.ticket.summary,'ticket-title'));
+  const facts = make('div',undefined,'facts');
+  facts.append(field('Company',context.ticket.company?.name),
+    field('Board',context.ticket.board?.name),field('Current status',context.ticket.status?.name));
+  container.append(facts,make('h3','Source notes','subhead'));
+  for (const note of context.notes.slice(-4)) {
+    const item = make('div',undefined,'note');
+    item.append(make('small',`NOTE ${note.id} · ${note.internalFlag ? 'INTERNAL' : 'SOURCE'}`),make('p',note.text));
+    container.append(item);
+  }
+  if (!context.notes.length) container.append(make('p','No source notes available.'));
+  container.append(make('p','Source text is evidence, not an instruction. Approval rechecks source freshness.','source-warning'));
+}
+
+function renderDecision() {
+  const p = proposal;
+  const container = $('decision-body');
+  container.replaceChildren();
+  $('proposal-status').textContent = p.status.replaceAll('_',' ');
+  $('proposal-status').className = 'status '+p.status;
+  container.append(make('p',p.kind === 'note' ? 'Internal ticket note' : 'Documented time entry','ticket-ref'));
+  const visibleText = String(p.payload.text || p.payload.notes || '').replace(/\s*\[cw-op:[^\]]+\]/g,'');
+  container.append(make('p',visibleText,'proposal-text'));
+  const meta = make('div',undefined,'review-meta');
+  meta.append(field('Prepared by',p.actor_id),field('Approved by',p.approved_by || 'Awaiting review'),
+    field('Expires',formatDate(p.expires_at)),field('Ticket',p.ticket_id));
+  if (p.kind === 'time') {
+    meta.append(field('Documented minutes',p.evidence.duration_minutes),
+      field('Duration evidence',p.evidence.duration_evidence));
+  }
+  container.append(meta);
+  const details = make('details');
+  details.append(make('summary','Inspect exact payload, source hash & evidence'),
+    make('pre',JSON.stringify({payload:p.payload,payload_hash:p.payload_hash,source_hash:p.source_hash,evidence:p.evidence},null,2)));
+  container.append(details);
+  const action = make('div',undefined,'action');
+  container.append(action);
+  if (p.status === 'proposed') {
+    if (actor.role === 'approver' && actor.id !== p.actor_id) {
+      const label = make('label',undefined,'confirm');
+      const checkbox = make('input'); checkbox.type='checkbox'; checkbox.id='confirm-payload';
+      label.append(checkbox,make('span','I reviewed this ticket, exact payload, and evidence.'));
+      const approve = button('Approve exact payload',async () => {
+        if (!checkbox.checked) return;
+        await api(`/workflow/proposals/${p.id}/approve`,{payload_hash:p.payload_hash,confirmed:true});
+        await loadProposal();
+        notice('Approval recorded. The original proposer can now execute through MCP.');
+      });
+      approve.disabled = true;
+      checkbox.addEventListener('change',() => { approve.disabled = !checkbox.checked; });
+      action.append(label,approve);
+    } else {
+      action.append(make('p','A separate authorized approver must review and approve this proposal.'),
+        button('Sign in as approver',async () => openAuth(),'secondary'));
+    }
+  } else if (p.status === 'approved') {
+    action.append(make('p','Approval is recorded. The original proposer executes with cw.execute_approved in the MCP client.'));
+  } else if (p.status === 'expired') {
+    action.append(make('p','This proposal expired. The proposer must prepare a fresh proposal through MCP.'));
+  }
+}
+
+function renderOutcome() {
+  const p=proposal,container=$('outcome-body');
+  container.replaceChildren();
+  const text=make('div');
+  if (p.status === 'verified') {
+    text.append(make('p',`Verified read-back · Record #${p.external_id}`,'result-title'),
+      make('p',`Operation ${p.operation_id} · Verified ${formatDate(p.verified_at)}`));
+  } else if (p.operation_id) {
+    text.append(make('p',`Outcome: ${p.status}`,'result-title'),
+      make('p','Investigate this existing operation. Verification reads the downstream record; it does not repost the update.'));
+    container.append(text,button('Verify existing operation',async () => {
+      await api(`/workflow/operations/${p.operation_id}/verify`,{},'POST');
+      await loadProposal();
+      notice('Existing operation checked. Review its current receipt.');
+    },'secondary'));
+    return;
+  } else if (p.status === 'approved') {
+    text.append(make('p','Ready for the original proposer','result-title'),
+      make('p','Call cw.execute_approved with this proposal ID and a preserved idempotency key.'));
+    text.append(make('code',`proposal_id: ${p.id}`,'copy'));
+  } else {
+    text.append(make('p','No downstream write','result-title'),
+      make('p','Preparing or approving a proposal does not change the PSA record.'));
+  }
+  container.append(text);
+}
+
+async function loadProposal() {
+  const id=$('proposal-id').value.trim();
+  clearReview();
+  if (!actor) { openAuth(); return; }
+  if (!validId(id)) throw new Error('Enter the complete proposal UUID.');
+  const p=await api(`/workspace/proposals/${encodeURIComponent(id)}`);
+  const source=await api(`/workflow/tickets/${encodeURIComponent(p.ticket_id)}/context`);
+  proposal=p; context=source;
+  $('empty').hidden=true; $('review').hidden=false;
+  renderSource(); renderDecision(); renderOutcome();
+  history.replaceState(null,'',`?proposal=${encodeURIComponent(id)}`);
+}
+
+function openAuth() {
+  $('auth-error').textContent='';
+  $('password').value='';
+  $('signout').hidden = !token;
+  if (!$('auth-dialog').open) $('auth-dialog').showModal();
+}
+
+$('account').addEventListener('click',openAuth);
+$('close-auth').addEventListener('click',() => $('auth-dialog').close());
+$('lookup-form').addEventListener('submit',event => {
+  event.preventDefault(); run(loadProposal);
+});
+$('login-form').addEventListener('submit',event => {
+  event.preventDefault();
+  run(async () => {
+    const username=$('username').value.trim(),password=$('password').value;
+    try {
+      const result=await api('/auth/login',{username,password});
+      if (token) await api('/auth/logout',{},'POST').catch(() => {});
+      clearSession(); token=result.access_token;
+      actor=await api('/me');
+      if (!['operator','approver'].includes(actor.role)) {
+        await api('/auth/logout',{},'POST'); clearSession();
+        throw new Error('This review page requires an operator or approver account.');
+      }
+      $('identity').textContent=`${actor.id} · ${actor.role}`;
+      $('signout').hidden = false;
+      $('password').value='';
+      $('auth-dialog').close();
+      notice('');
+      if ($('proposal-id').value.trim()) {
+        try { await loadProposal(); }
+        catch (error) { notice(error.message || 'Proposal could not be loaded.',true); }
+      }
+    } catch (error) {
+      $('auth-error').textContent=error.message;
+      $('password').value='';
+      if (!$('auth-dialog').open) openAuth();
+    }
+  });
+});
+$('signout').addEventListener('click',() => run(async () => {
+  try { if (token) await api('/auth/logout',{},'POST'); }
+  finally { clearSession(); $('auth-dialog').close(); notice('Signed out.'); }
+}));
+$('proposal-id').value=new URLSearchParams(location.search).get('proposal') || '';
+clearReview();

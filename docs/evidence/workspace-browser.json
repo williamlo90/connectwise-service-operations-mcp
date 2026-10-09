@@ -1,16 +1,19 @@
 {
   "status": "passed",
-  "timestamp_utc": "2026-10-08T14:51:16.628Z",
-  "environment": "Headless Chromium; isolated synthetic Docker stack; scripted separate-user browser login",
+  "timestamp_utc": "2026-10-09T05:54:45.200Z",
+  "environment": "Headless Chromium; isolated synthetic Docker stack; TypeScript reference client over stdio MCP",
   "hosted_requests": 0,
   "cases": [
-    "Separate-identity note approval, execution and verified read-back",
-    "390px responsive layout without page overflow",
-    "Time entry with explicit duration, start and evidence",
-    "Unknown outcome reconciled with exactly one downstream effect",
-    "Identity switch clears tenant A data and loads tenant B scope",
-    "Credentials and session tokens absent from browser storage",
-    "Sign out clears workspace data",
+    "Real stdio MCP tool discovery returns six tools",
+    "Scoped context returned through real stdio MCP",
+    "Proposer cannot approve own proposal",
+    "Separate browser approval and proposer MCP execution with read-back",
+    "390px review layout has no horizontal overflow",
+    "Documented time through MCP and browser approval",
+    "Unknown outcome reconciled with one independent downstream effect",
+    "Identity switch clears review and cross-tenant lookup returns no proposal",
+    "No browser storage of tokens or credentials",
+    "Sign-out clears the review",
     "No browser JavaScript errors"
   ]
 }

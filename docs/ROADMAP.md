@@ -1,6 +1,6 @@
 # Delivery roadmap
 
-The local application, browser workspace and portfolio delivery are complete. The next milestone is an end-to-end Azure deployment using synthetic service operations. Live ConnectWise acceptance can follow when authorized tenant access is available.
+The local application, browser workspace and portfolio delivery are complete. An optional final milestone is an end-to-end Azure deployment using synthetic service operations; it does not block the delivered local simulator scope. Live ConnectWise acceptance can follow when authorized tenant access is available.
 
 ## Completed milestones
 
@@ -15,11 +15,11 @@ The local application, browser workspace and portfolio delivery are complete. Th
 | 6 | Frozen synthetic provider evaluation | [Quality](PHASE-6-DELIVERY.md) |
 | 7 | Local workload, monitoring, restore, OOM and rollback qualification | [Reliability](PHASE-7-DELIVERY.md) |
 | 8 | Operator guides, recorded demo and fresh installation | [Delivery](PHASE-8-DELIVERY.md) |
-| Workspace | Responsive browser workflow and portfolio screenshots | [Browser validation](WORKSPACE-UI.md) |
+| Workspace | MCP-first browser review and portfolio evidence | [Browser validation](WORKSPACE-UI.md) |
 
 Original phase tags remain available for the learning modules. The current branch adds the workspace and English product documentation to that sequence.
 
-## Next: Azure validation
+## Optional final extension: Azure validation
 
 Deploy the actual service-operations workflow to Azure with the synthetic PSA simulator. Choose the subscription, region, budget and resource lifecycle before provisioning. Implement the cloud configuration, remote access controls, database TLS/roles, monitoring and reproducible infrastructure described in the [Azure plan](../deploy/AZURE-PLAN.md).
 
@@ -34,3 +34,7 @@ Obtain authorized PSA documentation and a test tenant, reconcile the pinned refe
 ## Future changes driven by use
 
 Longer workload qualification, broader ticket discovery, remote MCP transport and additional live model providers should follow an explicit use case and their own acceptance criteria. They are not required to run the current deterministic demo.
+
+## Future execution policy
+
+Develop and unit/contract-test changes before reserving a bounded Docker/connected session. Do not rerun or renumber completed phases solely to follow this policy. Local support is already a delivery responsibility; Azure support extends it only if that hosting option is selected.

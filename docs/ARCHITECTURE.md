@@ -6,7 +6,7 @@ Service Ops separates the user interface, model assistance and protocol transpor
 
 | Component | Implementation | Responsibility |
 | --- | --- | --- |
-| Browser workspace | Native HTML, CSS and JavaScript served by FastAPI | Scoped ticket context, proposals, separate-account approval and receipts |
+| Human review page | Native HTML, CSS and JavaScript served by FastAPI | Direct proposal lookup, scoped source/payload review, separate-account approval and receipt/recovery |
 | MCP and reference CLI | TypeScript, stdio MCP | Six bounded tools and interactive domain workflows |
 | Domain API | Python/FastAPI | Authentication, tenant scope, payload/source checks, approval, dispatch and verification |
 | Durable state | PostgreSQL, checksum-verified migrations | Sessions, scopes, proposals, approvals, operations, audit events and worker checkpoints |
@@ -50,8 +50,8 @@ OpenAI and Ollama are the validated provider paths. Anthropic/xAI adapters have 
 
 ## Deployment boundary
 
-The current application runs locally against the synthetic simulator. The API binds to loopback; PostgreSQL and the simulator have no published host ports. Secrets are generated into ignored `.env`, and browser tokens stay in page memory.
+The current application runs locally against the synthetic simulator. The browser is a narrow human decision surface; proposal preparation and execution are MCP client actions. The API binds to loopback; PostgreSQL and the simulator have no published host ports. Secrets are generated into ignored `.env`, and browser tokens stay in page memory.
 
-Azure validation is the next deployment milestone. Remote identity, TLS, database roles, cloud monitoring and cloud recovery must be implemented and tested for that environment. Live ConnectWise validation is a separate milestone described in [ConnectWise validation](CONNECTWISE-VALIDATION.md).
+Azure validation is an optional future deployment milestone. Remote identity, TLS, database roles, cloud monitoring and cloud recovery must be implemented and tested for that environment. Live ConnectWise validation is a separate milestone described in [ConnectWise validation](CONNECTWISE-VALIDATION.md).
 
 Further detail: [PSA contract](../contracts/PSA-SUBSET.md), [MCP guide](PHASE-4-MCP.md), [operations runbook](OPERATIONS-RUNBOOK.md), [acceptance evidence](ACCEPTANCE-CHECKLIST.md).

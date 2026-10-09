@@ -14,7 +14,7 @@ The TypeScript stdio MCP server exposes six bounded tools. Python enforces tenan
 
 Approval binds the exact payload and source state. An external write is recorded before dispatch, and an uncertain outcome remains visible as `unknown`. Recovery reads the downstream state and reconciles the existing operation; it does not automatically repost. A separate read-only sync worker refreshes source data with bounded retries and a review queue.
 
-A responsive browser workspace makes the workflow visible: source context alongside a proposal, a separate approver login, and a read-back receipt. It calls the same domain HTTP API as the MCP implementation. An authenticated activity endpoint applies the current user's tenant and ticket scopes before returning any proposal.
+A small browser review page serves the human approval boundary: direct proposal lookup, scoped source evidence, exact payload/hash, separate approver login and receipt/recovery. Preparation and execution remain in the MCP client. It calls the same domain HTTP API; a scoped direct-review endpoint applies tenant and ticket permissions.
 
 ## Engineering decisions
 
@@ -30,18 +30,18 @@ A responsive browser workspace makes the workflow visible: source context alongs
 
 In the recorded demo, the simulator commits a note but delays its response. The first read-back is unavailable, so the application reports `unknown`. Verification later finds the correct record. Replaying execution returns the same operation; an independent simulator check confirms exactly one effect.
 
-![Unknown outcome after the simulated lost response](showcase/workspace-unknown.png)
+![Unknown outcome after the simulated lost response](showcase/review-unknown.png)
 
-![Verified recovery of the same operation](showcase/workspace-recovered.png)
+![Verified recovery of the same operation](showcase/review-recovered.png)
 
-These screenshots come from the working browser UI against an isolated simulator, with scripted separate-user logins and an independent downstream count confirming one effect. The [browser checks](evidence/workspace-browser.json) record the exercised cases. The [CLI/MCP highlights](showcase/demo-highlights.gif) and [full offline replay](demo/demo.html) provide another view of the workflow.
+These screenshots come from the working review page against an isolated synthetic simulator. The [MCP-first walkthrough](MCP-WALKTHROUGH.md) includes actual tool discovery, source context, proposal and verified response. [Browser/MCP acceptance](evidence/workspace-browser.json) uses separate identities and independently counts one downstream effect after recovery. The [older full CLI replay](demo/demo.html) remains complementary protocol evidence.
 
 ## Evidence
 
 | Validation | Result |
 | --- | --- |
-| Backend/domain/evaluator + real-protocol MCP | 62 tests and 11 MCP scenarios passed |
-| Browser UI | 8 checks covering note/time, recovery, mobile layout, tenant switching, storage, sign-out and runtime errors |
+| Backend/domain/evaluator + real-protocol MCP | 63 tests and 11 MCP scenarios passed |
+| Browser UI | 11 checks covering real MCP calls, separate browser approval, note/time, recovery, mobile layout, tenant switching, storage, sign-out and runtime errors |
 | Declared normal/peak/two-minute soak | 135 tasks, including 33 verified writes; zero observed errors, drops or duplicate effects |
 | Recovery qualification | Matching PostgreSQL backup restore, database outage alerts, actual Ollama OOM handled without hosted fallback, and application rollback |
 | Optional AI selection | 8/8 held-out cases for each provider on a frozen synthetic set |
@@ -49,6 +49,8 @@ These screenshots come from the working browser UI against an isolated simulator
 
 These counts describe the stated finite suites, not production guarantees. Human productivity savings were not measured. Full reports: [quality](PHASE-6-DELIVERY.md), [reliability](PHASE-7-DELIVERY.md), [delivery](PHASE-8-DELIVERY.md).
 
-## Next validation
+## Delivery and optional extensions
 
-The next infrastructure goal is an end-to-end Azure deployment using synthetic service operations and the PSA simulator. It can be validated independently of vendor access. Real ConnectWise tenant acceptance is a separate pending integration step. Neither Azure validation nor live ConnectWise compatibility is claimed by the current results.
+The local simulator product and operator handover are the delivered scope. An optional final infrastructure extension is an end-to-end Azure deployment using synthetic service operations and the PSA simulator. It can be validated independently of vendor access. Real ConnectWise tenant acceptance is a separate pending integration step. Neither Azure validation nor live ConnectWise compatibility is claimed by the current results.
+
+Support and recovery qualification already have a local scope. New implementation is developed and contract-tested first, then checked in a reserved runtime session. Cloud is not required for local delivery, and cloud deployment against a simulator would still not establish compatibility with a real ConnectWise tenant.

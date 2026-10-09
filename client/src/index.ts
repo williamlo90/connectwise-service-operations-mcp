@@ -33,7 +33,11 @@ try {
     return page.items;
   }
   const rows=(process.argv.includes('--ai')||process.argv.includes('--automation'))?[]:await list();
-  if(process.argv.includes('--automation')) {
+  if(process.argv.includes('--tools')) {
+    if(!mcp) throw new Error('--tools requires --mcp');
+    const listed=await mcp.client.listTools();
+    console.log(JSON.stringify({protocol:'stdio MCP',server:'connectwise-service-operations',tools:listed.tools.map(tool=>({name:tool.name,description:tool.description,inputSchema:tool.inputSchema,outputSchema:tool.outputSchema}))},null,2));
+  } else if(process.argv.includes('--automation')) {
     await automationCLI(call,process.argv.slice(process.argv.indexOf('--automation')+1));
   } else if(process.argv.includes('--ai')) {
     await assistantCLI(call,process.argv.slice(process.argv.indexOf('--ai')+1));

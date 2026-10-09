@@ -10,8 +10,8 @@ Single-operator synthetic/simulator scope. Results link to executable evidence; 
 | Separate-user approval and internal note | Exact private payload, verified external ID | [Demo](evidence/phase-8-demo.json) |
 | Explicit 25-minute time entry | Supplied duration preserved, configured mapping and verified read-back | [Demo](evidence/phase-8-demo.json) |
 | Lost write response / unavailable first read-back | Unknown status; verify recovers same operation; one effect | [Demo](evidence/phase-8-demo.json) |
-| Permission, malicious source, stale approval and interrupted execution | Denial or explicit non-success; no bypass/duplicate on finite suite | [62 regression tests and 11 MCP cases](evidence/workspace-regression.json) |
-| Browser workspace | Note/time approval and recovery, scoped identity switching, responsive layout and session handling | [8 browser checks](evidence/workspace-browser.json) |
+| Permission, malicious source, stale approval and interrupted execution | Denial or explicit non-success; no bypass/duplicate on finite suite | [63 regression tests and 11 MCP cases](evidence/workspace-regression.json) |
+| MCP-first browser review | Actual tool calls, separate-user approval, note/time, recovery, tenant switching and mobile layout | [11 browser/MCP checks](evidence/workspace-browser.json) |
 | Model evidence selection | Predeclared quality gate met on stated small synthetic set | [8/8 cases per provider, Phase 6](evidence/phase-6-quality.json) |
 | Normal/peak/short soak and backlog | Declared latency/error/correctness gates pass | [135 tasks / 33 writes](evidence/phase-7-qualification.json) |
 | Backup, DB outage, model OOM and rollback | Restore matches, alerts received, fail closed, previous release works | [Qualification](evidence/phase-7-qualification.json) |

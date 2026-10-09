@@ -1,110 +1,59 @@
 # ConnectWise Service Operations MCP
 
-An approval-controlled workspace for service-ticket operations.
+A six-tool MCP server for controlled service-ticket operations. An operator reads a scoped ticket and prepares an internal note or documented time through stdio MCP. A separate person reviews the exact proposal in a small browser page; the original operator executes through MCP and verifies the downstream record.
 
-Read the right ticket, prepare an internal note or documented time entry, obtain a separate person's approval, and verify the resulting record. The browser workspace and six-tool MCP server share the same authorization, approval, and recovery controls.
+**TypeScript / MCP · Python / FastAPI · PostgreSQL · Docker · optional OpenAI / Ollama**
 
-> From ticket evidence to an approved, verified update.
+[![Actual MCP proposal against the synthetic PSA simulator](docs/showcase/mcp-proposal.png)](docs/MCP-WALKTHROUGH.md)
 
-[![Service Ops workspace showing a verified internal note](docs/showcase/workspace-verified.png)](docs/showcase/README.md)
+[End-to-end walkthrough](docs/MCP-WALKTHROUGH.md) · [Six-tool contract](docs/MCP-TOOL-MAP.md) · [Case study](docs/CASE-STUDY.md) · [Run locally](docs/LOCAL-SETUP.md) · [Evidence](docs/ACCEPTANCE-CHECKLIST.md)
 
-[Product walkthrough](docs/showcase/README.md) · [Engineering case study](docs/CASE-STUDY.md) · [Evidence](docs/ACCEPTANCE-CHECKLIST.md) · [Run locally](docs/LOCAL-SETUP.md) · [Documentation](docs/README.md)
+This repository is validated against an isolated two-tenant **synthetic PSA simulator**. Its API subset was mapped to published ConnectWise PSA documentation, but a live ConnectWise tenant has **not** been tested. Azure deployment is an optional future extension, not a completed result.
 
-**TypeScript / MCP · Python / FastAPI · PostgreSQL · Docker · OpenAI / Ollama**
+## One update, end to end
 
-Validated against a two-tenant synthetic PSA simulator. Azure deployment and live ConnectWise tenant validation are the next integration milestones.
+| Source ticket | MCP proposal | Human approval | Verified read-back |
+| --- | --- | --- | --- |
+| [![Scoped synthetic ticket context](docs/showcase/mcp-context.png)](docs/showcase/mcp-context.png) | [![Internal note proposal through MCP](docs/showcase/mcp-proposal.png)](docs/showcase/mcp-proposal.png) | [![Separate approver reviewing exact payload](docs/showcase/review-approval.png)](docs/showcase/review-approval.png) | [![Verified downstream MCP receipt](docs/showcase/mcp-verified.png)](docs/showcase/mcp-verified.png) |
+| `cw.ticket_context` checks ticket scope and returns source evidence. | `cw.note_prepare` creates an internal-only proposal; no PSA write occurs. | `approver-a` approves the payload hash and fresh source in the browser. | `op-a` executes via MCP; read-back records an external ID. |
 
-## Evidence snapshot
+The [recorded walkthrough](docs/MCP-WALKTHROUGH.md) names the actor, action, server check, state and evidence at each step. [Actual MCP tool discovery](docs/showcase/mcp-discovery.png) shows all six tools. Documented time follows the same review boundary and requires explicit minutes, duration evidence and a timezone-aware start. When a simulated write response is lost, the system retains `unknown` and [reconciles the existing operation](docs/showcase/review-recovered.png) without an automatic repost.
 
-| Result | What was exercised | Evidence |
+The browser is deliberately limited to **human review and outcome inspection**: load a proposal ID, inspect ticket evidence and exact payload, approve as a distinct actor, or verify an uncertain existing operation. Preparation and execution stay in the MCP reference client. Authorization, approval, idempotency and audit decisions remain in the shared FastAPI domain service.
+
+## Measured local evidence
+
+| Result | Scope | Evidence |
 | ---: | --- | --- |
-| **62 tests** | Backend authorization, workflow, providers, skills, evaluation controls, automation and browser API | [Regression report](docs/evidence/workspace-regression.json) |
-| **11 scenarios** | Real stdio MCP protocol, scoped tools, separate approval, interrupted writes and recovery | [MCP acceptance](docs/evidence/workspace-regression.json) |
-| **8 checks** | Browser note/time workflows, recovery, tenant switching, mobile layout, storage, sign-out and runtime errors | [Browser acceptance](docs/evidence/workspace-browser.json) |
-| **135/135 tasks** | Declared normal, peak and two-minute soak workload; 33 verified writes and zero observed duplicate effects | [Reliability qualification](docs/PHASE-7-DELIVERY.md) |
-| **8/8 per provider** | OpenAI and Ollama evidence selection on a frozen held-out synthetic set | [Quality evaluation](docs/PHASE-6-DELIVERY.md) |
-| **11 steps** | Installation from a fresh source archive, generated credentials, worker/monitor readiness and restart persistence | [Installation record](docs/evidence/workspace-installation.json) |
+| **63 tests** | Backend authorization, workflow, providers, synchronization and browser API | [Regression](docs/evidence/workspace-regression.json) |
+| **11 MCP scenarios** | Real stdio protocol, scoped tools, approval, interrupted writes and recovery | [Regression](docs/evidence/workspace-regression.json) |
+| **11 browser/MCP checks** | Tool discovery, separate identity, note/time, mobile, tenant isolation and recovery | [Browser acceptance](docs/evidence/workspace-browser.json) |
+| **135/135 tasks** | Declared local normal, peak and two-minute soak; 33 verified writes, zero observed duplicates | [Reliability qualification](docs/PHASE-7-DELIVERY.md) |
+| **8/8 per provider** | OpenAI and Ollama on a frozen held-out synthetic evidence-selection set | [Quality evaluation](docs/PHASE-6-DELIVERY.md) |
+| **11 installation steps** | Fresh source archive, generated credentials, worker/monitor readiness and restart persistence | [Installation](docs/evidence/workspace-installation.json) |
 
-These are measured results from finite local suites. The linked reports describe each environment and denominator; customer productivity and cloud capacity have not been measured.
-
-## Why it exists
-
-A plausible ticket update can still target the wrong customer, expose an internal note, invent working time, or be posted twice after a timeout. Service operations need explicit ownership and proof of completion alongside useful automation.
-
-This project keeps those decisions in the application: scope determines which evidence a user can read, a separate approver accepts one exact proposal, and a successful write must match its downstream read-back.
-
-## Product workflow
-
-```text
-Scoped ticket context → Proposal → Separate-user approval → Execute → Verify
-                                                               ↘ Unknown → Reconcile
-```
-
-| Stage | Operator experience | Enforced behavior |
-| --- | --- | --- |
-| Read | Ticket, company, board and source notes in one workspace | Tenant/company/board scope checked on the server |
-| Prepare | Internal note or time entry with technician evidence | Fixed internal visibility; explicit minutes and start time |
-| Approve | A different account reviews the exact payload | Approval bound to payload hash and fresh source state |
-| Execute | The original proposer submits the approved update | Durable dispatch record and idempotent proposal replay |
-| Verify | Receipt, downstream ID and recoverable outcome | Read-back comparison; uncertain writes reconciled without automatic reposting |
-
-Optional AI selects attributed source evidence. It cannot grant permissions, approve a proposal, or execute a business write. Status and assignment suggestions remain recommendations.
-
-## Product tour
-
-<table>
-  <tr>
-    <td width="50%">
-      <a href="docs/showcase/workspace-draft.png"><img src="docs/showcase/workspace-draft.png" alt="Ticket context beside an internal-note draft"></a><br>
-      <strong>Context before action</strong><br>
-      Review source notes and supply technician observations.
-    </td>
-    <td width="50%">
-      <a href="docs/showcase/workspace-approval.png"><img src="docs/showcase/workspace-approval.png" alt="Separate approver reviewing the proposed update"></a><br>
-      <strong>Explicit human approval</strong><br>
-      Review the payload and evidence under a separate identity.
-    </td>
-  </tr>
-  <tr>
-    <td width="50%">
-      <a href="docs/showcase/workspace-unknown.png"><img src="docs/showcase/workspace-unknown.png" alt="Unknown outcome after a simulated lost write response"></a><br>
-      <strong>Uncertainty stays visible</strong><br>
-      A lost response produces an unknown outcome requiring reconciliation.
-    </td>
-    <td width="50%">
-      <a href="docs/showcase/workspace-recovered.png"><img src="docs/showcase/workspace-recovered.png" alt="Existing operation reconciled to a verified receipt"></a><br>
-      <strong>Recovery with one effect</strong><br>
-      Find the existing record and verify its fields without posting again.
-    </td>
-  </tr>
-</table>
-
-Screenshots come from the working application against an isolated synthetic simulator. The [walkthrough](docs/showcase/README.md) explains the sequence; the [CLI/MCP recording](docs/demo/demo.html) provides a second interface to the same workflow.
+These counts describe finite local suites, not customer productivity or cloud capacity. The linked reports identify each environment and denominator.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    Browser[Browser workspace] --> API[FastAPI domain service]
-    Host[MCP host / reference CLI] --> MCP[TypeScript stdio MCP]
-    MCP --> API
-    Reviewer[Separate approver] --> API
-    API --> DB[(PostgreSQL)]
-    API --> Adapter[Scoped PSA HTTP adapter]
-    Adapter --> PSA[Synthetic PSA simulator]
-    API --> AI[Optional OpenAI / Ollama]
-    Worker[Scheduled read-only sync] --> Adapter
-    Worker --> DB
-    Monitor[Local operations monitor] --> DB
+  Host[Reference client / MCP host] --> MCP[TypeScript stdio MCP server]
+  MCP --> API[FastAPI domain service]
+  Reviewer[Human review page] --> API
+  API --> DB[(PostgreSQL)]
+  API --> Adapter[Scoped PSA HTTP adapter]
+  Adapter --> Simulator[Synthetic PSA simulator]
+  Worker[Read-only sync worker] --> Adapter
+  Worker --> DB
+  API --> AI[Optional OpenAI / Ollama evidence selection]
 ```
 
-The domain service owns authorization, proposal freshness, approval, dispatch and verification. PostgreSQL stores durable operations and synchronization checkpoints. The worker refreshes source data; the monitor records health and local alerts. The browser and MCP are two clients of this shared service.
-
-See the [architecture guide](docs/ARCHITECTURE.md), [MCP contract](docs/PHASE-4-MCP.md), and [PSA reference subset](contracts/PSA-SUBSET.md) for implementation details.
+The [architecture guide](docs/ARCHITECTURE.md) describes the authority and recovery boundaries; the [PSA reference subset](contracts/PSA-SUBSET.md) describes the mapped vendor assumptions. Live tenant acceptance remains a [separate milestone](docs/CONNECTWISE-VALIDATION.md).
 
 ## Run locally
 
-Requires Git, Python 3.10+, Docker with Linux containers and Compose v2. The deterministic workflow needs no model key or ConnectWise account.
+Git, Python 3.10+, Docker Engine with Linux containers and Compose v2 are required. The deterministic walkthrough needs no model key or ConnectWise account.
 
 ```sh
 git clone https://github.com/williamlo90/connectwise-service-operations-mcp.git
@@ -114,29 +63,18 @@ docker compose -f compose.yaml -f compose.ops.yaml --profile tools --profile aut
 docker compose -f compose.yaml -f compose.ops.yaml up -d --wait api
 docker compose -f compose.yaml -f compose.ops.yaml run --rm seed
 docker compose -f compose.yaml -f compose.ops.yaml --profile automation up -d --wait worker monitor
+docker compose run --rm client --mcp --tools
+docker compose run --rm client --mcp --workflow context A-100
+docker compose run --rm client --mcp --workflow note A-100
 ```
 
-Open **http://localhost:8030/**. Sign in as `op-a` using the generated `DEMO_PASSWORD` in your ignored `.env`. Prepare an update, switch to `approver-a` for approval, then return to `op-a` to execute. The source repository is public; reuse remains subject to its license.
+Use the returned proposal ID at **http://localhost:8030/?proposal=PROPOSAL_ID**. Sign in as `approver-a` with the generated password from ignored `.env`, inspect and approve. Then run `docker compose run --rm client --mcp --workflow execute PROPOSAL_ID IDEMPOTENCY_UUID` as `op-a`. The [operator guide](docs/USER-GUIDE.md) covers time and uncertain-outcome verification.
 
-The [setup guide](docs/LOCAL-SETUP.md) covers resources, alternate ports and lifecycle commands. The [operator guide](docs/USER-GUIDE.md) covers browser, CLI and recovery workflows.
+`python scripts/test_local.py` runs the isolated regression and real-protocol suite without paid model requests. Browser reproduction is in [the UI guide](docs/WORKSPACE-UI.md).
 
-```sh
-python scripts/test_local.py
-```
+## Explore the project
 
-The regression runner creates an isolated test stack and cleans it up. It makes no paid model requests. Run disposable suites serially; see [browser reproduction](docs/WORKSPACE-UI.md#reproduce-browser-acceptance) for the UI checks.
-
-## Explore the engineering
-
-| Interested in… | Start here |
-| --- | --- |
-| Problem, contribution and engineering tradeoffs | [Case study](docs/CASE-STUDY.md) |
-| Current results and reproducible evidence | [Acceptance checklist](docs/ACCEPTANCE-CHECKLIST.md) |
-| Design, permissions and failure handling | [Architecture](docs/ARCHITECTURE.md) |
-| Incremental learning from Phase 0 through Phase 8 | [Learning checkpoints](docs/LEARNING-CHECKPOINTS.md) |
-| Monitoring, backup, restore and rollback | [Operations runbook](docs/OPERATIONS-RUNBOOK.md) |
-| CV, LinkedIn and interview material | [Portfolio copy](docs/PORTFOLIO-COPY.md) |
-| Azure and vendor integration milestones | [Roadmap](docs/ROADMAP.md) |
+[Engineering case study](docs/CASE-STUDY.md) · [Acceptance evidence](docs/ACCEPTANCE-CHECKLIST.md) · [Learning checkpoints](docs/LEARNING-CHECKPOINTS.md) · [Operations runbook](docs/OPERATIONS-RUNBOOK.md) · [Portfolio copy](docs/PORTFOLIO-COPY.md) · [Roadmap](docs/ROADMAP.md) · [Full documentation index](docs/README.md)
 
 ## License
 

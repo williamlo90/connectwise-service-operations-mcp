@@ -7,20 +7,20 @@
 TypeScript · MCP · Python/FastAPI · PostgreSQL · Docker · OpenAI · Ollama
 
 - Built a six-tool MCP service-operations server with tenant-scoped access, separate-user approval, payload/source validation, and verified downstream writes against a PSA HTTP simulator.
-- Implemented durable synchronization, bounded retries, audit records, and unknown-outcome reconciliation; validated 62 backend/evaluator tests and 11 real-protocol MCP scenarios.
+- Implemented durable synchronization, bounded retries, audit records, and unknown-outcome reconciliation; validated 63 backend/evaluator tests and 11 real-protocol MCP scenarios.
 - Qualified 135 synthetic tasks, including 33 verified writes, with zero observed errors or duplicate effects on the declared local workload; tested PostgreSQL restore, model OOM handling, and application rollback.
 
 ## Short CV version
 
-Built and locally validated a TypeScript/Python MCP service-operations system with tenant isolation, human approval, and verified writes; passed 62 backend tests and 11 MCP scenarios against a synthetic PSA simulator.
+Built and locally validated a TypeScript/Python MCP service-operations system with tenant isolation, human approval, and verified writes; passed 63 backend tests and 11 MCP scenarios against a synthetic PSA simulator.
 
 ## LinkedIn project description
 
 I built a service-operations MCP server focused on a practical question: how can an assistant help with ticket work while keeping authorization and proof of completion explicit?
 
-The system uses TypeScript MCP tools, a Python/FastAPI domain service and PostgreSQL to enforce tenant scope, separate-user approval, exact payload checks and downstream read-back. Optional OpenAI/Ollama assistance selects source evidence; it cannot approve or execute actions. A scheduled worker handles read-only synchronization and recovery queues.
+The system uses six TypeScript MCP tools, a small separate-user browser review page, a Python/FastAPI domain service and PostgreSQL to enforce tenant scope, separate-user approval, exact payload checks and downstream read-back. Optional OpenAI/Ollama assistance selects source evidence; it cannot approve or execute actions. A scheduled worker handles read-only synchronization and recovery queues.
 
-Local validation passed 62 backend/evaluator tests and 11 MCP protocol scenarios. A declared synthetic workload completed 135 tasks, including 33 verified writes, with no observed errors or duplicate effects. The demo also shows recovery after a lost write response, and reliability checks cover backup restore, model OOM and rollback.
+Local validation passed 63 backend/evaluator tests and 11 MCP protocol scenarios. A declared synthetic workload completed 135 tasks, including 33 verified writes, with no observed errors or duplicate effects. The demo also shows recovery after a lost write response, and reliability checks cover backup restore, model OOM and rollback.
 
 Current scope: a two-tenant synthetic PSA simulator. Azure end-to-end validation and real ConnectWise tenant validation are separate next steps.
 

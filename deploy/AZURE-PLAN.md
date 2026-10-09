@@ -1,5 +1,7 @@
 # Azure deployment plan — not applied
 
+Optional hosting extension, last in the delivery sequence. The validated local release does not depend on provisioning this plan. Run its checks only if cloud hosting is selected; no local measurement establishes cloud behavior. Updated 2026-10-09.
+
 No subscription, resource group, service, public endpoint or billable cloud resource is created by this document. This is the Phase 8 design appendix, not deployable IaC or a validated cloud architecture. The next Azure validation may use the synthetic PSA simulator before Phase 8A. Connected production deployment still requires actual ConnectWise acceptance. The current application rejects connected/production mode and uses local bootstrap credentials; cloud access, secrets, TLS and runtime qualification must be prepared even for the simulator deployment.
 
 ## Proposed topology and limits

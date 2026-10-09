@@ -2,21 +2,17 @@
 
 Use the [quick start](LOCAL-SETUP.md) first. This guide operates the synthetic PSA simulator. [Replay the recorded terminal demo](demo/demo.html), read its [plain transcript](demo/transcript.txt), or replay the [asciicast](demo/service-operations.cast) in a compatible player. The recording uses the actual CLI and MCP subprocesses; approvals in it are scripted test identities.
 
-## Browser workspace
+## Human review page
 
-Open **http://localhost:8030/** after starting the local stack. The responsive workspace uses the existing domain HTTP API; the MCP/CLI remains available independently.
+Open **http://localhost:8030/** after starting the local stack. The browser loads one MCP proposal at a time; it does not prepare or execute service updates.
 
-1. Click **Sign in** and use `op-a` with the generated `DEMO_PASSWORD` from your local `.env`.
-2. Read the scoped ticket context. Enter technician observations and choose **Prepare proposal**. For time entries, supply minutes, duration evidence and a start time in your browser's local timezone.
-3. Open the account menu, sign in as `approver-a`, and review the proposal. Expand **Inspect exact payload & evidence**, confirm the checkbox, then select **Approve exact payload**.
-4. Sign back in as `op-a` and choose **Execute approved update**. A verified result includes the downstream record ID.
-5. For an unknown/review outcome, choose **Verify existing operation**. After a browser/network interruption, refresh and open the existing proposal before doing anything else.
+1. As `op-a`, run `docker compose run --rm client --mcp --workflow note A-100` or the documented time workflow below. Copy the proposal ID.
+2. Open `http://localhost:8030/?proposal=PROPOSAL_ID`. Sign in as `approver-a` with the generated `DEMO_PASSWORD` from ignored `.env`.
+3. Inspect scoped ticket evidence, proposer, exact payload/hash, source hash, expiry and duration evidence where applicable. Check the confirmation box and select **Approve exact payload**.
+4. As the original proposer, run `docker compose run --rm client --mcp --workflow execute PROPOSAL_ID IDEMPOTENCY_UUID`. Preserve the UUID for retries. Reload the review link to see the receipt.
+5. For `unknown` or `review`, choose **Verify existing operation** or call `cw.operation_verify` through the reference client. This checks the existing write and does not repost it.
 
-The activity table includes the latest 40 proposals within your scope, including proposals created through MCP. Refresh loads the latest state. Switching tenants clears the previous workspace; tokens remain only in page memory, and a reload requires login. No credentials are embedded in the frontend. The browser covers deterministic note/time operations; optional AI assistance remains in the CLI.
-
-For an independent tenant, use `op-b` and `approver-b`. Administrator, auditor and worker accounts use their existing tools rather than this operator workspace.
-
-Browser acceptance and screenshots: [workspace validation](WORKSPACE-UI.md).
+Switching identity clears the old review. An out-of-scope proposal is unavailable. Tokens remain in page memory only; page reload requires a new login. See [browser acceptance](WORKSPACE-UI.md) and the [MCP-first walkthrough](MCP-WALKTHROUGH.md).
 
 ## Read the ticket and prepare an internal note
 
@@ -29,11 +25,13 @@ At `Internal note >`, enter `Checked VPN settings; customer retest is pending.` 
 
 ## Review and approve as a separate person
 
+Use the browser link above for the canonical human approval path. The legacy CLI approval command remains available for scripted/test workflows:
+
 ```sh
 docker compose run --rm -e DEMO_USERNAME=approver-a client --workflow approve PROPOSAL_ID
 ```
 
-Replace `PROPOSAL_ID` with the actual ID. Read the payload, duration evidence if present and destination. Type `APPROVE` only if correct. Any other response submits no approval. The proposer cannot approve their own draft. Approval is a direct authenticated domain action and is intentionally absent from the MCP tool catalog.
+Approval is an authenticated domain action and is intentionally absent from the MCP tool catalog.
 
 ## Execute and verify
 

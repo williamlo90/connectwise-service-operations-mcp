@@ -220,6 +220,27 @@ def workspace_activity(actor: Actor):
     return {'items':rows,'limit':40,'platform_mode':'synthetic'}
 
 
+@app.get('/workspace/proposals/{proposal_id}')
+def workspace_proposal(proposal_id: UUID, actor: Actor):
+    """A scoped review receipt addressable even after it leaves recent activity."""
+    allow(actor, ('operator', 'approver'))
+    with connection() as conn:
+        row = conn.execute('''SELECT p.id,p.ticket_id,p.kind,p.actor_id,p.payload,p.payload_hash,
+            p.source_hash,p.evidence,p.created_at,p.expires_at,a.actor_id AS approved_by,
+            o.id AS operation_id,o.external_id,o.error_code,o.verified_at,
+            CASE WHEN o.status IS NOT NULL THEN o.status WHEN p.expires_at<=now() THEN 'expired'
+                 WHEN a.id IS NOT NULL THEN 'approved' ELSE 'proposed' END AS status
+            FROM proposals p JOIN tickets t ON t.tenant_id=p.tenant_id AND t.id=p.ticket_id
+            LEFT JOIN approvals a ON a.proposal_id=p.id LEFT JOIN operations o ON o.proposal_id=p.id
+            WHERE p.tenant_id=%s AND p.id=%s AND EXISTS (
+                SELECT 1 FROM actor_scopes s WHERE s.tenant_id=p.tenant_id
+                AND s.actor_id=%s AND s.company_id=t.company_id AND s.board_id=t.board_id)''',
+            (actor['tenant_id'], proposal_id, actor['id'])).fetchone()
+    if row is None:
+        raise HTTPException(404, 'proposal_not_found')
+    return {**row, 'platform_mode': 'synthetic'}
+
+
 STATIC=Path(__file__).resolve().parents[1]/'static'
 app.mount('/assets', StaticFiles(directory=STATIC), name='workspace-assets')
 

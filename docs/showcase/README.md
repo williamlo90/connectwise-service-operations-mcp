@@ -1,41 +1,43 @@
-# Service Ops product walkthrough
+# Service Ops: MCP to human approval to verified record
 
-A complete service update moves through evidence, proposal, separate approval and verified execution. These captures show the working browser workspace against an isolated two-tenant synthetic PSA simulator, with scripted logins for distinct operator and approver accounts.
+These are captures from the actual TypeScript reference client over stdio MCP and the working human-review page against an isolated **synthetic PSA simulator**. They do not show a live ConnectWise tenant. The [canonical walkthrough](../MCP-WALKTHROUGH.md) identifies each actor, tool, check and state; [browser acceptance](../evidence/workspace-browser.json) reproduces the sequence.
 
-[Run the demo locally](../LOCAL-SETUP.md) · [Operator guide](../USER-GUIDE.md) · [Browser acceptance](../evidence/workspace-browser.json) · [Case study](../CASE-STUDY.md)
+## 1. Discover and read the source
 
-## 1. Read the context and prepare
+The SDK client lists the six tool schemas, then `op-a` reads scoped ticket `A-100`. The screenshot shows the simulator response and source references, not a ConnectWise PSA screen.
 
-The operator sees the ticket, company, board, status and source notes alongside the update form. Preparation creates a proposal; it does not create a downstream note. Time entries additionally require explicit minutes, start time and duration evidence.
+[![Six actual MCP tools](mcp-discovery.png)](mcp-discovery.png)
 
-![Ticket context and internal-note preparation](workspace-draft.png)
+[![Scoped synthetic ticket context](mcp-context.png)](mcp-context.png)
 
-## 2. Review under a separate identity
+## 2. Prepare an internal-only update through MCP
 
-An approver signs in, opens the proposal and inspects the exact payload and evidence. The confirmation checkbox is explicit. Approval remains bound to this payload and fresh source state; the original operator retains execution ownership.
+`cw.note_prepare` returns a proposal, exact payload, hash, evidence and expiry. Its `internalFlag=true` and `externalFlag=false` are server-owned. No downstream note exists yet.
 
-![Separate approver reviewing the payload](workspace-approval.png)
+[![MCP note proposal](mcp-proposal.png)](mcp-proposal.png)
 
-## 3. Execute and verify
+## 3. Review as another person
 
-The proposer signs back in and executes the approved update. The backend compares the downstream record with the expected fields. The workspace displays a verified outcome and an external record ID, and activity retains the proposal's status.
+`approver-a` opens the proposal URL, sees ticket evidence and the exact payload, and explicitly confirms it. The browser has no preparation or execution form.
 
-![Verified internal-note receipt](workspace-verified.png)
+[![Separate-user human approval](review-approval.png)](review-approval.png)
 
-## 4. Recover after a lost response
+## 4. Execute and verify through MCP
 
-The simulator commits a note, then loses the response while the first read-back is unavailable. The application keeps an `unknown` outcome. Selecting **Verify existing operation** reads downstream state and reconciles the existing operation. An independent simulator count confirms exactly one effect.
+The original proposer executes the approved update, preserving the idempotency key. The receipt includes the operation and downstream external ID after matching read-back.
+
+| MCP receipt | Review page receipt |
+| --- | --- |
+| [![Verified MCP response](mcp-verified.png)](mcp-verified.png) | [![Verified browser receipt](review-verified.png)](review-verified.png) |
+
+## 5. Recover an uncertain write
+
+The simulator writes one note but loses its response; the first read-back is unavailable. The original MCP call and browser both show `unknown`. Verifying the **existing** operation resolves it to `verified`; the acceptance script independently counts one matching downstream effect.
 
 | Unknown outcome | Reconciled receipt |
 | --- | --- |
-| ![Unknown operation after the lost response](workspace-unknown.png) | ![Verified recovery of the same operation](workspace-recovered.png) |
+| [![Unknown browser outcome](review-unknown.png)](review-unknown.png) | [![Verified recovery](review-recovered.png)](review-recovered.png) |
 
-## Mobile and other interfaces
+The [actual MCP unknown response](mcp-unknown.png) and [MCP verification response](mcp-recovered.png) are also captured. The [390px mobile review](review-mobile.png) keeps the human decision usable on a narrow screen.
 
-The [390px mobile capture](workspace-mobile.png) shows the stacked layout and contained activity-table scrolling. The same domain workflow is also available through the CLI and stdio MCP.
-
-The [terminal highlights](demo-highlights.gif), [plain transcript](../demo/transcript.txt) and [offline HTML replay](../demo/demo.html) record actual CLI/MCP output. Download the HTML replay and open it locally; GitHub shows its source.
-
-## Reproduce the capture
-
-Follow [browser acceptance setup](../WORKSPACE-UI.md#reproduce-browser-acceptance), then run `node scripts/check_workspace.cjs`. It exercises the real forms, creates the screenshots, records eight browser checks and cleans up browser sessions. The documented Compose cleanup removes the isolated test stack. It makes no paid model requests and uses no live customer data.
+The [older full CLI/MCP replay](../demo/demo.html) remains available as additional protocol evidence; its approval step uses scripted CLI input. This current walkthrough uses the separate browser review surface. All data is synthetic.
