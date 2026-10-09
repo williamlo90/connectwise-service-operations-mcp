@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-09T05:56:52.965091+00:00",
+  "timestamp_utc": "2026-10-09T06:14:27.213351+00:00",
   "status": "passed",
   "environment": "local Docker Linux / isolated PostgreSQL tmpfs",
   "dataset": "synthetic phase-2 seed: 2 tenants, 7 actors, 4 local tickets, 6 remote tickets",
@@ -57,11 +57,12 @@
     "scripts/ai_canary.py": "228f1d1bdcf0f425dade2e76c686b9ce5bc52d92fa678047c872835a47bf0421",
     "scripts/check_installation.py": "addb6f20d0ddb011802600bb31c716a647d4c426ce72e22b6b9ac0f31bf60fc5",
     "scripts/check_workflow_cli.py": "2a4156defe260e55ebe90138893fa829b723e8fcca88bf46dbc39dec8ff058a7",
-    "scripts/check_workspace.cjs": "021e0f3411a405c83b74d058208442669748aa6ecce0be72ed05e09ae22cc6af",
+    "scripts/check_workspace.cjs": "6ac9bff6738da17ec7afc922a63a8e22898cbc9f32b048ad515d3457be4e36fa",
     "scripts/evaluate_local_ai.py": "66a4d49e8432c1d458bf9fed4a84f75389cd7713071a874211afaeda3debad9b",
     "scripts/qualify_local.py": "dba2da7dceeaa6bf4e8fdc8c5feeef83d30846df17f004162a41915ace6df92e",
     "scripts/record_demo.py": "34f27d408696ec8d0f2057dc3b8118a7d563340161dc9a557ae8a972c7751889",
     "scripts/release_manifest.py": "cf58eb80068e0b5a1f8e5bbdafdd0a5070b132d036f78239d94fe9dbcf6eab49",
+    "scripts/render_mcp_evidence.cjs": "9be0640393ee93a57ca36b58520807394364a49ffbc5eac898130cfc4f15ab95",
     "scripts/run_evaluation.py": "8e43790414d47ee483f6833b00b106af1792ac59a93bbb88af3bdeb8c1a3be4f",
     "scripts/setup_local.py": "727387652dd2149e5899853a332978707310980d01032ed8fd5c650ea796d5c7",
     "scripts/test_local.py": "c072842a26ec7f7d144a819f91bd89c71faf5d21e9e4b7022dcc7cb312ffcd36",
@@ -96,7 +97,7 @@
     "compose.eval.yaml": "05fc10983d905308bc3b2688b912bbe36efa125acc69f5644bf25dd9dcb21e2d"
   },
   "tests_total": 63,
-  "suite_seconds": 19.491,
+  "suite_seconds": 16.281,
   "http_tests": 28,
   "automation_tests": 11,
   "asgi_assistant_tests": 10,
@@ -167,7 +168,7 @@
     "test_direct_review_scopes_and_current_receipt",
     "test_workspace_assets_and_security_headers"
   ],
-  "structured_http_events": 370,
+  "structured_http_events": 368,
   "log_secret_check": "passed",
   "automation_cli": "passed",
   "mcp_cli": "passed",

@@ -10,7 +10,7 @@ Source text is rendered with `textContent`. Bearer tokens live only in page memo
 
 ## Acceptance
 
-[Browser/MCP acceptance](evidence/workspace-browser.json) exercises actual stdio MCP tool discovery/context/proposal/execution/verification and browser approval, time entry, unknown recovery, tenant switch, sign-out, storage and mobile layout. The simulator count independently checks one downstream effect after recovery. [Domain regression](evidence/workspace-regression.json) covers direct endpoint roles/scopes, as well as the other workflow controls. No hosted model or live tenant is used.
+[Browser/MCP acceptance](evidence/workspace-browser.json) exercises actual stdio MCP tool discovery/context/proposal/execution/verification, the offline viewer and its mobile layout, browser approval, time entry, unknown recovery, tenant switch, sign-out and storage. The simulator count independently checks one downstream effect after recovery. [Domain regression](evidence/workspace-regression.json) covers direct endpoint roles/scopes, as well as the other workflow controls. No hosted model or live tenant is used.
 
 To reproduce the browser run, install Playwright with Chromium and run `python scripts/test_local.py` first to build the isolated images. Create an ignored `local/workspace-test.yaml`:
 
@@ -33,4 +33,4 @@ node scripts/check_workspace.cjs
 docker compose --env-file .env.example -p cw-ops-ui-test -f compose.test.yaml -f local/workspace-test.yaml down --remove-orphans
 ```
 
-Set `PLAYWRIGHT_MODULE` to your installed Playwright module path if it is not discoverable by Node. The script uses only synthetic credentials and an isolated stack. It regenerates [screenshots](showcase/README.md) and its JSON report. The Phase 7 workload/restore/OOM results are a separate prior qualification; Azure and connected ConnectWise acceptance remain pending.
+Set `PLAYWRIGHT_MODULE` to your installed Playwright module path if it is not discoverable by Node. The script uses only synthetic credentials and an isolated stack. It regenerates the [offline MCP evidence viewer](showcase/mcp-evidence.html), [screenshots](showcase/README.md), and its JSON report. The viewer is a presentation of recorded tool responses, not a live MCP host. The Phase 7 workload/restore/OOM results are a separate prior qualification; Azure and connected ConnectWise acceptance remain pending.

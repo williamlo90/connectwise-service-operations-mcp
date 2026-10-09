@@ -34,14 +34,14 @@ In the recorded demo, the simulator commits a note but delays its response. The 
 
 ![Verified recovery of the same operation](showcase/review-recovered.png)
 
-These screenshots come from the working review page against an isolated synthetic simulator. The [MCP-first walkthrough](MCP-WALKTHROUGH.md) includes actual tool discovery, source context, proposal and verified response. [Browser/MCP acceptance](evidence/workspace-browser.json) uses separate identities and independently counts one downstream effect after recovery. The [older full CLI replay](demo/demo.html) remains complementary protocol evidence.
+These screenshots come from the working review page against an isolated synthetic simulator. The [MCP-first walkthrough](MCP-WALKTHROUGH.md) includes actual tool discovery, source context, proposal and verified response. Its [offline evidence viewer](showcase/mcp-evidence.html) formats the recorded MCP responses for easier inspection and retains the original client output. [Browser/MCP acceptance](evidence/workspace-browser.json) uses separate identities and independently counts one downstream effect after recovery. The [older full CLI replay](demo/demo.html) remains complementary protocol evidence.
 
 ## Evidence
 
 | Validation | Result |
 | --- | --- |
 | Backend/domain/evaluator + real-protocol MCP | 63 tests and 11 MCP scenarios passed |
-| Browser UI | 11 checks covering real MCP calls, separate browser approval, note/time, recovery, mobile layout, tenant switching, storage, sign-out and runtime errors |
+| Browser and evidence viewer | 12 checks covering real MCP calls, formatted tool evidence, separate browser approval, note/time, recovery, mobile layout, tenant switching, storage, sign-out and runtime errors |
 | Declared normal/peak/two-minute soak | 135 tasks, including 33 verified writes; zero observed errors, drops or duplicate effects |
 | Recovery qualification | Matching PostgreSQL backup restore, database outage alerts, actual Ollama OOM handled without hosted fallback, and application rollback |
 | Optional AI selection | 8/8 held-out cases for each provider on a frozen synthetic set |

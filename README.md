@@ -4,7 +4,7 @@ A six-tool MCP server for controlled service-ticket operations. An operator read
 
 **TypeScript / MCP · Python / FastAPI · PostgreSQL · Docker · optional OpenAI / Ollama**
 
-[![Actual MCP proposal against the synthetic PSA simulator](docs/showcase/mcp-proposal.png)](docs/MCP-WALKTHROUGH.md)
+[![Formatted view of a recorded MCP proposal against the synthetic PSA simulator](docs/showcase/mcp-proposal.png)](docs/MCP-WALKTHROUGH.md)
 
 [End-to-end walkthrough](docs/MCP-WALKTHROUGH.md) · [Six-tool contract](docs/MCP-TOOL-MAP.md) · [Case study](docs/CASE-STUDY.md) · [Run locally](docs/LOCAL-SETUP.md) · [Evidence](docs/ACCEPTANCE-CHECKLIST.md)
 
@@ -17,7 +17,7 @@ This repository is validated against an isolated two-tenant **synthetic PSA simu
 | [![Scoped synthetic ticket context](docs/showcase/mcp-context.png)](docs/showcase/mcp-context.png) | [![Internal note proposal through MCP](docs/showcase/mcp-proposal.png)](docs/showcase/mcp-proposal.png) | [![Separate approver reviewing exact payload](docs/showcase/review-approval.png)](docs/showcase/review-approval.png) | [![Verified downstream MCP receipt](docs/showcase/mcp-verified.png)](docs/showcase/mcp-verified.png) |
 | `cw.ticket_context` checks ticket scope and returns source evidence. | `cw.note_prepare` creates an internal-only proposal; no PSA write occurs. | `approver-a` approves the payload hash and fresh source in the browser. | `op-a` executes via MCP; read-back records an external ID. |
 
-The [recorded walkthrough](docs/MCP-WALKTHROUGH.md) names the actor, action, server check, state and evidence at each step. [Actual MCP tool discovery](docs/showcase/mcp-discovery.png) shows all six tools. Documented time follows the same review boundary and requires explicit minutes, duration evidence and a timezone-aware start. When a simulated write response is lost, the system retains `unknown` and [reconciles the existing operation](docs/showcase/review-recovered.png) without an automatic repost.
+The [offline evidence viewer](docs/showcase/mcp-evidence.html) lets you inspect each formatted MCP response and its original client output (clone or download the repository and open the HTML locally). The [recorded walkthrough](docs/MCP-WALKTHROUGH.md) names the actor, action, server check, state and evidence at each step. [Actual MCP tool discovery](docs/showcase/mcp-discovery.png) shows all six tools. Documented time follows the same review boundary and requires explicit minutes, duration evidence and a timezone-aware start. When a simulated write response is lost, the system retains `unknown` and [reconciles the existing operation](docs/showcase/review-recovered.png) without an automatic repost.
 
 The browser is deliberately limited to **human review and outcome inspection**: load a proposal ID, inspect ticket evidence and exact payload, approve as a distinct actor, or verify an uncertain existing operation. Preparation and execution stay in the MCP reference client. Authorization, approval, idempotency and audit decisions remain in the shared FastAPI domain service.
 
@@ -27,7 +27,7 @@ The browser is deliberately limited to **human review and outcome inspection**: 
 | ---: | --- | --- |
 | **63 tests** | Backend authorization, workflow, providers, synchronization and browser API | [Regression](docs/evidence/workspace-regression.json) |
 | **11 MCP scenarios** | Real stdio protocol, scoped tools, approval, interrupted writes and recovery | [Regression](docs/evidence/workspace-regression.json) |
-| **11 browser/MCP checks** | Tool discovery, separate identity, note/time, mobile, tenant isolation and recovery | [Browser acceptance](docs/evidence/workspace-browser.json) |
+| **12 browser/MCP checks** | Tool discovery, separate identity, note/time, mobile, tenant isolation and recovery | [Browser acceptance](docs/evidence/workspace-browser.json) |
 | **135/135 tasks** | Declared local normal, peak and two-minute soak; 33 verified writes, zero observed duplicates | [Reliability qualification](docs/PHASE-7-DELIVERY.md) |
 | **8/8 per provider** | OpenAI and Ollama on a frozen held-out synthetic evidence-selection set | [Quality evaluation](docs/PHASE-6-DELIVERY.md) |
 | **11 installation steps** | Fresh source archive, generated credentials, worker/monitor readiness and restart persistence | [Installation](docs/evidence/workspace-installation.json) |

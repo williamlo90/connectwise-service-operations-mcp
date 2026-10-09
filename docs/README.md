@@ -7,6 +7,7 @@ Start with the product and its measured results, then follow the implementation 
 | Guide | Purpose |
 | --- | --- |
 | [Product walkthrough](showcase/README.md) | Follow real MCP preparation and execution, browser approval, and recovery |
+| [Offline MCP evidence viewer](showcase/mcp-evidence.html) | Explore seven formatted tool responses and inspect their original output; clone or download the repository to open the HTML locally |
 | [Engineering case study](CASE-STUDY.md) | Understand the problem, contribution and design decisions |
 | [Business brief](BUSINESS-BRIEF.md) | Review users, scope and expected operational value |
 | [Portfolio copy](PORTFOLIO-COPY.md) | English CV, LinkedIn and interview material |

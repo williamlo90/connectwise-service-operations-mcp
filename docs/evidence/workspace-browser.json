@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "timestamp_utc": "2026-10-09T05:54:45.200Z",
+  "timestamp_utc": "2026-10-09T06:15:04.653Z",
   "environment": "Headless Chromium; isolated synthetic Docker stack; TypeScript reference client over stdio MCP",
   "hosted_requests": 0,
   "cases": [
@@ -11,6 +11,7 @@
     "390px review layout has no horizontal overflow",
     "Documented time through MCP and browser approval",
     "Unknown outcome reconciled with one independent downstream effect",
+    "Offline evidence viewer shows seven captured states, original output and mobile layout",
     "Identity switch clears review and cross-tenant lookup returns no proposal",
     "No browser storage of tokens or credentials",
     "Sign-out clears the review",

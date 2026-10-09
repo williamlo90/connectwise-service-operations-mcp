@@ -1,6 +1,6 @@
 # One service update, from MCP to verified PSA record
 
-This is an actual test-stack recording of the TypeScript reference client using stdio MCP, a separate approver using the browser, and a stateful **synthetic PSA simulator**. The test identities are `op-a` and `approver-a`; no live ConnectWise tenant or hosted model was used. [Browser acceptance](evidence/workspace-browser.json) runs this sequence and the recovery branch.
+These visuals format actual test-stack responses of the TypeScript reference client using stdio MCP, a separate approver using the browser, and a stateful **synthetic PSA simulator**. The test identities are `op-a` and `approver-a`; no live ConnectWise tenant or hosted model was used. [Browser acceptance](evidence/workspace-browser.json) runs this sequence and the recovery branch. The [offline evidence viewer](showcase/mcp-evidence.html) presents all seven stages with expandable original client output; clone or download the repository and open it locally.
 
 | Step | Actor and interface | Server check and resulting state | Capture |
 | --- | --- | --- | --- |

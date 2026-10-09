@@ -26,7 +26,7 @@ Current scope: a two-tenant synthetic PSA simulator. Azure end-to-end validation
 
 ## Featured-project caption
 
-Service-ticket automation with explicit approval and proof of completion. Watch a lost write response recover to a verified receipt without posting twice. Built with MCP, TypeScript, FastAPI and PostgreSQL; validated locally against a synthetic PSA simulator.
+Service-ticket automation with explicit approval and proof of completion. Explore formatted captures of seven real MCP steps, then watch a lost write response recover to a verified receipt without posting twice. Built with MCP, TypeScript, FastAPI and PostgreSQL; validated locally against a synthetic PSA simulator.
 
 ## Thirty-second interview introduction
 

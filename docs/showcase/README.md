@@ -1,6 +1,6 @@
 # Service Ops: MCP to human approval to verified record
 
-These are captures from the actual TypeScript reference client over stdio MCP and the working human-review page against an isolated **synthetic PSA simulator**. They do not show a live ConnectWise tenant. The [canonical walkthrough](../MCP-WALKTHROUGH.md) identifies each actor, tool, check and state; [browser acceptance](../evidence/workspace-browser.json) reproduces the sequence.
+The MCP images are formatted views of captured responses from the actual TypeScript reference client over stdio MCP. The approval images come from the working human-review page. All run against an isolated **synthetic PSA simulator**. They do not show a live ConnectWise tenant or a fictional chat host. Clone or download the repository and open the [offline evidence viewer](mcp-evidence.html) to switch between all seven MCP states and inspect the original client output. The [canonical walkthrough](../MCP-WALKTHROUGH.md) identifies each actor, tool, check and state; [browser acceptance](../evidence/workspace-browser.json) reproduces the sequence.
 
 ## 1. Discover and read the source
 
@@ -38,6 +38,6 @@ The simulator writes one note but loses its response; the first read-back is una
 | --- | --- |
 | [![Unknown browser outcome](review-unknown.png)](review-unknown.png) | [![Verified recovery](review-recovered.png)](review-recovered.png) |
 
-The [actual MCP unknown response](mcp-unknown.png) and [MCP verification response](mcp-recovered.png) are also captured. The [390px mobile review](review-mobile.png) keeps the human decision usable on a narrow screen.
+The [actual MCP unknown response](mcp-unknown.png) and [MCP verification response](mcp-recovered.png) are also captured. Both the [390px evidence viewer](mcp-viewer-mobile.png) and [mobile review page](review-mobile.png) remain usable on a narrow screen.
 
 The [older full CLI/MCP replay](../demo/demo.html) remains available as additional protocol evidence; its approval step uses scripted CLI input. This current walkthrough uses the separate browser review surface. All data is synthetic.
