@@ -1,7 +1,7 @@
 {
   "candidate": "local-simulator-workspace-rc2",
-  "generated_at": "2026-10-13T06:20:34.938558+00:00",
-  "source_revision": "2c293af24481ca3e05901e328816374b6cd8b809",
+  "generated_at": "2026-10-13T06:23:18.704444+00:00",
+  "source_revision": "a44075e0d5f1afc3e8debe5aebef487e90a85e88",
   "installation_source_revision": "b17529ff2302811495fa191fe9e08fbdb4f9f29d",
   "status": "local-ready; connected/cloud pending",
   "schema": "004_automation.sql",
@@ -78,7 +78,7 @@
     ".dockerignore": "704f5b143c2cf6cc6ee10f686332be2b89e65774622f8448a427495a394d1d2a",
     ".env.example": "ae45eb08b5db15aac827568d1b9d8b6c52774d7ca038b2cd686202f8d616fc30",
     ".gitattributes": "c57fe0a88b5e96b2e8ad847367eb1fce92536b30b7d489b8919bbb73f50f4577",
-    ".github/workflows/ci.yml": "1d26bf9a6a68da1b4dd7f94e10fbaa68411bc97c840220fcf8667e738a05d2a9",
+    ".github/workflows/ci.yml": "22b1eaa0bd697b905dd42453d8f0d677c0cab86dd672a863c1b8c324453c5295",
     ".gitignore": "bcb9e14b6f676d2f817ee8106f4939b4e7ed29befb7c57f73a4fd5ff108acc99",
     "LICENSE": "50a366a7fe4ae9f6381d4112239b30445f30890eb2557d0faeb42f813067711c",
     "README.md": "2bf5f0c8d4de01e48f737d188e6d287c76571b01b8c3394b36b6c894ff5b8c91",
