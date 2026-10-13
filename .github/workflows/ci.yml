@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Quality and supply chain
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            client/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install locked Node dependencies
+        run: |
+          npm ci
+          npm ci --prefix client
+      - name: Build TypeScript and run deterministic rubric tests
+        run: |
+          npm run build --prefix client
+          python -m unittest tests.test_evaluation -v
+          node --check scripts/check_workspace.cjs
+      - name: Verify release manifest
+        run: python scripts/release_manifest.py --verify
+      - name: Audit Node and Python dependencies
+        run: |
+          npm audit --audit-level=high
+          npm audit --prefix client --audit-level=high
+          python -m pip install pip-audit==2.10.1
+          python -m pip_audit -r backend/requirements.lock --strict
+
+  acceptance:
+    name: Docker and browser acceptance
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned browser runtime
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Run isolated domain and MCP regression
+        run: python scripts/test_local.py
+      - name: Start synthetic browser stack
+        run: docker compose --env-file .env.example -p cw-ops-ui-test -f compose.test.yaml -f compose.browser.yaml up -d --no-build --wait api
+      - name: Run browser and MCP acceptance
+        run: npm run test:browser
+      - name: Clean up isolated browser stack
+        if: always()
+        run: docker compose --env-file .env.example -p cw-ops-ui-test -f compose.test.yaml -f compose.browser.yaml down --remove-orphans

@@ -1,0 +1,10 @@
+{
+  "name": "connectwise-service-operations-browser-acceptance",
+  "private": true,
+  "scripts": {
+    "test:browser": "node scripts/check_workspace.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

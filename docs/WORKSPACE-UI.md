@@ -12,25 +12,15 @@ Source text is rendered with `textContent`. Bearer tokens live only in page memo
 
 [Browser/MCP acceptance](evidence/workspace-browser.json) exercises actual stdio MCP tool discovery/context/proposal/execution/verification, the offline viewer and its mobile layout, browser approval, time entry, unknown recovery, tenant switch, sign-out and storage. The simulator count independently checks one downstream effect after recovery. [Domain regression](evidence/workspace-regression.json) covers direct endpoint roles/scopes, as well as the other workflow controls. No hosted model or live tenant is used.
 
-To reproduce the browser run, install Playwright with Chromium and run `python scripts/test_local.py` first to build the isolated images. Create an ignored `local/workspace-test.yaml`:
-
-```yaml
-services:
-  api:
-    image: cw-ops-test-api
-    ports: ['127.0.0.1:8031:8000']
-  migrate:
-    image: cw-ops-test-api
-  seed:
-    image: cw-ops-test-api
-  simulator:
-    image: cw-ops-test-api
-```
+To reproduce from a fresh clone, install Node.js 22, Python 3.12 and Docker Engine with Linux containers and Compose v2. The root [npm lockfile](../package-lock.json) pins Playwright; [the browser Compose overlay](../compose.browser.yaml) is committed. Port 8031 must be free on loopback. Run these commands from the repository root:
 
 ```sh
-docker compose --env-file .env.example -p cw-ops-ui-test -f compose.test.yaml -f local/workspace-test.yaml up -d --no-build --wait api
-node scripts/check_workspace.cjs
-docker compose --env-file .env.example -p cw-ops-ui-test -f compose.test.yaml -f local/workspace-test.yaml down --remove-orphans
+npm ci
+npx playwright install chromium
+python scripts/test_local.py
+docker compose --env-file .env.example -p cw-ops-ui-test -f compose.test.yaml -f compose.browser.yaml up -d --no-build --wait api
+npm run test:browser
+docker compose --env-file .env.example -p cw-ops-ui-test -f compose.test.yaml -f compose.browser.yaml down --remove-orphans
 ```
 
-Set `PLAYWRIGHT_MODULE` to your installed Playwright module path if it is not discoverable by Node. The script uses only synthetic credentials and an isolated stack. It regenerates the [offline MCP evidence viewer](showcase/mcp-evidence.html), [screenshots](showcase/README.md), and its JSON report. The viewer is a presentation of recorded tool responses, not a live MCP host. The Phase 7 workload/restore/OOM results are a separate prior qualification; Azure and connected ConnectWise acceptance remain pending.
+Use `npx playwright install --with-deps chromium` on a fresh Linux machine when browser system libraries are missing. Always run the final `down` command, including after a test failure. The script uses only synthetic credentials and an isolated stack. It regenerates the [offline MCP evidence viewer](showcase/mcp-evidence.html), [screenshots](showcase/README.md), and its [JSON report](evidence/workspace-browser.json), which records the Playwright and Chromium versions. The viewer is a presentation of recorded tool responses, not a live MCP host. The Phase 7 workload/restore/OOM results are a separate prior qualification; Azure and connected ConnectWise acceptance remain pending.
