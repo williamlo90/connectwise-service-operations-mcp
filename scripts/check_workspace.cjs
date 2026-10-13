@@ -1,5 +1,6 @@
 // Browser acceptance uses the real TypeScript MCP client against cw-ops-ui-test.
-const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const {chromium}=require('playwright');
+const playwrightVersion=require('playwright/package.json').version;
 const {mkdirSync,writeFileSync,readFileSync}=require('node:fs');
 const {spawnSync,execFileSync}=require('node:child_process');
 const {randomUUID}=require('node:crypto');
@@ -7,7 +8,7 @@ const {resolve}=require('node:path');
 const {pathToFileURL}=require('node:url');
 const assert=require('node:assert/strict');
 const {writeEvidenceViewer}=require('./render_mcp_evidence.cjs');
-const compose=['compose','--env-file','.env.example','-p','cw-ops-ui-test','-f','compose.test.yaml','-f','local/workspace-test.yaml'];
+const compose=['compose','--env-file','.env.example','-p','cw-ops-ui-test','-f','compose.test.yaml','-f','compose.browser.yaml'];
 const cases=[];
 const sql=query=>execFileSync('docker',['exec','cw-ops-ui-test-db-1','psql','-U','cw_test','-d','cw_ops_test','-tAc',query],{encoding:'utf8'}).trim();
 function cli(command,id,input='',key){
@@ -95,7 +96,7 @@ function discover(){
   await page.locator('#account').click();await page.locator('#signout').click();await settled();
   assert.equal(await page.locator('#identity').innerText(),'Sign in');assert.equal(await page.locator('#review').isVisible(),false);cases.push('Sign-out clears the review');
   assert.deepEqual(errors,[]);cases.push('No browser JavaScript errors');
-  writeFileSync('docs/evidence/workspace-browser.json',JSON.stringify({status:'passed',timestamp_utc:new Date().toISOString(),environment:'Headless Chromium; isolated synthetic Docker stack; TypeScript reference client over stdio MCP',hosted_requests:0,cases},null,2)+'\n');
+  writeFileSync('docs/evidence/workspace-browser.json',JSON.stringify({status:'passed',timestamp_utc:new Date().toISOString(),environment:'Headless Chromium; isolated synthetic Docker stack; TypeScript reference client over stdio MCP',playwright_version:playwrightVersion,chromium_version:browser.version(),hosted_requests:0,cases},null,2)+'\n');
   console.log(JSON.stringify({status:'passed',cases}));
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

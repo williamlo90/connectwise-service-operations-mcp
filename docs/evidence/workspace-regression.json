@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-09T06:14:27.213351+00:00",
+  "timestamp_utc": "2026-10-13T06:19:21.103947+00:00",
   "status": "passed",
   "environment": "local Docker Linux / isolated PostgreSQL tmpfs",
   "dataset": "synthetic phase-2 seed: 2 tenants, 7 actors, 4 local tickets, 6 remote tickets",
@@ -57,7 +57,7 @@
     "scripts/ai_canary.py": "228f1d1bdcf0f425dade2e76c686b9ce5bc52d92fa678047c872835a47bf0421",
     "scripts/check_installation.py": "addb6f20d0ddb011802600bb31c716a647d4c426ce72e22b6b9ac0f31bf60fc5",
     "scripts/check_workflow_cli.py": "2a4156defe260e55ebe90138893fa829b723e8fcca88bf46dbc39dec8ff058a7",
-    "scripts/check_workspace.cjs": "6ac9bff6738da17ec7afc922a63a8e22898cbc9f32b048ad515d3457be4e36fa",
+    "scripts/check_workspace.cjs": "c3fea16d26b378f3f2c0538a698734da761b743d663d55bab0c27c110813467b",
     "scripts/evaluate_local_ai.py": "66a4d49e8432c1d458bf9fed4a84f75389cd7713071a874211afaeda3debad9b",
     "scripts/qualify_local.py": "dba2da7dceeaa6bf4e8fdc8c5feeef83d30846df17f004162a41915ace6df92e",
     "scripts/record_demo.py": "34f27d408696ec8d0f2057dc3b8118a7d563340161dc9a557ae8a972c7751889",
@@ -97,7 +97,7 @@
     "compose.eval.yaml": "05fc10983d905308bc3b2688b912bbe36efa125acc69f5644bf25dd9dcb21e2d"
   },
   "tests_total": 63,
-  "suite_seconds": 16.281,
+  "suite_seconds": 22.08,
   "http_tests": 28,
   "automation_tests": 11,
   "asgi_assistant_tests": 10,
@@ -168,7 +168,7 @@
     "test_direct_review_scopes_and_current_receipt",
     "test_workspace_assets_and_security_headers"
   ],
-  "structured_http_events": 368,
+  "structured_http_events": 372,
   "log_secret_check": "passed",
   "automation_cli": "passed",
   "mcp_cli": "passed",

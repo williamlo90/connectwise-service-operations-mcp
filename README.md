@@ -8,6 +8,8 @@ A six-tool MCP server for controlled service-ticket operations. An operator read
 
 [End-to-end walkthrough](docs/MCP-WALKTHROUGH.md) · [Six-tool contract](docs/MCP-TOOL-MAP.md) · [Case study](docs/CASE-STUDY.md) · [Run locally](docs/LOCAL-SETUP.md) · [Evidence](docs/ACCEPTANCE-CHECKLIST.md)
 
+[![CI](https://github.com/williamlo90/connectwise-service-operations-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/williamlo90/connectwise-service-operations-mcp/actions/workflows/ci.yml)
+
 This repository is validated against an isolated two-tenant **synthetic PSA simulator**. Its API subset was mapped to published ConnectWise PSA documentation, but a live ConnectWise tenant has **not** been tested. Azure deployment is an optional future extension, not a completed result.
 
 ## One update, end to end

@@ -1,0 +1,12 @@
+# Browser acceptance overlay for the isolated synthetic test project.
+# Images are built first by scripts/test_local.py; only the API is exposed on loopback.
+services:
+  api:
+    image: cw-ops-test-api
+    ports: ['127.0.0.1:8031:8000']
+  migrate:
+    image: cw-ops-test-api
+  seed:
+    image: cw-ops-test-api
+  simulator:
+    image: cw-ops-test-api
